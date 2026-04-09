@@ -1,0 +1,299 @@
+
+> vaultlock@0.1.0 dev
+> next dev
+
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3000
+  - Environments: .env.local, .env
+
+ ✓ Starting...
+ ⚠ Invalid next.config.mjs options detected: 
+ ⚠     Unrecognized key(s) in object: 'ignoreDuringBuild' at "eslint"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 1487ms
+ ○ Compiling / ...
+ ✓ Compiled / in 2.1s (748 modules)
+ HEAD / 200 in 2324ms
+ ✓ Compiled in 255ms (359 modules)
+ ○ Compiling /favicon.ico ...
+ ✓ Compiled /favicon.ico in 507ms (403 modules)
+ GET /favicon.ico 200 in 563ms
+ ✓ Compiled /pricing in 489ms (756 modules)
+ GET /pricing 200 in 637ms
+ ○ Compiling /api/auth/[...nextauth] ...
+ ✓ Compiled /api/auth/[...nextauth] in 1118ms (645 modules)
+ GET /api/auth/session 200 in 2143ms
+ GET /api/auth/session 200 in 12ms
+ GET /api/auth/session 200 in 242ms
+ ✓ Compiled /_not-found in 467ms (994 modules)
+ GET /how-it-works 404 in 570ms
+ GET /api/auth/session 200 in 30ms
+ GET /api/auth/session 200 in 52ms
+ GET /api/auth/session 200 in 33ms
+ GET /pricing 200 in 53ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 11ms
+ GET /api/auth/session 200 in 26ms
+ GET / 200 in 131ms
+ GET /api/auth/session 200 in 26ms
+ GET /api/auth/session 200 in 26ms
+ GET /api/auth/session 200 in 31ms
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 1182ms (951 modules)
+ GET / 404 in 1316ms
+ GET /_next/static/css/app/layout.css?v=1775692194522 404 in 68ms
+ ✓ Compiled /signup in 416ms (969 modules)
+ GET /signup 200 in 497ms
+ GET /_next/static/css/app/layout.css?v=1775692200036 404 in 23ms
+ GET /_next/static/chunks/main-app.js?v=1775692200036 404 in 50ms
+ GET /_next/static/chunks/app/error.js 404 in 48ms
+ GET /_next/static/chunks/app/not-found.js 404 in 47ms
+ GET /_next/static/chunks/app/layout.js 404 in 50ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 51ms
+ GET /signup 200 in 37ms
+ GET /_next/static/css/app/layout.css?v=1775692202089 404 in 22ms
+ GET /_next/static/chunks/main-app.js?v=1775692202089 404 in 32ms
+ GET /_next/static/chunks/app/layout.js 404 in 31ms
+ GET /_next/static/chunks/app/error.js 404 in 32ms
+ GET /_next/static/chunks/app/not-found.js 404 in 28ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 32ms
+ ✓ Compiled /favicon.ico in 204ms (459 modules)
+ GET /favicon.ico 200 in 253ms
+ GET / 200 in 108ms
+ GET /_next/static/css/app/layout.css?v=1775692203765 404 in 17ms
+ GET /_next/static/chunks/main-app.js?v=1775692203765 404 in 29ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 29ms
+ GET /_next/static/chunks/app/error.js 404 in 28ms
+ GET /_next/static/chunks/app/page.js 404 in 30ms
+ GET /_next/static/chunks/app/layout.js 404 in 31ms
+ GET /_next/static/chunks/app/not-found.js 404 in 32ms
+ GET / 200 in 37ms
+ GET /_next/static/css/app/layout.css?v=1775692205299 404 in 13ms
+ GET /_next/static/chunks/app/page.js 404 in 45ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 47ms
+ GET /_next/static/chunks/main-app.js?v=1775692205299 404 in 43ms
+ GET /_next/static/chunks/app/error.js 404 in 41ms
+ GET /_next/static/chunks/app/layout.js 404 in 42ms
+ GET /_next/static/chunks/app/not-found.js 404 in 40ms
+ GET /favicon.ico 200 in 7ms
+ GET / 200 in 35ms
+ GET /_next/static/css/app/layout.css?v=1775692206246 404 in 14ms
+ GET /_next/static/chunks/app/layout.js 404 in 34ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 36ms
+ GET /_next/static/chunks/main-app.js?v=1775692206246 404 in 43ms
+ GET /_next/static/chunks/app/page.js 404 in 35ms
+ GET /_next/static/chunks/app/error.js 404 in 35ms
+ GET /_next/static/chunks/app/not-found.js 404 in 29ms
+ GET /favicon.ico 200 in 5ms
+ GET / 200 in 37ms
+ GET /_next/static/css/app/layout.css?v=1775692206617 404 in 13ms
+ GET /_next/static/chunks/app/error.js 404 in 25ms
+ GET /_next/static/chunks/main-app.js?v=1775692206617 404 in 29ms
+ GET /_next/static/chunks/app/layout.js 404 in 26ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 29ms
+ GET /_next/static/chunks/app/not-found.js 404 in 25ms
+ GET /_next/static/chunks/app/page.js 404 in 27ms
+ GET /favicon.ico 200 in 4ms
+ GET / 200 in 17ms
+ GET /_next/static/css/app/layout.css?v=1775692206784 404 in 13ms
+ GET /_next/static/chunks/main-app.js?v=1775692206784 404 in 63ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 69ms
+ GET /_next/static/chunks/app/page.js 404 in 67ms
+ GET /_next/static/chunks/app/layout.js 404 in 65ms
+ GET /_next/static/chunks/app/not-found.js 404 in 64ms
+ GET /_next/static/chunks/app/error.js 404 in 65ms
+ GET / 200 in 20ms
+ GET /_next/static/css/app/layout.css?v=1775692206947 404 in 12ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 37ms
+ GET /_next/static/chunks/app/page.js 404 in 36ms
+ GET /_next/static/chunks/app/layout.js 404 in 36ms
+ GET /_next/static/chunks/main-app.js?v=1775692206947 404 in 38ms
+ GET /_next/static/chunks/app/not-found.js 404 in 33ms
+ GET /_next/static/chunks/app/error.js 404 in 36ms
+ GET /favicon.ico 200 in 6ms
+ GET /signup 200 in 28ms
+ GET /_next/static/css/app/layout.css?v=1775692211572 404 in 13ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 48ms
+ GET /_next/static/chunks/main-app.js?v=1775692211572 404 in 51ms
+ GET /_next/static/chunks/app/layout.js 404 in 50ms
+ GET /_next/static/chunks/app/error.js 404 in 50ms
+ GET /_next/static/chunks/app/not-found.js 404 in 48ms
+ ✓ Compiled /login in 407ms (1011 modules)
+ GET /login 200 in 473ms
+ GET /_next/static/css/app/layout.css?v=1775692215671 404 in 24ms
+ GET /_next/static/chunks/main-app.js?v=1775692215671 404 in 33ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 32ms
+ GET /_next/static/chunks/app/layout.js 404 in 30ms
+ GET /_next/static/chunks/app/error.js 404 in 29ms
+ GET /_next/static/chunks/app/not-found.js 404 in 26ms
+ GET / 200 in 176ms
+ GET /_next/static/css/app/layout.css?v=1775692264004 404 in 16ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 38ms
+ GET /_next/static/chunks/main-app.js?v=1775692264004 404 in 38ms
+ GET /_next/static/chunks/app/layout.js 404 in 38ms
+ GET /_next/static/chunks/app/page.js 404 in 38ms
+ GET /_next/static/chunks/app/error.js 404 in 37ms
+ GET /_next/static/chunks/app/not-found.js 404 in 37ms
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, lstat '/Users/parthkaran/Documents/claude_projects/vaultlock/.next/server/app/api'
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Resolving './vendor-chunks/styled-jsx' in /Users/parthkaran/Documents/claude_projects/vaultlock/.next/server for build dependencies doesn't lead to expected result '/Users/parthkaran/Documents/claude_projects/vaultlock/.next/server/vendor-chunks/styled-jsx.js', but to 'Error: Can't resolve './vendor-chunks/styled-jsx' in '/Users/parthkaran/Documents/claude_projects/vaultlock/.next/server'' instead. Resolving dependencies are ignored for this path.
+<w>  at resolve commonjs file ./vendor-chunks/styled-jsx (expected /Users/parthkaran/Documents/claude_projects/vaultlock/.next/server/vendor-chunks/styled-jsx.js)
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/.next/server/webpack-runtime.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/.next/server/webpack-runtime.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/.next/server/app/page.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/.next/server/app/page.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/server/require.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/server/require.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/server/load-components.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/server/load-components.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/utils.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/utils.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js
+<w>  at resolve commonjs /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Resolving './vendor-chunks/@stellar' in /Users/parthkaran/Documents/claude_projects/vaultlock/.next/server for build dependencies doesn't lead to expected result '/Users/parthkaran/Documents/claude_projects/vaultlock/.next/server/vendor-chunks/@stellar.js', but to 'Error: Can't resolve './vendor-chunks/@stellar' in '/Users/parthkaran/Documents/claude_projects/vaultlock/.next/server'' instead. Resolving dependencies are ignored for this path.
+<w>  at resolve commonjs file ./vendor-chunks/@stellar (expected /Users/parthkaran/Documents/claude_projects/vaultlock/.next/server/vendor-chunks/@stellar.js)
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/.next/server/webpack-runtime.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/.next/server/webpack-runtime.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/.next/server/app/page.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/.next/server/app/page.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/server/require.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/server/require.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/server/load-components.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/server/load-components.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/utils.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/utils.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js
+<w>  at resolve commonjs /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Resolving '../../../../.next/server/app/api/auth/[...nextauth]/route' in /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/server for build dependencies doesn't lead to expected result '/Users/parthkaran/Documents/claude_projects/vaultlock/.next/server/app/api/auth/[...nextauth]/route.js', but to 'Error: Can't resolve '../../../../.next/server/app/api/auth/[...nextauth]/route' in '/Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/server'' instead. Resolving dependencies are ignored for this path.
+<w>  at resolve commonjs file ../../../../.next/server/app/api/auth/[...nextauth]/route (expected /Users/parthkaran/Documents/claude_projects/vaultlock/.next/server/app/api/auth/[...nextauth]/route.js)
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/server/require.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/server/require.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/server/load-components.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/server/load-components.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/utils.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/utils.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js
+<w>  at resolve commonjs /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, lstat '/Users/parthkaran/Documents/claude_projects/vaultlock/.next/server/app/api'
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Resolving './vendor-chunks/styled-jsx' in /Users/parthkaran/Documents/claude_projects/vaultlock/.next/server for build dependencies doesn't lead to expected result '/Users/parthkaran/Documents/claude_projects/vaultlock/.next/server/vendor-chunks/styled-jsx.js', but to 'Error: Can't resolve './vendor-chunks/styled-jsx' in '/Users/parthkaran/Documents/claude_projects/vaultlock/.next/server'' instead. Resolving dependencies are ignored for this path.
+<w>  at resolve commonjs file ./vendor-chunks/styled-jsx (expected /Users/parthkaran/Documents/claude_projects/vaultlock/.next/server/vendor-chunks/styled-jsx.js)
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/.next/server/webpack-runtime.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/.next/server/webpack-runtime.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/.next/server/app/page.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/.next/server/app/page.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/server/require.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/server/require.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/server/load-components.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/server/load-components.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/utils.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/utils.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/compiled/loader-runner/LoaderRunner.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/compiled/loader-runner/LoaderRunner.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/compiled/webpack/bundle5.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/compiled/webpack/bundle5.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/compiled/webpack/webpack.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/compiled/webpack/webpack.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/webpack/plugins/define-env-plugin.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/webpack/plugins/define-env-plugin.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/swc/index.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/swc/index.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/webpack/loaders/next-barrel-loader.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/webpack/loaders/next-barrel-loader.js
+<w>  at resolve commonjs /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/webpack/loaders/next-barrel-loader.js
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Resolving '../../../../.next/server/app/api/auth/[...nextauth]/route' in /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/server for build dependencies doesn't lead to expected result '/Users/parthkaran/Documents/claude_projects/vaultlock/.next/server/app/api/auth/[...nextauth]/route.js', but to 'Error: Can't resolve '../../../../.next/server/app/api/auth/[...nextauth]/route' in '/Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/server'' instead. Resolving dependencies are ignored for this path.
+<w>  at resolve commonjs file ../../../../.next/server/app/api/auth/[...nextauth]/route (expected /Users/parthkaran/Documents/claude_projects/vaultlock/.next/server/app/api/auth/[...nextauth]/route.js)
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/server/require.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/server/require.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/server/load-components.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/server/load-components.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/utils.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/utils.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/compiled/loader-runner/LoaderRunner.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/compiled/loader-runner/LoaderRunner.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/compiled/webpack/bundle5.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/compiled/webpack/bundle5.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/compiled/webpack/webpack.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/compiled/webpack/webpack.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/webpack/plugins/define-env-plugin.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/webpack/plugins/define-env-plugin.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/swc/index.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/swc/index.js
+<w>  at file dependencies /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/webpack/loaders/next-barrel-loader.js
+<w>  at file /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/webpack/loaders/next-barrel-loader.js
+<w>  at resolve commonjs /Users/parthkaran/Documents/claude_projects/vaultlock/node_modules/next/dist/build/webpack/loaders/next-barrel-loader.js
+ GET / 200 in 303ms
+ GET /_next/static/css/app/layout.css?v=1775692286917 404 in 16ms
+ GET /_next/static/chunks/main-app.js?v=1775692286917 404 in 80ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 67ms
+ GET /_next/static/chunks/app/page.js 404 in 48ms
+ GET /_next/static/chunks/app/layout.js 404 in 17ms
+ GET /_next/static/chunks/app/error.js 404 in 20ms
+ GET /_next/static/chunks/app/not-found.js 404 in 21ms
+ GET /signup 200 in 108ms
+ GET /_next/static/css/app/layout.css?v=1775692287876 404 in 75ms
+ GET /_next/static/chunks/main-app.js?v=1775692287876 404 in 66ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 64ms
+ GET /_next/static/chunks/app/error.js 404 in 54ms
+ GET /_next/static/chunks/app/not-found.js 404 in 48ms
+ GET /_next/static/chunks/app/layout.js 404 in 58ms
+ GET /signup 200 in 107ms
+ GET /signup 404 in 80ms
+ GET /signup 404 in 26ms
+ GET /signup 404 in 74ms
+ GET /signup 404 in 34ms
+ GET / 200 in 65ms
+ ○ Compiling /api/auth/[...nextauth] ...
+ ✓ Compiled /api/auth/[...nextauth] in 1379ms (666 modules)
+ GET /api/auth/session 200 in 1628ms
+ GET /api/auth/session 200 in 4ms
+ ✓ Compiled /login in 171ms (672 modules)
+ GET /_next/static/chunks/app/pricing/page.js 404 in 427ms
+ GET /pricing 200 in 155ms
+ GET /_next/static/chunks/app/pricing/page.js 404 in 61ms
+ ○ Compiling /blog ...
+ ✓ Compiled /blog in 925ms (1228 modules)
+ GET /blog 200 in 1009ms
+ GET /api/auth/session 200 in 31ms
+ GET /api/auth/session 200 in 7ms
+ ○ Compiling /about ...
+ ✓ Compiled /about in 656ms (1238 modules)
+ ✓ Compiled /middleware in 426ms (174 modules)
+ GET /login?callbackUrl=%2Fclient%2Fescrow%2Fnew 200 in 40ms
+ GET /api/auth/session 200 in 31ms
+ GET /api/auth/session 200 in 8ms
+ GET /api/auth/session 200 in 18ms
+ GET /login?callbackUrl=%2Ffreelancer%2Fdashboard 200 in 82ms
+ GET /api/auth/session 200 in 22ms
+ GET /api/auth/session 200 in 28ms
+ GET /api/auth/session 200 in 19ms
+ GET /pricing 200 in 146ms
+ GET /_next/static/chunks/app/pricing/page.js 404 in 59ms
+ GET /blog 200 in 39ms
+ ○ Compiling /about/team ...
+ GET /about 200 in 2061ms
+ ✓ Compiled /privacy in 3.3s (1266 modules)
+ GET /contact 200 in 3669ms
+ GET /about/team 200 in 3849ms
+ GET /signup 200 in 1979ms
+ GET /privacy 200 in 2877ms
+ ○ Compiling /terms ...
+ ✓ Compiled /terms in 2.2s (1268 modules)
+ GET /terms 200 in 2606ms
+ GET /api/auth/session 200 in 36ms
+ GET /api/auth/session 200 in 90ms
+ GET /api/auth/session 200 in 131ms
+ GET /login 200 in 111ms
+ GET /api/auth/session 200 in 17ms
+ GET /api/auth/session 200 in 15ms
+ GET /signup 200 in 86ms
+ GET /api/auth/session 200 in 20ms
+ GET /api/auth/session 200 in 12ms
+ GET / 200 in 1030ms
+ ✓ Compiled in 2.3s (578 modules)
+ ✓ Compiled in 361ms (578 modules)
