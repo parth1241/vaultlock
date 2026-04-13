@@ -1,117 +1,141 @@
-<div align="center">
-  <img src="./public/assets/hero.png" alt="VaultLock Hero" width="100%" />
+# VaultLock — On-chain Escrow & Milestone Payments
 
-  <h1>VaultLock</h1>
-  <p><strong>The Gold Standard for On-Chain Escrows.</strong></p>
+![CI](https://github.com/parth1241/vaultlock/actions/workflows/ci.yml/badge.svg)
+![Vercel](https://img.shields.io/badge/deployed-vercel-black)
+![Stellar](https://img.shields.io/badge/blockchain-Stellar%20Testnet-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-  <p>
-    Built on the <a href="https://stellar.org/">Stellar Blockchain</a> • Automated & Trustless • Milestone-based Payments
-  </p>
+## 🌐 Live Demo
+**[YOUR_VERCEL_URL]**
 
-  <br />
-</div>
+> Built on **Stellar Testnet** — no real funds used.
 
-## 🛡️ About VaultLock
+## 📱 Screenshots
 
-VaultLock ensures absolute trust between clients and freelancers through automated, milestone-based escrow contracts secured by the Stellar network.
+### Wallet Connected + Balance Display
+> Screenshot of WalletStatusBar showing connected address + XLM balance.
 
-Gone are the days of unfulfilled invoices and untrustworthy escrows. VaultLock integrates deeply with Stellar's modern **Claimable Balances** to lock funds upfront and release them instantly as milestones are verified. 
+### Successful Testnet Transaction
+> Screenshot of TransactionSuccessCard after creating an escrow.
+> Shows: txHash, amount, wallet address, updated balance, Stellar Expert link.
 
-Featuring a premium Glassmorphic dark theme and completely custom UI, VaultLock is not just functionally robust—it’s beautifully designed to be the definitive platform for digital talent and their clients.
+### Mobile Responsive View
+> Screenshot of the app on 375px mobile width.
 
----
-
-## ✨ Key Features
-
-### For Clients
-- **Secure Deposits**: Lock funds in escrow before work begins. Neither party can withdraw unilaterally.
-- **Milestone Verification**: Release payments seamlessly only when satisfied with the milestone submission.
-- **Dispute Protection**: Built-in mechanisms to protect your funds on every contract.
-
-### For Freelancers
-- **Guaranteed Payment**: Verify that funds are securely locked in the smart contract before you start working.
-- **Instant Claiming**: Claim milestones directly into your Stellar wallet instantly after approval via the Freighter API.
-- **Zero Platform Hold**: VaultLock never takes custody of funds, meaning no withdrawal limits or bank holds.
+### CI/CD Pipeline
+> GitHub Actions tab showing green CI run.
 
 ---
 
-## 📸 Screenshots
+## 📋 What It Does
+VaultLock is a secure, trustless escrow platform built on Stellar that enables conditional payments for freelancers, contractors, and service providers. Funds are "locked" in a smart contract and released only when predefined milestones are met or both parties agree. This eliminates payment risks for both clients and providers, ensuring a fair and transparent exchange of value.
 
-### The Modern Pipeline
-Beautiful, step-by-step visualizations so both parties know exactly what to do next.
+## ⚙️ Tech Stack
+| Layer | Technology |
+|-------|-----------|
+| Frontend | Next.js 14 App Router + TypeScript |
+| Styling | TailwindCSS + shadcn/ui |
+| Blockchain | Stellar SDK + Soroban + Freighter Wallet |
+| Database | MongoDB Atlas |
+| Auth | NextAuth.js (JWT) |
+| Deployment | Vercel |
+| Network | Stellar Testnet |
 
-<img src="./public/assets/how_it_works.png" alt="How It Works" width="100%" />
+## 🔗 Blockchain Details
 
-### Simple, Transparent Pricing
-Sleek tier presentation with an enterprise custom offering.
+### Network
+- **Network:** Stellar Testnet
+- **Horizon:** https://horizon-testnet.stellar.org
+- **Soroban RPC:** https://soroban-testnet.stellar.org
+- **Explorer:** https://stellar.expert/explorer/testnet
 
-<img src="./public/assets/pricing.png" alt="Pricing Page" width="100%" />
+### Contract Details
+- **Escrow Contract ID:** [CONTRACT_ID]
+- **Blockchain Network:** Stellar Testnet
 
-### Freelancer / Client Login Workflows
-Tailored dashboard experiences based on the actor's role.
+### Asset / Token Details
+- **Asset Code:** XLM (Native)
+- **Explorer Link:** https://stellar.expert/explorer/testnet/asset/XLM
 
-<img src="./public/assets/signup.png" alt="Signup Page" width="100%" />
-
----
-
-## 🚀 Tech Stack
-
-- **Framework:** Next.js 14 (App Router)
-- **Styling:** Tailwind CSS (Dark Mode, Custom Animations, Glassmorphism)
-- **Icons & Visuals:** Lucide React, Recharts
-- **Blockchain:** Stellar SDK (`@stellar/stellar-sdk`, `@stellar/freighter-api`)
-- **Database:** MongoDB & Mongoose
-- **Authentication:** NextAuth.js
-
----
-
-## 💻 Getting Started
+## 🚀 Setup Instructions (Run Locally)
 
 ### Prerequisites
-- Node.js > 18.x
-- MongoDB Instance (Atlas or Local)
-- Testnet Stellar Freighter Wallet (for blockchain operations)
+- [ ] Node.js 18+
+- [ ] MongoDB Atlas account
+- [ ] Freighter wallet extension
 
-### Installation
+### Step 1 — Clone Repository
+```bash
+git clone https://github.com/parth1241/vaultlock.git
+cd vaultlock
+```
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/your-username/vaultlock.git
-   cd vaultlock
-   ```
+### Step 2 — Install Dependencies
+```bash
+npm install
+```
 
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+### Step 3 — Configure Environment Variables
+```bash
+cp .env.example .env.local
+```
 
-3. **Configure Environment Variables:**
-   Create a `.env.local` in the root and add the following keys:
-   ```env
-   # Database
-   MONGODB_URI=your_mongodb_connection_string
+### Step 4 — Set Up MongoDB Atlas
+1. Visit https://cloud.mongodb.com and create a free M0 cluster.
+2. Add a database user and allow network access (0.0.0.0/0).
+3. Copy the driver connection string into `MONGODB_URI` in `.env.local`.
 
-   # Authentication
-   NEXTAUTH_URL=http://localhost:3000
-   NEXTAUTH_SECRET=your_super_secret_string
+### Step 5 — Set Up Freighter Wallet
+1. Install Freighter and switch to **Testnet**.
+2. Fund your wallet at https://friendbot.stellar.org/?addr=YOUR_PUBLIC_KEY.
 
-   # Encryption for Escrow Private Keys
-   ESCROW_ENCRYPTION_KEY=32_byte_hex_string
+### Step 6 — Run Development Server
+```bash
+npm run dev
+```
 
-   # Stellar Configuration
-   NEXT_PUBLIC_STELLAR_NETWORK=TESTNET
-   NEXT_PUBLIC_STELLAR_HORIZON=https://horizon-testnet.stellar.org
-   ```
+### Step 7 — Create Account + Connect Wallet
+1. Visit http://localhost:3000/signup
+2. After login, click "Connect Wallet" and approve in Freighter.
 
-4. **Launch the Dev Server:**
-   ```bash
-   npm run dev
-   ```
+### Step 8 — Test a Transaction
+1. Projects → Create New Escrow.
+2. Enter recipient wallet and amount.
+3. Click "Lock Funds on Stellar".
+4. Approve in Freighter → transaction confirmed and funds held in escrow.
 
-Open `http://localhost:3000` to view VaultLock in action!
+## 📁 Project Structure
+```
+/app                 → Next.js App Router root
+  /(auth)            → Login + signup pages
+  /dashboard         → Main user portal
+  /escrow            → Escrow management logic
+/components
+  /shared            → Shared blockchain UI (Wallet button, status bar)
+  /ui                → Base UI components (shadcn)
+/lib
+  stellar.ts         ← Core Stellar & Soroban SDK logic
+  contracts.ts       ← Soroban contract interaction layer
+/hooks
+  useVault.ts        ← Hook for managing escrow state
+```
 
----
+## 🔒 Security
+- Non-custodial escrow: funds are held in Soroban smart contracts.
+- Client-side signing via Freighter.
+- Role-based access control via middleware.
 
-<div align="center">
-  <p>Built with 🧡 for the Stellar Ecosystem</p>
-</div>
+## 🌱 Deployment (Vercel)
+1. Push to GitHub.
+2. Import to Vercel and add environment variables.
+3. Update `NEXTAUTH_URL` to your Vercel URL.
+
+## 📝 Commit History
+10+ meaningful commits following conventional format.
+
+## 🏆 Hackathon
+Built for the **Antigravity x Stellar Builder Track Belt Progression**.
+- Level 1-4 Complete ✅
+
+## 📄 License
+MIT — see LICENSE file
