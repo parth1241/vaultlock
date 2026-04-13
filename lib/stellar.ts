@@ -1,221 +1,210 @@
-import crypto from 'crypto';
+import {
+  Server,
+  Networks,
+  Operation,
+  TransactionBuilder,
+  BASE_FEE,
+  Memo,
+  Asset,
+  Keypair
+} from '@stellar/stellar-sdk'
+import { 
+  isConnected, 
+  getPublicKey, 
+  getNetworkDetails,
+  signTransaction 
+} from '@stellar/freighter-api'
 
-const HORIZON_URL = process.env.NEXT_PUBLIC_STELLAR_HORIZON || 'https://horizon-testnet.stellar.org';
-const ENCRYPTION_KEY = process.env.ESCROW_ENCRYPTION_KEY || '';
-const ALGORITHM = 'aes-256-cbc';
+const HORIZON_URL = process.env.NEXT_PUBLIC_STELLAR_HORIZON 
+  || 'https://horizon-testnet.stellar.org'
+const NETWORK_PASSPHRASE = Networks.TESTNET
+const server = new Server(HORIZON_URL)
 
-// ─── Encryption Helpers ─────────────────────────────────
-export function encryptSecret(secret: string): string {
-  const key = crypto.scryptSync(ENCRYPTION_KEY, 'vaultlock-salt', 32);
-  const iv = crypto.randomBytes(16);
-  const cipher = crypto.createCipheriv(ALGORITHM, key, iv);
-  let encrypted = cipher.update(secret, 'utf8', 'hex');
-  encrypted += cipher.final('hex');
-  return iv.toString('hex') + ':' + encrypted;
+// ── 1. WALLET SETUP ──────────────────────────────────────────
+
+export async function isFreighterInstalled(): Promise<boolean> {
+  const result = await isConnected();
+  return !result.error && result.isConnected;
 }
 
-export function decryptSecret(encrypted: string): string {
-  const key = crypto.scryptSync(ENCRYPTION_KEY, 'vaultlock-salt', 32);
-  const [ivHex, encryptedData] = encrypted.split(':');
-  const iv = Buffer.from(ivHex, 'hex');
-  const decipher = crypto.createDecipheriv(ALGORITHM, key, iv);
-  let decrypted = decipher.update(encryptedData, 'hex', 'utf8');
-  decrypted += decipher.final('utf8');
-  return decrypted;
+export async function isFreighterConnected(): Promise<boolean> {
+  const result = await isConnected();
+  return !result.error && result.isConnected;
 }
 
-// ─── Keypair Generation ─────────────────────────────────
-export function generateCollectorKeypair() {
-  // Dynamic import not possible for Keypair, use fetch-based approach
-  // We generate a random keypair server-side
-  const { Keypair } = require('@stellar/stellar-sdk');
-  const keypair = Keypair.random();
-  return {
-    publicKey: keypair.publicKey(),
-    secretKey: keypair.secret(),
-  };
-}
-
-// ─── Fund Escrow Wallet (Client → Escrow via Freighter) ─
-// This is called from the frontend; builds the transaction for Freighter signing
-export async function buildFundEscrowTransaction(
-  clientPublicKey: string,
-  escrowPublicKey: string,
-  amountXLM: string
-) {
-  const StellarSdk = require('@stellar/stellar-sdk');
-  const server = new StellarSdk.Horizon.Server(HORIZON_URL);
-  const clientAccount = await server.loadAccount(clientPublicKey);
-
-  const transaction = new StellarSdk.TransactionBuilder(clientAccount, {
-    fee: StellarSdk.BASE_FEE,
-    networkPassphrase: StellarSdk.Networks.TESTNET,
-  })
-    .addOperation(
-      StellarSdk.Operation.createAccount({
-        destination: escrowPublicKey,
-        startingBalance: amountXLM,
-      })
-    )
-    .addMemo(StellarSdk.Memo.text('VaultLock Escrow'))
-    .setTimeout(180)
-    .build();
-
-  return transaction.toXDR();
-}
-
-// ─── Create Claimable Balance (Escrow → Freelancer) ─────
-export async function createClaimableBalance(
-  escrowSecretEncrypted: string,
-  recipientWallet: string,
-  amountXLM: number,
-  milestoneId: string
-) {
-  const StellarSdk = require('@stellar/stellar-sdk');
-  const server = new StellarSdk.Horizon.Server(HORIZON_URL);
-
-  const secretKey = decryptSecret(escrowSecretEncrypted);
-  const escrowKeypair = StellarSdk.Keypair.fromSecret(secretKey);
-  const escrowAccount = await server.loadAccount(escrowKeypair.publicKey());
-
-  const memoText = milestoneId.substring(0, 28);
-
-  const transaction = new StellarSdk.TransactionBuilder(escrowAccount, {
-    fee: StellarSdk.BASE_FEE,
-    networkPassphrase: StellarSdk.Networks.TESTNET,
-  })
-    .addOperation(
-      StellarSdk.Operation.createClaimableBalance({
-        asset: StellarSdk.Asset.native(),
-        amount: amountXLM.toString(),
-        claimants: [
-          new StellarSdk.Claimant(
-            recipientWallet,
-            StellarSdk.Claimant.predicateUnconditional()
-          ),
-        ],
-      })
-    )
-    .addMemo(StellarSdk.Memo.text(memoText))
-    .setTimeout(180)
-    .build();
-
-  transaction.sign(escrowKeypair);
-  const result = await server.submitTransaction(transaction);
-
-  // Extract balance ID from result
-  const balanceId = result.result_xdr
-    ? extractBalanceId(result)
-    : result.id || '';
-
-  return {
-    balanceId,
-    txHash: result.hash,
-  };
-}
-
-function extractBalanceId(result: any): string {
+export async function getFreighterNetwork(): Promise<string> {
   try {
-    // The balance ID is in the operation results
-    if (result.result_xdr) {
-      return result.result_xdr;
-    }
-    return '';
+    const details = await getNetworkDetails();
+    if (details.networkPassphrase === Networks.PUBLIC) return 'PUBLIC';
+    if (details.networkPassphrase === Networks.TESTNET) return 'TESTNET';
+    if (details.networkPassphrase === Networks.FUTURENET) return 'FUTURENET';
+    return 'UNKNOWN';
   } catch {
-    return '';
+    return 'UNKNOWN';
   }
 }
 
-// ─── Build Claim Balance Transaction (for Freighter) ────
-export async function claimBalance(
-  freelancerPublicKey: string,
-  balanceId: string
-) {
-  const StellarSdk = require('@stellar/stellar-sdk');
-  const server = new StellarSdk.Horizon.Server(HORIZON_URL);
-  const freelancerAccount = await server.loadAccount(freelancerPublicKey);
+// ── 2. WALLET CONNECT / DISCONNECT ───────────────────────────
 
-  const transaction = new StellarSdk.TransactionBuilder(freelancerAccount, {
-    fee: StellarSdk.BASE_FEE,
-    networkPassphrase: StellarSdk.Networks.TESTNET,
-  })
-    .addOperation(
-      StellarSdk.Operation.claimClaimableBalance({
-        balanceId,
-      })
-    )
-    .setTimeout(180)
-    .build();
+export async function connectFreighter(): Promise<{
+  publicKey: string
+  network: string
+}> {
+  const installed = await isFreighterInstalled();
+  if (!installed) throw new Error('Freighter not installed');
 
-  return transaction.toXDR();
+  try {
+    const publicKey = await getPublicKey();
+    const network = await getFreighterNetwork();
+    if (network !== 'TESTNET') throw new Error('Please switch Freighter to Stellar Testnet');
+    return { publicKey, network };
+  } catch (error: any) {
+    if (error.message.includes('User rejected')) throw new Error('User rejected connection');
+    throw error;
+  }
 }
 
-// ─── Get Escrow Balance ─────────────────────────────────
-export async function getEscrowBalance(escrowPublicKey: string): Promise<number> {
+export function disconnectWallet(): { success: boolean } {
+  return { success: true };
+}
+
+// ── 3. BALANCE HANDLING ───────────────────────────────────────
+
+export async function getXLMBalance(address: string): Promise<number> {
   try {
-    const response = await fetch(`${HORIZON_URL}/accounts/${escrowPublicKey}`);
-    if (!response.ok) return 0;
-    const data = await response.json();
-    const nativeBalance = data.balances?.find(
-      (b: any) => b.asset_type === 'native'
-    );
+    const account = await server.loadAccount(address);
+    const nativeBalance = account.balances.find(b => b.asset_type === 'native');
     return nativeBalance ? parseFloat(nativeBalance.balance) : 0;
   } catch {
     return 0;
   }
 }
 
-// ─── Get Claimable Balances ─────────────────────────────
-export async function getClaimableBalances(recipientWallet: string) {
+export async function fundWithFriendbot(address: string): Promise<{
+  success: boolean,
+  message: string
+}> {
   try {
-    const response = await fetch(
-      `${HORIZON_URL}/claimable_balances?claimant=${recipientWallet}&limit=50`
-    );
-    if (!response.ok) return [];
+    const response = await fetch(`https://friendbot.stellar.org?addr=${address}`);
+    if (response.ok) return { success: true, message: 'Wallet funded with 10,000 XLM' };
     const data = await response.json();
-    return (data._embedded?.records || []).map((record: any) => ({
-      balanceId: record.id,
-      amount: record.amount,
-      sponsor: record.sponsor,
-      lastModifiedLedger: record.last_modified_ledger,
-      asset: record.asset,
-    }));
+    return { success: false, message: data.detail || 'Friendbot funding failed' };
   } catch {
-    return [];
+    return { success: false, message: 'Network error funding wallet' };
   }
 }
 
-// ─── Get Transaction History ────────────────────────────
-export async function getTransactionHistory(walletAddress: string) {
+// ── 4. TRANSACTION FLOW ───────────────────────────────────────
+
+export type SendXLMResult = 
+  | {
+      success: true
+      txHash: string
+      ledger: number
+      timestamp: string
+      amount: string
+      destination: string
+      fee: string
+    }
+  | {
+      success: false
+      error: string
+      code?: string
+    }
+
+export async function sendXLM(params: {
+  sourcePublicKey: string
+  destinationAddress: string
+  amountXLM: string
+  memo?: string
+}): Promise<SendXLMResult> {
   try {
-    const response = await fetch(
-      `${HORIZON_URL}/accounts/${walletAddress}/payments?order=desc&limit=20`
+    const sourceAccount = await server.loadAccount(params.sourcePublicKey);
+    const builder = new TransactionBuilder(sourceAccount, {
+      fee: BASE_FEE,
+      networkPassphrase: NETWORK_PASSPHRASE,
+    }).addOperation(
+      Operation.payment({
+        destination: params.destinationAddress,
+        asset: Asset.native(),
+        amount: params.amountXLM,
+      })
     );
-    if (!response.ok) return [];
-    const data = await response.json();
-    return (data._embedded?.records || []).map((record: any) => ({
-      id: record.id,
-      type: record.type,
-      amount: record.amount,
-      from: record.from,
-      to: record.to,
-      createdAt: record.created_at,
-      txHash: record.transaction_hash,
-      asset: record.asset_type === 'native' ? 'XLM' : record.asset_code,
-    }));
-  } catch {
-    return [];
+
+    if (params.memo) builder.addMemo(Memo.text(params.memo));
+    const transaction = builder.setTimeout(30).build();
+    const xdr = transaction.toXDR();
+    const signedXdr = await signTransaction(xdr, { network: 'TESTNET' });
+    const result = await server.submitTransaction(signedXdr);
+
+    return {
+      success: true,
+      txHash: result.hash,
+      ledger: result.ledger,
+      timestamp: new Date().toISOString(),
+      amount: params.amountXLM,
+      destination: params.destinationAddress,
+      fee: (parseFloat(BASE_FEE) / 10000000).toString(),
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      error: parseStellarError(error),
+      code: error.response?.data?.extras?.result_codes?.transaction || 'error',
+    };
   }
 }
 
-// ─── Fund with Friendbot (Testnet) ──────────────────────
-export async function fundWithFriendbot(publicKey: string) {
+export function validateStellarAddress(address: string): {
+  valid: boolean,
+  error?: string
+} {
   try {
-    const response = await fetch(
-      `https://friendbot.stellar.org?addr=${encodeURIComponent(publicKey)}`
-    );
-    return { success: response.ok };
+    Keypair.fromPublicKey(address);
+    return { valid: true };
   } catch {
-    return { success: false };
+    return { valid: false, error: 'Invalid Stellar address format' };
   }
+}
+
+export async function getTransactionByHash(txHash: string): Promise<{
+  txHash: string
+  ledger: number
+  createdAt: string
+  sourceAccount: string
+  fee: string
+  memo?: string
+  successful: boolean
+} | null> {
+  try {
+    const tx = await server.transactions().transaction(txHash).call();
+    return {
+      txHash: tx.hash,
+      ledger: tx.ledger_attr,
+      createdAt: tx.created_at,
+      sourceAccount: tx.source_account,
+      fee: tx.fee_value,
+      memo: tx.memo,
+      successful: tx.successful,
+    };
+  } catch {
+    return null;
+  }
+}
+
+export function parseStellarError(error: any): string {
+  const resultCodes = error.response?.data?.extras?.result_codes;
+  const mainCode = resultCodes?.transaction;
+  const opCode = resultCodes?.operations?.[0];
+
+  const errorMap: Record<string, string> = {
+    'op_underfunded': 'Insufficient XLM balance for this transaction',
+    'op_no_destination': 'Destination wallet does not exist on Stellar yet',
+    'tx_bad_seq': 'Transaction sequence error. Please try again.',
+    'op_low_reserve': 'Your wallet needs more XLM to meet the minimum reserve',
+    'tx_insufficient_fee': 'Transaction fee too low. Please try again.',
+  }
+
+  if (error.message === 'User rejected') return 'Transaction rejected in Freighter';
+  return errorMap[opCode] || errorMap[mainCode] || error.message || 'An unexpected Stellar error occurred';
 }
