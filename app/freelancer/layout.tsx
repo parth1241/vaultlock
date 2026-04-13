@@ -1,14 +1,18 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
 import { usePathname, useRouter } from 'next/navigation';
-import { Shield, LayoutDashboard, FileText, DollarSign, UserCircle, LogOut } from 'lucide-react';
+import { Shield, LayoutDashboard, FileText, DollarSign, UserCircle, LogOut, AlertTriangle, Menu, X } from 'lucide-react';
 import { DashboardSkeleton } from '@/components/shared/DashboardSkeleton';
 import { SessionWatcher } from '@/components/shared/SessionWatcher';
+import WalletStatusBar from '@/components/shared/WalletStatusBar';
+import Level1StatusBadge from '@/components/shared/Level1StatusBadge';
+import { MobilePreviewBanner } from '@/components/shared/MobilePreviewBanner';
 import { cn } from '@/lib/utils';
 import { formatDistanceToNow } from 'date-fns';
+import { Networks } from '@stellar/stellar-sdk';
 
 const navItems = [
   { label: 'Dashboard', href: '/freelancer/dashboard', icon: LayoutDashboard, color: 'indigo' },
@@ -28,6 +32,28 @@ export default function FreelancerLayout({ children }: { children: React.ReactNo
   const { data: session, status } = useSession();
   const pathname = usePathname();
   const router = useRouter();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [wrongNetwork, setWrongNetwork] = useState(false);
+
+  useEffect(() => {
+    async function checkNetwork() {
+      if (typeof window === 'undefined') return
+      try {
+        const { getNetworkDetails } = await import('@stellar/freighter-api')
+        const details = await getNetworkDetails()
+        if (details.networkPassphrase !== Networks.TESTNET) {
+          setWrongNetwork(true)
+        } else {
+          setWrongNetwork(false)
+        }
+      } catch {
+        // Freighter not installed
+      }
+    }
+    checkNetwork()
+    const interval = setInterval(checkNetwork, 10000)
+    return () => clearInterval(interval)
+  }, [])
 
   if (status === 'loading') {
     return <DashboardSkeleton />;
@@ -47,11 +73,23 @@ export default function FreelancerLayout({ children }: { children: React.ReactNo
   const avatarColor = session.user.avatarColor || '#6366f1';
 
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="flex h-screen overflow-hidden relative">
       <SessionWatcher />
 
+      {/* Mobile Sidebar Overlay */}
+      {sidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[45] lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <aside className="w-64 bg-[#120f00] border-r border-indigo-900/10 flex flex-col shrink-0">
+      <aside className={cn(
+        "w-64 bg-[#120f00] border-r border-indigo-900/10 flex flex-col shrink-0 transition-transform duration-300 z-50 overflow-y-auto",
+        "fixed inset-y-0 left-0 lg:static lg:translate-x-0",
+        sidebarOpen ? "translate-x-0" : "-translate-x-full"
+      )}>
         {/* Logo */}
         <div className="p-6 pb-4">
           <Link href="/" className="flex items-center space-x-2 group">
@@ -101,8 +139,8 @@ export default function FreelancerLayout({ children }: { children: React.ReactNo
               <p className="text-xs text-slate-500 truncate">{session.user.email}</p>
             </div>
           </div>
-          <p className="text-xs text-slate-600 mb-3">
-            Last login {formatDistanceToNow(new Date(), { addSuffix: true })}
+          <p className="text-xs text-slate-600 mb-3 font-bold uppercase tracking-widest opacity-50">
+            Node: {Networks.TESTNET.slice(0, 10)}...
           </p>
           <button
             onClick={() => signOut({ callbackUrl: '/login' })}
@@ -115,9 +153,29 @@ export default function FreelancerLayout({ children }: { children: React.ReactNo
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-y-auto bg-[#0a0800] p-8">
-        {children}
-      </main>
+      <div className="flex-1 flex flex-col overflow-hidden w-full relative">
+        {/* Mobile Toggle */}
+        <button 
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          className="fixed top-20 left-4 z-[60] bg-indigo-600 text-white p-2 rounded-lg lg:hidden shadow-lg border border-indigo-400/50"
+        >
+          {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+        {wrongNetwork && (
+          <div className="w-full bg-rose-600 text-white py-2 px-4 flex items-center justify-center gap-2 z-[100] animate-in slide-in-from-top duration-300">
+            <AlertTriangle className="h-4 w-4" />
+            <span className="text-xs font-bold uppercase tracking-wider text-center">
+              Wrong Network: Switch Freighter to Stellar Testnet to use VaultLock
+            </span>
+          </div>
+        )}
+        <WalletStatusBar />
+        <main className="flex-1 overflow-y-auto bg-[#0a0800] p-4 sm:p-8">
+          {children}
+        </main>
+      </div>
+      <Level1StatusBadge />
+      <MobilePreviewBanner />
     </div>
   );
 }

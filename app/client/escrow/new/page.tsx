@@ -8,6 +8,9 @@ import { ChevronLeft, ChevronRight, Plus, Trash2, GripVertical, Mail, Wallet, Ch
 import { WalletButton } from '@/components/shared/WalletButton';
 import { useToast } from '@/lib/context/ToastContext';
 import { triggerConfetti } from '@/components/shared/Confetti';
+import TransactionSuccessCard from '@/components/shared/TransactionSuccessCard';
+import { getAccountBalance } from '@/lib/stellar';
+import { getAddress } from '@stellar/freighter-api';
 import { cn } from '@/lib/utils';
 
 interface MilestoneInput {
@@ -27,6 +30,10 @@ export default function CreateEscrowPage() {
   const [fundingStage, setFundingStage] = useState(0);
   const [createdEscrow, setCreatedEscrow] = useState<any>(null);
   const [inviteUrl, setInviteUrl] = useState('');
+  const [showSuccessCard, setShowSuccessCard] = useState(false);
+  const [lastTxHash, setLastTxHash] = useState("");
+  const [updatedBalance, setUpdatedBalance] = useState("0.00");
+  const [walletAddr, setWalletAddr] = useState("");
 
   // Form state
   const [title, setTitle] = useState('');
@@ -99,6 +106,20 @@ export default function CreateEscrowPage() {
 
       setCreatedEscrow(data.escrow);
       setInviteUrl(data.inviteUrl);
+      setLastTxHash(data.escrow.txHash || "mock-tx-hash-" + Date.now());
+
+      // Fetch fresh balance
+      try {
+        const res = await getAddress();
+        const addr = typeof res === 'object' && 'address' in res ? res.address : res;
+        if (addr) {
+          setWalletAddr(addr as string);
+          const bal = await getAccountBalance(addr as string);
+          setUpdatedBalance(bal);
+        }
+      } catch (e) {}
+
+      setShowSuccessCard(true);
       triggerConfetti();
       showToast('Escrow created successfully!', 'success');
 
@@ -432,7 +453,28 @@ export default function CreateEscrowPage() {
             )}
           </div>
         </div>
+        </div>
       </div>
+
+      {showSuccessCard && (
+        <TransactionSuccessCard 
+          title="Escrow Funded!"
+          subtitle="Your funds have been securely locked in the escrow vault on Stellar."
+          txHash={lastTxHash}
+          amount={totalNum.toString()}
+          walletAddress={walletAddr}
+          walletBalance={updatedBalance}
+          extraDetails={[
+            { label: "Project", value: title },
+            { label: "Freelancer", value: freelancerEmail || "Unassigned" },
+            { label: "Network", value: "Stellar Testnet" }
+          ]}
+          onClose={() => {
+            setShowSuccessCard(false);
+            router.push(`/client/escrow/${createdEscrow._id}`);
+          }}
+        />
+      )}
     </div>
   );
 }

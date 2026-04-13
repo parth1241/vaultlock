@@ -252,7 +252,7 @@ export default function LandingPage() {
             <span className="text-xs text-amber-400 font-medium">Built on Stellar Blockchain</span>
           </div>
 
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-slate-100 mb-6 min-h-[80px] md:min-h-[100px]">
+          <h1 className="text-3xl sm:text-5xl lg:text-7xl font-bold text-slate-100 mb-6 min-h-[60px] md:min-h-[100px]">
             {headline}
             <span className="animate-pulse text-amber-500">|</span>
           </h1>

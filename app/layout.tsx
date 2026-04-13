@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/shared/Providers";
+import WalletStatusBar from "@/components/shared/WalletStatusBar";
 import { cn } from "@/lib/utils";
 
 const inter = Inter({
@@ -34,6 +35,7 @@ export default function RootLayout({
         )}
       >
         <Providers>
+          <WalletStatusBar />
           <div className="ambient-blobs">
             <div className="blob-amber" />
             <div className="blob-indigo" />

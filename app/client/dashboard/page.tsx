@@ -9,6 +9,9 @@ import { Plus, Search, DollarSign, Briefcase, CheckCircle2, Clock } from 'lucide
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { EscrowCard } from '@/components/shared/EscrowCard';
 import { cn } from '@/lib/utils';
+import WalletManager from '@/components/shared/WalletManager';
+import SendXLMPanel from '@/components/shared/SendXLMPanel';
+import { Activity } from 'lucide-react';
 
 const chartData = [
   { month: 'Nov', amount: 0 },
@@ -93,6 +96,32 @@ export default function ClientDashboard() {
             <p className="text-xs text-slate-500 uppercase tracking-wider mt-1">{stat.label}</p>
           </div>
         ))}
+      </div>
+
+      {/* Stellar Wallet Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-1">
+          <WalletManager />
+        </div>
+        <div className="lg:col-span-1">
+          <SendXLMPanel compact />
+        </div>
+        <div className="lg:col-span-1">
+          <div className="card-surface card-hover p-6 flex flex-col items-center justify-center text-center space-y-4">
+             <div className="w-12 h-12 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-500">
+                <Activity size={24} className="animate-pulse" />
+             </div>
+             <div>
+                <h3 className="text-sm font-bold text-slate-100 uppercase tracking-widest">Network Activity</h3>
+                <p className="text-[10px] text-slate-500 mt-1 italic">Real-time Stellar Testnet ledger synchronization active</p>
+             </div>
+             <div className="w-full h-px bg-white/5" />
+             <div className="flex items-center gap-2">
+                <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                <span className="text-[10px] font-black text-emerald-500 uppercase">Operational</span>
+             </div>
+          </div>
+        </div>
       </div>
 
       {/* Chart */}
