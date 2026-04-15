@@ -1,6 +1,8 @@
 'use client'
-
+ 
 import React, { useState, useEffect } from 'react'
+
+import { useStellarWallet } from '@/lib/context/StellarWalletContext'
 import { 
   validateStellarAddress, 
   sendXLM, 
@@ -32,23 +34,21 @@ interface SendXLMPanelProps {
 }
 
 export default function SendXLMPanel({ defaultMemo = '', onSuccess, compact = false }: SendXLMPanelProps) {
+  const { address, kit } = useStellarWallet()
   const [step, setStep] = useState<'FORM' | 'BUILDING' | 'SIGNING' | 'BROADCASTING' | 'SUCCESS' | 'FAILURE'>('FORM')
   const [destination, setDestination] = useState('')
   const [amount, setAmount] = useState('')
   const [memo, setMemo] = useState(defaultMemo)
   const [balance, setBalance] = useState<number>(0)
-  const [address, setAddress] = useState('')
   const [errors, setErrors] = useState<{ destination?: string; amount?: string }>({})
   const [txResult, setTxResult] = useState<SendXLMResult | null>(null)
   const [copied, setCopied] = useState(false)
 
   useEffect(() => {
-    const savedAddress = localStorage.getItem('stellar_address')
-    if (savedAddress) {
-      setAddress(savedAddress)
-      getXLMBalance(savedAddress).then(setBalance)
+    if (address) {
+      getXLMBalance(address).then(setBalance)
     }
-  }, [])
+  }, [address])
 
   const validate = () => {
     const newErrors: { destination?: string; amount?: string } = {}
@@ -74,9 +74,10 @@ export default function SendXLMPanel({ defaultMemo = '', onSuccess, compact = fa
       setStep('SIGNING')
       try {
         const result = await sendXLM({
-          sourcePublicKey: address,
+          sourcePublicKey: address!,
           destinationAddress: destination,
           amountXLM: amount,
+          kit: kit,
           memo: memo
         })
 
@@ -135,7 +136,7 @@ export default function SendXLMPanel({ defaultMemo = '', onSuccess, compact = fa
               {step === 'BROADCASTING' && 'Syncing Ledger...'}
             </h3>
             <p className="text-xs text-muted-foreground/60 font-bold uppercase tracking-widest leading-relaxed">
-              {step === 'SIGNING' && 'Please approve in Freighter wallet'}
+              {step === 'SIGNING' && 'Please approve in your wallet'}
               {step === 'BROADCASTING' && 'Broadcasting to Stellar Testnet'}
             </p>
           </div>

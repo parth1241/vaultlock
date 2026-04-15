@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { isConnected, getAddress } from '@stellar/freighter-api';
-import { signIn } from 'next-auth/react';
-import { Wallet, CheckCircle2, Copy, LogOut, ExternalLink } from 'lucide-react';
+import { useStellarWallet } from '@/lib/context/StellarWalletContext';
+import { WalletSelector } from './WalletSelector';
+import { Wallet, CheckCircle2, Copy, LogOut, ExternalLink, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface WalletButtonProps {
@@ -12,16 +12,11 @@ interface WalletButtonProps {
 }
 
 export function WalletButton({ onWalletConnect, enableLogin = false }: WalletButtonProps) {
-  const [address, setAddress] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const { address, disconnect, isConnected } = useStellarWallet();
+  const [showSelector, setShowSelector] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [error, setError] = useState('');
   const dropdownRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    checkConnection();
-  }, []);
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -33,75 +28,6 @@ export function WalletButton({ onWalletConnect, enableLogin = false }: WalletBut
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const checkConnection = async () => {
-    try {
-      const connected = await isConnected();
-      if (connected) {
-        const addr = await getAddress();
-        if (typeof addr === 'string') {
-          setAddress(addr);
-        } else if (addr && typeof addr === 'object' && 'address' in addr) {
-          setAddress((addr as any).address);
-        }
-      }
-    } catch (e) {
-      // Freighter not installed or not connected
-    }
-  };
-
-  const connectWallet = async () => {
-    setLoading(true);
-    setError('');
-
-    try {
-      const connected = await isConnected();
-      if (!connected) {
-        window.open('https://freighter.app', '_blank');
-        setError('Install Freighter wallet');
-        setLoading(false);
-        return;
-      }
-
-      const addrResult = await getAddress();
-      let addr: string;
-      if (typeof addrResult === 'string') {
-        addr = addrResult;
-      } else if (addrResult && typeof addrResult === 'object' && 'address' in addrResult) {
-        addr = (addrResult as any).address;
-      } else {
-        throw new Error('Could not get wallet address');
-      }
-
-      setAddress(addr);
-      onWalletConnect?.(addr);
-
-      if (enableLogin) {
-        // Try wallet login
-        const res = await fetch('/api/auth/wallet-login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ walletAddress: addr }),
-        });
-
-        if (res.ok) {
-          await signIn('credentials', {
-            walletAddress: addr,
-            isWalletLogin: 'true',
-            redirect: false,
-          });
-          window.location.href = '/client/dashboard';
-        } else {
-          const data = await res.json();
-          setError(data.error || 'No account found for this wallet. Sign up first.');
-        }
-      }
-    } catch (e: any) {
-      setError(e.message || 'Failed to connect wallet');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const copyAddress = () => {
     if (address) {
       navigator.clipboard.writeText(address);
@@ -110,19 +36,10 @@ export function WalletButton({ onWalletConnect, enableLogin = false }: WalletBut
     }
   };
 
-  const disconnect = () => {
-    setAddress(null);
+  const handleDisconnect = () => {
+    disconnect();
     setShowDropdown(false);
   };
-
-  if (loading) {
-    return (
-      <button className="flex items-center space-x-2 px-4 py-2 rounded-lg border border-indigo-500/30 bg-indigo-500/5 text-indigo-400">
-        <div className="spin-ring" />
-        <span className="text-sm">Connecting...</span>
-      </button>
-    );
-  }
 
   if (address) {
     return (
@@ -153,7 +70,7 @@ export function WalletButton({ onWalletConnect, enableLogin = false }: WalletBut
                 <span>{copied ? 'Copied!' : 'Copy'}</span>
               </button>
               <button
-                onClick={disconnect}
+                onClick={handleDisconnect}
                 className="flex-1 flex items-center justify-center space-x-1 px-3 py-2 rounded-lg bg-rose-500/10 text-rose-400 text-xs hover:bg-rose-500/20 transition-colors"
               >
                 <LogOut size={12} />
@@ -169,15 +86,18 @@ export function WalletButton({ onWalletConnect, enableLogin = false }: WalletBut
   return (
     <div className="flex flex-col items-center">
       <button
-        onClick={connectWallet}
-        className="flex items-center space-x-2 px-4 py-2 rounded-lg border border-indigo-500/30 text-indigo-400 hover:bg-indigo-500/10 transition-all"
+        onClick={() => setShowSelector(true)}
+        className="flex items-center space-x-2 px-4 py-2 rounded-lg border border-indigo-500/30 text-indigo-400 hover:bg-indigo-500/10 transition-all font-bold tracking-tight"
       >
         <Wallet size={16} />
-        <span className="text-sm font-medium">Connect Wallet</span>
+        <span className="text-sm">Connect Wallet</span>
       </button>
-      {error && (
-        <p className="text-xs text-rose-400 mt-2 text-center max-w-[200px]">{error}</p>
-      )}
+      
+      <WalletSelector 
+        isOpen={showSelector} 
+        onClose={() => setShowSelector(false)} 
+        onConnect={(addr) => onWalletConnect?.(addr)}
+      />
     </div>
   );
 }

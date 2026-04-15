@@ -2,13 +2,16 @@
 
 import { SessionProvider } from 'next-auth/react';
 import { ToastProvider } from '@/lib/context/ToastContext';
+import { StellarWalletProvider } from '@/lib/context/StellarWalletContext';
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <SessionProvider refetchInterval={300}>
-      <ToastProvider>
-        {children}
-      </ToastProvider>
+      <StellarWalletProvider>
+        <ToastProvider>
+          {children}
+        </ToastProvider>
+      </StellarWalletProvider>
     </SessionProvider>
   );
 }

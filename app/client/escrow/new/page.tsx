@@ -10,7 +10,7 @@ import { useToast } from '@/lib/context/ToastContext';
 import { triggerConfetti } from '@/components/shared/Confetti';
 import TransactionSuccessCard from '@/components/shared/TransactionSuccessCard';
 import { getAccountBalance } from '@/lib/stellar';
-import { getAddress, signTransaction } from '@stellar/freighter-api';
+import { useStellarWallet } from '@/lib/context/StellarWalletContext';
 import { Networks } from '@stellar/stellar-sdk';
 import { cn } from '@/lib/utils';
 
@@ -34,6 +34,7 @@ export default function CreateEscrowPage() {
   const [showSuccessCard, setShowSuccessCard] = useState(false);
   const [lastTxHash, setLastTxHash] = useState("");
   const [updatedBalance, setUpdatedBalance] = useState("0.00");
+  const { address, kit } = useStellarWallet();
   const [walletAddr, setWalletAddr] = useState("");
 
   // Form state
@@ -110,15 +111,13 @@ export default function CreateEscrowPage() {
       setLastTxHash(data.escrow.txHash || "mock-tx-hash-" + Date.now());
 
       // Fetch fresh balance
-      try {
-        const res = await getAddress();
-        const addr = typeof res === 'object' && 'address' in res ? res.address : res;
-        if (addr) {
-          setWalletAddr(addr as string);
-          const bal = await getAccountBalance(addr as string);
+      if (address) {
+        try {
+          setWalletAddr(address);
+          const bal = await getAccountBalance(address);
           setUpdatedBalance(bal.toString());
-        }
-      } catch (e) {}
+        } catch (e) {}
+      }
 
       // Stage 4: Signing and Submitting (Implementation placeholder)
       // For real implementation, we would call an API that uses the signed XDR

@@ -1,13 +1,12 @@
 'use client'
-
+ 
 import React, { useState, useEffect, useCallback } from 'react'
+
+import { useStellarWallet } from '@/lib/context/StellarWalletContext'
+import { WalletSelector } from './WalletSelector'
 import { 
-  isFreighterInstalled, 
-  connectFreighter, 
-  disconnectWallet, 
   getXLMBalance, 
   fundWithFriendbot,
-  getFreighterNetwork 
 } from '@/lib/stellar'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
@@ -16,85 +15,37 @@ import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 
 export default function WalletManager() {
-  const [status, setStatus] = useState<'LOADING' | 'NOT_INSTALLED' | 'WRONG_NETWORK' | 'DISCONNECTED' | 'CONNECTING' | 'CONNECTED'>('LOADING')
-  const [address, setAddress] = useState('')
+  const { address, walletType, disconnect, isConnected } = useStellarWallet()
   const [balance, setBalance] = useState<number>(0)
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [isFunding, setIsFunding] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [copied, setCopied] = useState(false)
+  const [showSelector, setShowSelector] = useState(false)
 
-  const checkStatus = useCallback(async () => {
-    try {
-      const installed = await isFreighterInstalled()
-      if (!installed) {
-        setStatus('NOT_INSTALLED')
-        return
-      }
-
-      const network = await getFreighterNetwork()
-      if (network !== 'TESTNET' && network !== 'UNKNOWN') {
-        setStatus('WRONG_NETWORK')
-        return
-      }
-
-      const savedAddress = localStorage.getItem('stellar_address')
-      if (savedAddress) {
-        setAddress(savedAddress)
-        const bal = await getXLMBalance(savedAddress)
-        setBalance(bal)
-        setStatus('CONNECTED')
-      } else {
-        setStatus('DISCONNECTED')
-      }
-    } catch (err) {
-      setStatus('DISCONNECTED')
+  const handleRefresh = useCallback(async () => {
+    if (address) {
+      setIsRefreshing(true)
+      const bal = await getXLMBalance(address)
+      setBalance(bal)
+      setTimeout(() => setIsRefreshing(false), 1000)
     }
-  }, [])
+  }, [address])
 
   useEffect(() => {
-    checkStatus()
-  }, [checkStatus])
+    handleRefresh()
+  }, [handleRefresh])
 
   useEffect(() => {
-    if (status === 'CONNECTED' && address) {
-      const interval = setInterval(async () => {
-        const bal = await getXLMBalance(address)
-        setBalance(bal)
-      }, 60000)
+    if (isConnected && address) {
+      const interval = setInterval(handleRefresh, 60000)
       return () => clearInterval(interval)
     }
-  }, [status, address])
-
-  const handleConnect = async () => {
-    setStatus('CONNECTING')
-    setError(null)
-    try {
-      const { publicKey } = await connectFreighter()
-      setAddress(publicKey)
-      localStorage.setItem('stellar_address', publicKey)
-      const bal = await getXLMBalance(publicKey)
-      setBalance(bal)
-      setStatus('CONNECTED')
-    } catch (err: any) {
-      setError(err.message)
-      setStatus('DISCONNECTED')
-    }
-  }
+  }, [isConnected, address, handleRefresh])
 
   const handleDisconnect = () => {
-    disconnectWallet()
-    localStorage.removeItem('stellar_address')
-    setAddress('')
+    disconnect()
     setBalance(0)
-    setStatus('DISCONNECTED')
-  }
-
-  const handleRefresh = async () => {
-    setIsRefreshing(true)
-    const bal = await getXLMBalance(address)
-    setBalance(bal)
-    setTimeout(() => setIsRefreshing(false), 1000)
   }
 
   const handleFund = async () => {
@@ -114,55 +65,7 @@ export default function WalletManager() {
     }
   }
 
-  if (status === 'LOADING') {
-    return (
-      <Card className="border-blue-500/20 bg-black/40 backdrop-blur-md">
-        <CardContent className="flex items-center justify-center p-12">
-          <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
-        </CardContent>
-      </Card>
-    )
-  }
-
-  if (status === 'NOT_INSTALLED') {
-    return (
-      <Card className="border-indigo-500/30 bg-indigo-500/5">
-        <CardHeader>
-          <CardTitle className="text-lg text-indigo-500 flex items-center gap-2">
-            <AlertTriangle className="h-5 w-5" />
-            Freighter Missing
-          </CardTitle>
-          <CardDescription>Install the Freighter extension to interact with Stellar.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Button className="w-full bg-indigo-500" onClick={() => window.open('https://freighter.app', '_blank')}>
-            Get Freighter
-          </Button>
-        </CardContent>
-      </Card>
-    )
-  }
-
-  if (status === 'WRONG_NETWORK') {
-    return (
-      <Card className="border-rose-500/30 bg-rose-500/5">
-        <CardHeader>
-          <CardTitle className="text-lg text-rose-500 flex items-center gap-2">
-            <AlertTriangle className="h-5 w-5" />
-            Switch to Testnet
-          </CardTitle>
-          <CardDescription>VaultLock operations are currently restricted to Stellar Testnet.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Button className="w-full bg-rose-500" onClick={checkStatus}>
-            Check Again
-          </Button>
-        </CardContent>
-      </Card>
-    )
-  }
-
-  if (status === 'DISCONNECTED' || status === 'CONNECTING') {
+  if (!isConnected) {
     return (
       <Card className="border-blue-500/30 bg-black/40 backdrop-blur-md">
         <CardHeader className="text-center">
@@ -173,10 +76,11 @@ export default function WalletManager() {
           <CardDescription>Securely link your Stellar wallet</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <Button className="w-full h-12 bg-blue-600 hover:bg-blue-500 font-bold" disabled={status === 'CONNECTING'} onClick={handleConnect}>
-            {status === 'CONNECTING' ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Wallet className="h-4 w-4 mr-2" />}
-            {status === 'CONNECTING' ? 'Connecting...' : 'Connect Wallet'}
+          <Button className="w-full h-12 bg-blue-600 hover:bg-blue-500 font-bold" onClick={() => setShowSelector(true)}>
+            <Wallet className="h-4 w-4 mr-2" />
+            Connect Wallet
           </Button>
+          <WalletSelector isOpen={showSelector} onClose={() => setShowSelector(false)} />
           {error && <p className="text-xs text-rose-500 text-center font-bold italic">{error}</p>}
         </CardContent>
       </Card>
@@ -188,7 +92,9 @@ export default function WalletManager() {
       <div className="bg-blue-600/10 px-6 py-3 flex items-center justify-between border-b border-blue-500/20">
         <div className="flex items-center gap-2">
           <div className="h-2 w-2 rounded-full bg-indigo-500 animate-pulse" />
-          <span className="text-[10px] font-black uppercase tracking-widest text-blue-400">Vault Authenticated</span>
+          <span className="text-[10px] font-black uppercase tracking-widest text-blue-400">
+            {walletType || 'Vault'} Authenticated
+          </span>
         </div>
         <Badge variant="outline" className="text-[8px] font-black border-blue-500/30 text-blue-400 bg-blue-500/5">TESTNET</Badge>
       </div>

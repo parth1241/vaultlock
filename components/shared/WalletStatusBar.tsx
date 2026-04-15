@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useCallback } from 'react'
+import { useStellarWallet } from '@/lib/context/StellarWalletContext'
 import { getXLMBalance } from '@/lib/stellar'
 import { 
   RefreshCw, 
@@ -20,29 +21,24 @@ import SendXLMPanel from './SendXLMPanel'
 import { Button } from '@/components/ui/button'
 
 export default function WalletStatusBar() {
-  const [address, setAddress] = useState<string | null>(null)
+  const { address, walletType } = useStellarWallet()
   const [balance, setBalance] = useState<number | null>(null)
   const [loading, setLoading] = useState(false)
   const [copied, setCopied] = useState(false)
 
   const fetchWalletData = useCallback(async () => {
-    const savedAddress = localStorage.getItem('stellar_address')
-    if (!savedAddress) {
-      setAddress(null)
-      return
-    }
+    if (!address) return
     
     setLoading(true)
-    setAddress(savedAddress)
     try {
-      const bal = await getXLMBalance(savedAddress)
+      const bal = await getXLMBalance(address)
       setBalance(bal)
     } catch (err) {
       console.error("Failed to fetch balance", err)
     } finally {
       setTimeout(() => setLoading(false), 500)
     }
-  }, [])
+  }, [address])
 
   useEffect(() => {
     fetchWalletData()
@@ -85,7 +81,7 @@ export default function WalletStatusBar() {
           <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.8)]" />
           <div className="flex flex-col">
             <span className="text-[10px] uppercase font-black tracking-widest text-white leading-none mb-1">
-              Testnet Connected
+              {(walletType?.toUpperCase()) || 'Wallet'} Connected
             </span>
             <span className="font-mono text-[11px] text-blue-400 font-bold leading-none">
               {address.slice(0, 6)}...{address.slice(-6)}

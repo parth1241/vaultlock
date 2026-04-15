@@ -10,10 +10,8 @@ import {
   Claimant
 } from '@stellar/stellar-sdk'
 import { 
-  isConnected, 
-  getAddress, 
-  signTransaction 
-} from '@stellar/freighter-api'
+  StellarWalletsKit,
+} from '@creit.tech/stellar-wallets-kit'
 
 const HORIZON_URL = process.env.NEXT_PUBLIC_STELLAR_HORIZON 
   || 'https://horizon-testnet.stellar.org'
@@ -22,22 +20,7 @@ export const server = new Horizon.Server(HORIZON_URL)
 
 // ── 1. WALLET SETUP ──────────────────────────────────────────
 
-export async function isFreighterInstalled(): Promise<boolean> {
-  const result = await isConnected();
-  return !result.error && result.isConnected;
-}
-
-export async function isFreighterConnected(): Promise<boolean> {
-  const result = await isConnected();
-  return !result.error && result.isConnected;
-}
-
-// Helper for network check
-export async function getFreighterNetwork(): Promise<string> {
-  // Freighter v6+ manages network internally. 
-  // We return TESTNET as it is the target for this portfolio.
-  return 'TESTNET';
-}
+// ── 1. HELPERS ──────────────────────────────────────────
 
 export function generateCollectorKeypair() {
   const kp = Keypair.random();
@@ -115,22 +98,7 @@ export async function getAccountBalance(address: string) {
 
 // ── 2. WALLET CONNECT / DISCONNECT ───────────────────────────
 
-export async function connectFreighter(): Promise<{
-  publicKey: string
-  network: string
-}> {
-  const result = await isConnected();
-  if (result.error || !result.isConnected) throw new Error('Freighter not installed');
-
-  try {
-    const { address } = await getAddress();
-    if (!address) throw new Error('Could not get address from Freighter');
-    return { publicKey: address, network: 'TESTNET' };
-  } catch (error: any) {
-    if (error.message?.includes('User rejected')) throw new Error('User rejected connection');
-    throw error;
-  }
-}
+// Wallet connection logic is now handled in StellarWalletContext
 
 export function disconnectWallet(): { success: boolean } {
   return { success: true };
@@ -184,6 +152,7 @@ export async function sendXLM(params: {
   sourcePublicKey: string
   destinationAddress: string
   amountXLM: string
+  kit: StellarWalletsKit
   memo?: string
 }): Promise<SendXLMResult> {
   try {
@@ -202,8 +171,16 @@ export async function sendXLM(params: {
     if (params.memo) builder.addMemo(Memo.text(params.memo));
     const transaction = builder.setTimeout(30).build();
     const xdr = transaction.toXDR();
-    const signedTx = await signTransaction(xdr, { networkPassphrase: NETWORK_PASSPHRASE });
-    const result = await server.submitTransaction(TransactionBuilder.fromXDR(signedTx.signedTxXdr, NETWORK_PASSPHRASE));
+    
+    // Multi-wallet signing (v2 API)
+    const { signedTxXdr: signedTx } = await params.kit.signTransaction(xdr, {
+      networkPassphrase: NETWORK_PASSPHRASE,
+      address: params.sourcePublicKey
+    });
+    
+    const result = await server.submitTransaction(
+      TransactionBuilder.fromXDR(signedTx, NETWORK_PASSPHRASE)
+    );
 
     return {
       success: true,
@@ -273,6 +250,6 @@ export function parseStellarError(error: any): string {
     'tx_insufficient_fee': 'Transaction fee too low. Please try again.',
   }
 
-  if (error.message === 'User rejected') return 'Transaction rejected in Freighter';
+  if (error.message === 'User rejected') return 'Transaction rejected by user';
   return errorMap[opCode] || errorMap[mainCode] || error.message || 'An unexpected Stellar error occurred';
 }
