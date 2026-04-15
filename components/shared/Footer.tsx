@@ -28,13 +28,13 @@ const LinkedinIcon = ({ size = 20 }: { size?: number }) => (
 
 export function Footer() {
   return (
-    <footer className="bg-[#120f00] border-t border-amber-900/10 pt-20 pb-10">
+    <footer className="bg-[#120f00] border-t border-indigo-900/10 pt-20 pb-10">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           {/* Col 1: Brand */}
           <div className="col-span-1">
             <Link href="/" className="flex items-center space-x-2 mb-6 group">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center group-hover:rotate-12 transition-transform">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center group-hover:rotate-12 transition-transform">
                 <Shield className="text-black w-5 h-5" />
               </div>
               <span className="text-xl font-bold tracking-tight gradient-text">VaultLock</span>
@@ -43,7 +43,7 @@ export function Footer() {
               Trustless escrow on Stellar blockchain. Secure, transparent, and automated payments for global collaboration.
             </p>
             <div className="flex items-center space-x-3">
-              <Link href="#" className="w-9 h-9 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-400 hover:bg-amber-500/20 transition-all border border-amber-500/20">
+              <Link href="#" className="w-9 h-9 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-400 hover:bg-indigo-500/20 transition-all border border-indigo-500/20">
                 <TwitterIcon size={16} />
               </Link>
               <Link href="#" className="w-9 h-9 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-400 hover:bg-indigo-500/20 transition-all border border-indigo-500/20">
@@ -59,10 +59,10 @@ export function Footer() {
           <div>
             <h4 className="text-slate-100 font-semibold mb-6">Product</h4>
             <ul className="space-y-4 text-sm text-slate-400">
-              <li><Link href="/client/escrow/new" className="hover:text-amber-400 transition-colors">Create Escrow</Link></li>
-              <li><Link href="/freelancer/dashboard" className="hover:text-amber-400 transition-colors">Find Work</Link></li>
-              <li><Link href="/pricing" className="hover:text-amber-400 transition-colors">Pricing</Link></li>
-              <li><Link href="/blog" className="hover:text-amber-400 transition-colors">Blog</Link></li>
+              <li><Link href="/client/escrow/new" className="hover:text-indigo-400 transition-colors">Create Escrow</Link></li>
+              <li><Link href="/freelancer/dashboard" className="hover:text-indigo-400 transition-colors">Find Work</Link></li>
+              <li><Link href="/pricing" className="hover:text-indigo-400 transition-colors">Pricing</Link></li>
+              <li><Link href="/blog" className="hover:text-indigo-400 transition-colors">Blog</Link></li>
             </ul>
           </div>
 
@@ -70,9 +70,9 @@ export function Footer() {
           <div>
             <h4 className="text-slate-100 font-semibold mb-6">Company</h4>
             <ul className="space-y-4 text-sm text-slate-400">
-              <li><Link href="/about" className="hover:text-amber-400 transition-colors">About</Link></li>
-              <li><Link href="/about/team" className="hover:text-amber-400 transition-colors">Team</Link></li>
-              <li><Link href="/contact" className="hover:text-amber-400 transition-colors">Contact</Link></li>
+              <li><Link href="/about" className="hover:text-indigo-400 transition-colors">About</Link></li>
+              <li><Link href="/about/team" className="hover:text-indigo-400 transition-colors">Team</Link></li>
+              <li><Link href="/contact" className="hover:text-indigo-400 transition-colors">Contact</Link></li>
             </ul>
           </div>
 
@@ -80,14 +80,14 @@ export function Footer() {
           <div>
             <h4 className="text-slate-100 font-semibold mb-6">Legal</h4>
             <ul className="space-y-4 text-sm text-slate-400">
-              <li><Link href="/privacy" className="hover:text-amber-400 transition-colors">Privacy</Link></li>
-              <li><Link href="/terms" className="hover:text-amber-400 transition-colors">Terms</Link></li>
+              <li><Link href="/privacy" className="hover:text-indigo-400 transition-colors">Privacy</Link></li>
+              <li><Link href="/terms" className="hover:text-indigo-400 transition-colors">Terms</Link></li>
             </ul>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div className="pt-8 border-t border-amber-900/10 text-center">
+        <div className="pt-8 border-t border-indigo-900/10 text-center">
           <p className="text-xs text-slate-500">
             © {new Date().getFullYear()} VaultLock. All escrow transactions recorded on Stellar blockchain.
           </p>

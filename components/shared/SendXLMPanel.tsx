@@ -151,15 +151,15 @@ export default function SendXLMPanel({ defaultMemo = '', onSuccess, compact = fa
 
   if (step === 'SUCCESS' && txResult?.success) {
     return (
-      <Card className="border-emerald-500/20 bg-[#0a0f0d] shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300">
-        <div className="bg-emerald-500/5 px-6 py-4 flex items-center justify-center border-b border-emerald-500/10">
-          <CheckCircle2 className="h-8 w-8 text-emerald-500" />
+      <Card className="border-indigo-500/20 bg-[#0a0f0d] shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300">
+        <div className="bg-indigo-500/5 px-6 py-4 flex items-center justify-center border-b border-indigo-500/10">
+          <CheckCircle2 className="h-8 w-8 text-indigo-500" />
         </div>
         
         <CardContent className="p-8 space-y-8">
           <div className="text-center space-y-1">
             <h2 className="text-2xl font-black text-white italic tracking-tighter uppercase leading-none">Transaction Sealed</h2>
-            <p className="text-[10px] font-black text-emerald-500 uppercase tracking-[0.3em] font-mono">
+            <p className="text-[10px] font-black text-indigo-500 uppercase tracking-[0.3em] font-mono">
               Network Confirmation Received
             </p>
           </div>
@@ -186,7 +186,7 @@ export default function SendXLMPanel({ defaultMemo = '', onSuccess, compact = fa
                   setCopied(true)
                   setTimeout(() => setCopied(false), 2000)
                 }}>
-                   {copied ? <CheckCircle2 className="h-4 w-4 text-emerald-500" /> : <Copy className="h-4 w-4" />}
+                   {copied ? <CheckCircle2 className="h-4 w-4 text-indigo-500" /> : <Copy className="h-4 w-4" />}
                 </Button>
              </div>
           </div>

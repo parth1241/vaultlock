@@ -11,7 +11,7 @@ export default function TermsPage() {
           <h1 className="text-3xl font-bold text-slate-100 mb-2">Terms of Service</h1>
           <p className="text-sm text-slate-500 mb-8">Last updated: March 1, 2026</p>
 
-          <div className="prose prose-invert prose-amber max-w-none prose-headings:text-slate-100 prose-p:text-slate-400 prose-li:text-slate-400">
+          <div className="prose prose-invert prose-indigo max-w-none prose-headings:text-slate-100 prose-p:text-slate-400 prose-li:text-slate-400">
             <h2>1. Acceptance of Terms</h2>
             <p>
               By accessing or using VaultLock, you agree to be bound by these Terms of Service.

@@ -72,7 +72,7 @@ export default function HistoryPage() {
             className={cn(
               'px-4 py-2 rounded-lg text-sm font-medium transition-colors capitalize',
               tab === t
-                ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                ? 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20'
                 : 'text-slate-500 hover:text-slate-300'
             )}
           >
@@ -85,7 +85,7 @@ export default function HistoryPage() {
       <div className="card-surface overflow-hidden">
         {loading ? (
           <div className="p-6 space-y-4">
-            {[1, 2, 3].map((i) => <div key={i} className="h-12 bg-amber-500/5 rounded shimmer" />)}
+            {[1, 2, 3].map((i) => <div key={i} className="h-12 bg-indigo-500/5 rounded shimmer" />)}
           </div>
         ) : filtered.length === 0 ? (
           <div className="p-12 text-center">
@@ -96,7 +96,7 @@ export default function HistoryPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-amber-900/10">
+                <tr className="border-b border-indigo-900/10">
                   <th className="text-left py-3 px-6 text-xs text-slate-500 uppercase tracking-wider">Title</th>
                   <th className="text-left py-3 px-4 text-xs text-slate-500 uppercase tracking-wider">Amount</th>
                   <th className="text-left py-3 px-4 text-xs text-slate-500 uppercase tracking-wider">Status</th>
@@ -108,13 +108,13 @@ export default function HistoryPage() {
                 {filtered.map((e) => {
                   const badge = statusBadges[e.status] || statusBadges.completed;
                   return (
-                    <tr key={e._id} className="border-b border-amber-900/5 hover:bg-amber-500/5 transition-colors cursor-pointer">
+                    <tr key={e._id} className="border-b border-indigo-900/5 hover:bg-indigo-500/5 transition-colors cursor-pointer">
                       <td className="py-3 px-6 text-slate-200 font-medium">{e.title}</td>
-                      <td className="py-3 px-4 text-amber-400 font-mono">{e.totalAmount} XLM</td>
+                      <td className="py-3 px-4 text-indigo-400 font-mono">{e.totalAmount} XLM</td>
                       <td className="py-3 px-4"><span className={badge.badge}>{badge.label}</span></td>
                       <td className="py-3 px-4 text-slate-500">{new Date(e.createdAt).toLocaleDateString()}</td>
                       <td className="py-3 px-4">
-                        <Link href={`/client/escrow/${e._id}`} className="text-amber-400 hover:text-amber-300 text-xs">
+                        <Link href={`/client/escrow/${e._id}`} className="text-indigo-400 hover:text-indigo-300 text-xs">
                           View
                         </Link>
                       </td>

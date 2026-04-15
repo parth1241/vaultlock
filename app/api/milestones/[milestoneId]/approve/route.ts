@@ -5,7 +5,7 @@ import dbConnect from '@/lib/db';
 import Milestone from '@/lib/models/Milestone';
 import Escrow from '@/lib/models/Escrow';
 import User from '@/lib/models/User';
-import { createClaimableBalance } from '@/lib/stellar';
+import { submitClaimableBalance, decryptSecret } from '@/lib/stellar';
 
 // POST /api/milestones/[milestoneId]/approve — Client approves + creates claimable balance
 export async function POST(
@@ -50,17 +50,18 @@ export async function POST(
 
     // Create claimable balance on Stellar
     try {
-      const result = await createClaimableBalance(
-        escrow.escrowSecretEncrypted,
+      // Decrypt secret if using real encryption, otherwise it handles base64
+      const secret = decryptSecret(escrow.escrowSecretEncrypted);
+      const result = await submitClaimableBalance(
+        secret,
         freelancer.linkedWallet,
-        milestone.amount,
-        milestone._id.toString()
+        milestone.amount.toString()
       );
       milestone.balanceId = result.balanceId;
       milestone.txHash = result.txHash;
     } catch (stellarError: any) {
       console.error('Stellar claimable balance error:', stellarError);
-      // Still approve even if Stellar fails (testnet may be down)
+      // Still approve even if Stellar fails for demo robustness
       milestone.status = 'approved';
     }
 

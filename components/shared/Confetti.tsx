@@ -15,8 +15,8 @@ export function triggerConfetti() {
 
   const ctx = canvas.getContext('2d')!;
   const colors = [
-    '#f59e0b', // amber
-    '#f97316', // orange
+    '#6366f1', // indigo
+    '#8b5cf6', // violet
     '#6366f1', // indigo
     '#8b5cf6', // violet
     '#d946ef', // fuchsia

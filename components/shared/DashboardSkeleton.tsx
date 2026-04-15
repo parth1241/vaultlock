@@ -6,7 +6,7 @@ export function DashboardSkeleton() {
   return (
     <div className="flex h-screen animate-in fade-in duration-500">
       {/* Sidebar skeleton */}
-      <div className="w-64 bg-[#120f00] border-r border-amber-900/10 p-6 flex flex-col">
+      <div className="w-64 bg-[#120f00] border-r border-indigo-900/10 p-6 flex flex-col">
         {/* Logo */}
         <Skeleton className="h-8 w-32 mb-10 rounded-lg" />
 
@@ -18,7 +18,7 @@ export function DashboardSkeleton() {
         </div>
 
         {/* User info */}
-        <div className="flex items-center space-x-3 mt-auto pt-6 border-t border-amber-900/10">
+        <div className="flex items-center space-x-3 mt-auto pt-6 border-t border-indigo-900/10">
           <SkeletonAvatar />
           <div className="flex-1 space-y-2">
             <Skeleton className="h-3 w-20 rounded" />

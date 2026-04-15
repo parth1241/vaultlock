@@ -6,7 +6,7 @@ const UserSchema = new Schema({
   passwordHash: { type: String, required: true },
   role: { type: String, enum: ['client', 'freelancer'], required: true },
   linkedWallet: { type: String, default: '' },
-  avatarColor: { type: String, default: '#f59e0b' },
+  avatarColor: { type: String, default: '#6366f1' },
   createdAt: { type: Date, default: Date.now },
   lastLogin: { type: Date, default: Date.now },
   rememberMe: { type: Boolean, default: false },

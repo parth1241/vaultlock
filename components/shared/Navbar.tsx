@@ -37,15 +37,15 @@ export function Navbar() {
 
   return (
     <nav className={cn(
-      'fixed top-0 w-full z-50 transition-all duration-300 border-b h-16 flex items-center',
+      'fixed w-full z-50 transition-all duration-300 border-b h-16 flex items-center',
       scrolled
-        ? 'bg-[rgba(10,8,0,0.85)] backdrop-blur-md border-amber-900/20'
+        ? 'bg-[rgba(10,8,0,0.85)] backdrop-blur-md border-indigo-900/20'
         : 'bg-transparent border-transparent'
-    )}>
+    )} style={{ top: 'var(--wallet-bar-height)' }}>
       <div className="container mx-auto px-6 flex items-center justify-between">
         {/* Left: Logo */}
         <Link href="/" className="flex items-center space-x-2 group">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/20 group-hover:scale-110 transition-transform duration-300">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:scale-110 transition-transform duration-300">
             <Shield className="text-black w-5 h-5" />
           </div>
           <span className="text-xl font-bold tracking-tight gradient-text">VaultLock</span>
@@ -60,8 +60,8 @@ export function Navbar() {
               className={cn(
                 'px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200',
                 isActive(link.href)
-                  ? 'gradient-text border-b-2 border-amber-500'
-                  : 'text-slate-400 hover:text-amber-400'
+                  ? 'gradient-text border-b-2 border-indigo-500'
+                  : 'text-slate-400 hover:text-indigo-400'
               )}
             >
               {link.label}
@@ -74,8 +74,8 @@ export function Navbar() {
           <WalletButton />
           {session ? (
             <Link href={session.user.role === 'client' ? '/client/dashboard' : '/freelancer/dashboard'}>
-              <button className="flex items-center space-x-2 px-4 py-2 rounded-lg bg-surface-high border border-amber-900/30 text-slate-200 hover:border-amber-500/50 transition-all text-sm font-medium">
-                <LayoutDashboard size={16} className="text-amber-500" />
+              <button className="flex items-center space-x-2 px-4 py-2 rounded-lg bg-surface-high border border-indigo-900/30 text-slate-200 hover:border-indigo-500/50 transition-all text-sm font-medium">
+                <LayoutDashboard size={16} className="text-indigo-500" />
                 <span>Dashboard</span>
               </button>
             </Link>
@@ -99,7 +99,7 @@ export function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-[rgba(10,8,0,0.95)] backdrop-blur-xl border-b border-amber-900/20 animate-in slide-in-from-top duration-300">
+        <div className="md:hidden absolute top-full left-0 w-full bg-[rgba(10,8,0,0.95)] backdrop-blur-xl border-b border-indigo-900/20 animate-in slide-in-from-top duration-300">
           <div className="p-6 flex flex-col space-y-4">
             {navLinks.map((link) => (
               <Link
@@ -108,17 +108,17 @@ export function Navbar() {
                 onClick={() => setIsOpen(false)}
                 className={cn(
                   'text-sm font-medium py-2',
-                  isActive(link.href) ? 'text-amber-400' : 'text-slate-300 hover:text-amber-400'
+                  isActive(link.href) ? 'text-indigo-400' : 'text-slate-300 hover:text-indigo-400'
                 )}
               >
                 {link.label}
               </Link>
             ))}
-            <div className="pt-4 border-t border-amber-900/20 space-y-3">
+            <div className="pt-4 border-t border-indigo-900/20 space-y-3">
               {session ? (
                 <Link
                   href={session.user.role === 'client' ? '/client/dashboard' : '/freelancer/dashboard'}
-                  className="text-amber-500 font-medium"
+                  className="text-indigo-500 font-medium"
                   onClick={() => setIsOpen(false)}
                 >
                   Dashboard

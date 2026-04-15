@@ -1,24 +1,19 @@
-'use client'
+'use client';
 
-import React, { useEffect, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Check, Copy, ExternalLink, X, Wallet, ArrowRight, Clock, Hash, Activity } from 'lucide-react'
-import Confetti from './Confetti' 
-import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import React from 'react';
+import { CheckCircle2, ExternalLink, Copy, Check, X, Shield, Clock, Wallet, Info } from 'lucide-react';
+import { triggerConfetti } from './Confetti';
+import { cn } from '@/lib/utils';
 
 interface TransactionSuccessCardProps {
-  title: string
-  subtitle: string
-  txHash: string
-  amount?: string
-  walletAddress?: string
-  walletBalance?: string
-  network?: string
-  timestamp?: string
-  extraDetails?: { label: string; value: string }[]
-  onClose?: () => void
-  onViewExplorer?: () => void
+  title: string;
+  subtitle: string;
+  txHash: string;
+  amount?: string;
+  walletAddress?: string;
+  walletBalance?: string;
+  extraDetails?: { label: string; value: string }[];
+  onClose: () => void;
 }
 
 export default function TransactionSuccessCard({
@@ -28,190 +23,115 @@ export default function TransactionSuccessCard({
   amount,
   walletAddress,
   walletBalance,
-  network = "Stellar Testnet",
-  timestamp = new Date().toLocaleString(),
   extraDetails,
-  onClose,
-  onViewExplorer
+  onClose
 }: TransactionSuccessCardProps) {
-  const [copied, setCopied] = useState(false)
-  const [showConfetti, setShowConfetti] = useState(false)
+  const [copied, setCopied] = React.useState(false);
 
-  useEffect(() => {
-    setShowConfetti(true)
-  }, [])
+  React.useEffect(() => {
+    triggerConfetti();
+  }, []);
 
-  const copyHash = () => {
-    navigator.clipboard.writeText(txHash)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
-
-  const truncateAddress = (addr: string) => {
-    if (!addr) return ""
-    return `${addr.slice(0, 6)}...${addr.slice(-6)}`
-  }
+  const copyTxHash = () => {
+    navigator.clipboard.writeText(txHash);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
-      <Confetti active={showConfetti} />
-      <motion.div 
-        initial={{ scale: 0.9, opacity: 0, y: 20 }}
-        animate={{ scale: 1, opacity: 1, y: 0 }}
-        className="relative w-full max-w-lg overflow-hidden rounded-3xl bg-[#0d0019] border border-white/10 shadow-2xl"
-      >
-        {/* Animated Border Effect */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute inset-0 rounded-3xl border-2 border-transparent" 
-               style={{ 
-                 background: 'linear-gradient(90deg, transparent, #3b82f6, transparent) border-box',
-                 WebkitMask: 'linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)',
-                 WebkitMaskComposite: 'destination-out',
-                 maskComposite: 'exclude',
-                 animation: 'rotateBorder 3s linear infinite'
-               }} 
-          />
+    <div className="card-surface p-0 overflow-hidden border-indigo-500/30 animate-in zoom-in-95 duration-300 max-w-lg mx-auto">
+      {/* Header */}
+      <div className="bg-indigo-500/10 px-6 py-8 flex flex-col items-center justify-center border-b border-indigo-500/20 text-center relative">
+        <button 
+          onClick={onClose}
+          className="absolute top-4 right-4 p-1 text-slate-500 hover:text-white transition-colors"
+        >
+          <X size={20} />
+        </button>
+        
+        <div className="w-16 h-16 rounded-3xl bg-indigo-500/20 flex items-center justify-center mb-4 border border-indigo-500/30">
+          <CheckCircle2 size={32} className="text-indigo-400" />
+        </div>
+        
+        <h2 className="text-2xl font-bold text-white mb-2">{title}</h2>
+        <p className="text-slate-400 text-sm max-w-[280px]">{subtitle}</p>
+      </div>
+
+      {/* Content */}
+      <div className="p-6 space-y-6">
+        {/* Transaction Stats */}
+        <div className="grid grid-cols-2 gap-4">
+          <div className="p-4 rounded-xl bg-slate-900/50 border border-slate-800">
+            <p className="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Amount</p>
+            <p className="text-xl font-bold text-indigo-400 font-mono">{amount || '---'} <span className="text-xs">XLM</span></p>
+          </div>
+          <div className="p-4 rounded-xl bg-slate-900/50 border border-slate-800">
+            <p className="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Network</p>
+            <div className="flex items-center gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
+              <p className="text-sm font-bold text-slate-200 uppercase tracking-tighter">Testnet</p>
+            </div>
+          </div>
         </div>
 
-        <div className="relative p-8 flex flex-col items-center">
-          {/* Close Button */}
-          <button 
-            onClick={onClose}
-            className="absolute top-4 right-4 p-2 text-muted-foreground hover:text-white transition-colors"
-          >
-            <X size={20} />
-          </button>
-
-          {/* Animated Checkmark */}
-          <div className="relative mb-6">
-            <svg className="w-20 h-20 text-blue-500" viewBox="0 0 52 52">
-              <circle 
-                className="stroke-current fill-none" 
-                cx="26" cy="26" r="25" 
-                strokeWidth="2"
-                style={{
-                  strokeDasharray: 157,
-                  strokeDashoffset: 157,
-                  animation: 'checkmarkCircle 0.6s ease-in-out forwards'
-                }}
-              />
-              <path 
-                className="stroke-current fill-none" 
-                d="M14.1 27.2l7.1 7.2 16.7-16.8" 
-                strokeWidth="3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                style={{
-                  strokeDasharray: 48,
-                  strokeDashoffset: 48,
-                  animation: 'checkmarkPath 0.3s 0.6s ease-in-out forwards'
-                }}
-              />
-            </svg>
-          </div>
-
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent mb-2 text-center">{title}</h2>
-          <p className="text-muted-foreground mb-6 text-center">{subtitle}</p>
-
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs font-bold text-blue-400 mb-8">
-            <Check size={12} /> {network}
-          </div>
-
-          {/* Wallet Section */}
-          <div className="w-full bg-white/5 rounded-2xl p-5 mb-4 border border-white/5 space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Wallet size={16} />
-                <span>Connected Wallet</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="font-mono text-xs text-white uppercase">{truncateAddress(walletAddress || "")}</span>
-                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
-              </div>
-            </div>
-            
-            <div className="flex items-center justify-between">
-              <div className="text-sm text-muted-foreground">Wallet Balance</div>
-              <div className="text-2xl font-bold text-blue-400">
-                {walletBalance || "0.00"} <span className="text-sm font-medium text-muted-foreground">XLM</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Transaction Section */}
-          <div className="w-full space-y-3 mb-8 px-2">
-            <div className="flex justify-between items-center text-sm">
-              <span className="text-muted-foreground flex items-center gap-2"><Hash size={14} /> Hash</span>
+        {/* Details Table */}
+        <div className="space-y-3">
+          <div className="flex justify-between items-center text-sm">
+            <span className="text-slate-500">Transaction Hash</span>
+            <div className="flex items-center gap-2">
+              <span className="font-mono text-indigo-300 text-xs">
+                {txHash.slice(0, 6)}...{txHash.slice(-6)}
+              </span>
               <button 
-                onClick={copyHash}
-                className="font-mono text-[10px] text-white/60 hover:text-white flex items-center gap-2 transition-colors bg-white/5 px-2 py-1 rounded"
+                onClick={copyTxHash}
+                className="p-1 hover:bg-slate-800 rounded transition-colors"
               >
-                {txHash.slice(0, 12)}...{txHash.slice(-12)}
-                {copied ? <Check size={12} className="text-emerald-400" /> : <Copy size={12} />}
+                {copied ? <Check size={12} className="text-indigo-400" /> : <Copy size={12} className="text-slate-500" />}
               </button>
             </div>
-
-            {amount && (
-              <div className="flex justify-between items-center text-sm">
-                <span className="text-muted-foreground flex items-center gap-2"><Activity size={14} /> Amount</span>
-                <span className="font-bold text-white">{amount} XLM</span>
-              </div>
-            )}
-
-            <div className="flex justify-between items-center text-sm">
-              <span className="text-muted-foreground flex items-center gap-2"><Clock size={14} /> Timestamp</span>
-              <span className="text-white/80">{timestamp}</span>
-            </div>
-
-            <div className="flex justify-between items-center text-sm">
-              <span className="text-muted-foreground flex items-center gap-2"><Check size={14} /> Status</span>
-              <span className="text-blue-400 font-bold">Confirmed ✓</span>
-            </div>
-
-            {extraDetails?.map((detail, idx) => (
-              <div key={idx} className="flex justify-between items-center text-sm">
-                <span className="text-muted-foreground">{detail.label}</span>
-                <span className="text-white font-medium">{detail.value}</span>
-              </div>
-            ))}
           </div>
 
-          {/* Action Buttons */}
-          <div className="grid grid-cols-2 gap-4 w-full">
-            <Button 
-              variant="outline" 
-              onClick={onClose}
-              className="rounded-xl border-white/10 hover:bg-white/5"
-            >
-              Close
-            </Button>
-            <Button 
-              onClick={() => {
-                window.open(`https://stellar.expert/explorer/testnet/tx/${txHash}`, '_blank')
-                onViewExplorer?.()
-              }}
-              className="rounded-xl flex items-center gap-2 bg-gradient-to-r from-blue-500 to-indigo-500 text-white border-none"
-            >
-              Explorer <ExternalLink size={16} />
-            </Button>
-          </div>
+          {extraDetails?.map((detail, idx) => (
+            <div key={idx} className="flex justify-between items-center text-sm">
+              <span className="text-slate-500">{detail.label}</span>
+              <span className="text-slate-200 font-medium">{detail.value}</span>
+            </div>
+          ))}
+
+          {walletAddress && (
+            <div className="flex justify-between items-center text-sm">
+              <span className="text-slate-500">Wallet</span>
+              <span className="font-mono text-slate-400 text-xs">
+                {walletAddress.slice(0, 8)}...{walletAddress.slice(-4)}
+              </span>
+            </div>
+          )}
+
+          {walletBalance && (
+            <div className="flex justify-between items-center text-sm">
+              <span className="text-slate-500">New Balance</span>
+              <span className="text-indigo-400 font-mono text-xs">{walletBalance} XLM</span>
+            </div>
+          )}
         </div>
-      </motion.div>
 
-      <style jsx global>{`
-        @keyframes rotateBorder {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-        @keyframes checkmarkCircle {
-          0% { stroke-dashoffset: 157; opacity: 0; }
-          100% { stroke-dashoffset: 0; opacity: 1; }
-        }
-        @keyframes checkmarkPath {
-          0% { stroke-dashoffset: 48; }
-          100% { stroke-dashoffset: 0; }
-        }
-      `}</style>
+        {/* Actions */}
+        <div className="flex gap-3">
+          <button 
+            onClick={() => window.open(`https://stellar.expert/explorer/testnet/tx/${txHash}`, '_blank')}
+            className="flex-1 flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-white py-3 rounded-xl text-sm font-bold transition-all border border-slate-700 hover:border-indigo-500/50"
+          >
+            <ExternalLink size={16} />
+            Explorer
+          </button>
+          <button 
+            onClick={onClose}
+            className="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white py-3 rounded-xl text-sm font-bold transition-all shadow-lg shadow-indigo-600/20"
+          >
+            Done
+          </button>
+        </div>
+      </div>
     </div>
-  )
+  );
 }

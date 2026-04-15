@@ -14,7 +14,7 @@ const tiers = [
     cta: 'Start Free', popular: false,
   },
   {
-    name: 'Pro', price: '1%', period: 'per transaction', color: 'amber',
+    name: 'Pro', price: '1%', period: 'per transaction', color: 'indigo',
     features: ['1% platform fee', 'Unlimited escrows', 'Dispute protection', 'Priority support', 'Analytics dashboard', 'CSV export'],
     cta: 'Go Pro', popular: true,
   },
@@ -39,10 +39,10 @@ export default function PricingPage() {
   return (
     <main>
       <Navbar />
-      <div className="min-h-screen pt-24 pb-16 px-6">
+      <div className="min-h-screen pb-16 px-6" style={{ paddingTop: 'calc(96px + var(--wallet-bar-height))' }}>
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <span className="badge-amber mb-4 inline-block">Pricing</span>
+            <span className="badge-indigo mb-4 inline-block">Pricing</span>
             <h1 className="text-3xl md:text-4xl font-bold text-slate-100 mb-4">Simple, Transparent Pricing</h1>
             <p className="text-slate-400">No hidden fees. Pay only for what you use.</p>
           </div>
@@ -55,14 +55,14 @@ export default function PricingPage() {
                 className={cn(
                   'card-surface p-8 border relative transition-all duration-300 hover:-translate-y-1',
                   tier.popular
-                    ? 'border-amber-500/40 shadow-[0_0_30px_rgba(245,158,11,0.1)]'
+                    ? 'border-indigo-500/40 shadow-[0_0_30px_rgba(245,158,11,0.1)]'
                     : tier.color === 'violet'
                     ? 'border-violet-500/20'
                     : 'border-indigo-500/20'
                 )}
               >
                 {tier.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 badge-amber px-3 py-1 text-xs">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 badge-indigo px-3 py-1 text-xs">
                     Most Popular
                   </div>
                 )}
@@ -75,7 +75,7 @@ export default function PricingPage() {
                   {tier.features.map((f, fi) => (
                     <li key={fi} className="flex items-center space-x-2 text-sm text-slate-300">
                       <CheckCircle2 size={14} className={cn('shrink-0',
-                        tier.color === 'amber' ? 'text-amber-500' :
+                        tier.color === 'indigo' ? 'text-indigo-500' :
                         tier.color === 'indigo' ? 'text-indigo-500' : 'text-violet-500'
                       )} />
                       <span>{f}</span>
@@ -100,7 +100,7 @@ export default function PricingPage() {
             <h2 className="text-2xl font-bold text-slate-100 text-center mb-8">FAQ</h2>
             <div className="space-y-3">
               {faqs.map((faq, i) => (
-                <div key={i} className="card-surface border border-amber-900/10">
+                <div key={i} className="card-surface border border-indigo-900/10">
                   <button
                     onClick={() => setOpenFaq(openFaq === i ? null : i)}
                     className="w-full flex items-center justify-between p-4 text-left"

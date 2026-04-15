@@ -1,24 +1,30 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { Server } from '@stellar/stellar-sdk'
+import { NextResponse } from 'next/server';
+import { Horizon } from '@stellar/stellar-sdk';
 
-const HORIZON_URL = process.env.NEXT_PUBLIC_STELLAR_HORIZON || 'https://horizon-testnet.stellar.org'
-const server = new Server(HORIZON_URL)
+const HORIZON_URL = process.env.NEXT_PUBLIC_STELLAR_HORIZON || 'https://horizon-testnet.stellar.org';
+const server = new Horizon.Server(HORIZON_URL);
 
-export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url)
-  const address = searchParams.get('address')
-
-  if (!address) return NextResponse.json({ error: 'Address is required' }, { status: 400 })
-
+export async function POST(req: Request) {
   try {
-    const account = await server.loadAccount(address)
-    const nativeBalance = account.balances.find(b => b.asset_type === 'native')
-    const balance = nativeBalance ? parseFloat(nativeBalance.balance) : 0
-    return NextResponse.json({ address, balance, funded: true })
-  } catch (error: any) {
-    if (error.response?.status === 404) {
-      return NextResponse.json({ address, balance: 0, funded: false })
+    const { address } = await req.json();
+
+    if (!address) {
+      return NextResponse.json({ error: 'Address is required' }, { status: 400 });
     }
-    return NextResponse.json({ error: 'Failed to fetch balance' }, { status: 500 })
+
+    const account = await server.loadAccount(address);
+    const nativeBalance = account.balances.find((b: any) => b.asset_type === 'native');
+    const balance = nativeBalance ? nativeBalance.balance : '0';
+
+    return NextResponse.json({ 
+      balance,
+      asset_type: 'native'
+    });
+  } catch (error: any) {
+    console.error('Balance API Error:', error);
+    return NextResponse.json({ 
+      error: 'Failed to fetch balance',
+      details: error.message 
+    }, { status: 500 });
   }
 }

@@ -83,10 +83,10 @@ export function SessionWatcher() {
   return (
     <div className="min-h-0">
       <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 backdrop-blur-sm">
-        <div className="bg-[#120f00] border border-amber-500/30 rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl shadow-amber-500/10">
+        <div className="bg-[#120f00] border border-indigo-500/30 rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl shadow-indigo-500/10">
           <div className="flex items-center space-x-3 mb-6">
-            <div className="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center">
-              <AlertTriangle className="text-amber-500 w-6 h-6" />
+            <div className="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center">
+              <AlertTriangle className="text-indigo-500 w-6 h-6" />
             </div>
             <div>
               <h3 className="text-lg font-bold text-slate-100">Session Expiring</h3>
@@ -96,7 +96,7 @@ export function SessionWatcher() {
 
           <p className="text-slate-300 mb-6">
             Your session will expire in{' '}
-            <span className="text-amber-500 font-mono font-bold text-lg">
+            <span className="text-indigo-500 font-mono font-bold text-lg">
               {minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}
             </span>{' '}
             due to inactivity.

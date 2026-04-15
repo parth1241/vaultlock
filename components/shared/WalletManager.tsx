@@ -11,7 +11,8 @@ import {
 } from '@/lib/stellar'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
-import { Loader2, Wallet, AlertTriangle, CheckCircle2, RefreshCw, Copy, ExternalLink, Unlink, Info } from 'lucide-react'
+import { ChevronDown, Wallet, ExternalLink, Copy, CheckCircle2, History, Shield, LogOut, Loader2, AlertTriangle, RefreshCw, Info, Unlink } from 'lucide-react'
+import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 
 export default function WalletManager() {
@@ -125,16 +126,16 @@ export default function WalletManager() {
 
   if (status === 'NOT_INSTALLED') {
     return (
-      <Card className="border-amber-500/30 bg-amber-500/5">
+      <Card className="border-indigo-500/30 bg-indigo-500/5">
         <CardHeader>
-          <CardTitle className="text-lg text-amber-500 flex items-center gap-2">
+          <CardTitle className="text-lg text-indigo-500 flex items-center gap-2">
             <AlertTriangle className="h-5 w-5" />
             Freighter Missing
           </CardTitle>
           <CardDescription>Install the Freighter extension to interact with Stellar.</CardDescription>
         </CardHeader>
         <CardContent>
-          <Button className="w-full bg-amber-500" onClick={() => window.open('https://freighter.app', '_blank')}>
+          <Button className="w-full bg-indigo-500" onClick={() => window.open('https://freighter.app', '_blank')}>
             Get Freighter
           </Button>
         </CardContent>
@@ -186,7 +187,7 @@ export default function WalletManager() {
     <Card className="border-blue-500/40 bg-[#0a0a0f] shadow-2xl overflow-hidden group">
       <div className="bg-blue-600/10 px-6 py-3 flex items-center justify-between border-b border-blue-500/20">
         <div className="flex items-center gap-2">
-          <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+          <div className="h-2 w-2 rounded-full bg-indigo-500 animate-pulse" />
           <span className="text-[10px] font-black uppercase tracking-widest text-blue-400">Vault Authenticated</span>
         </div>
         <Badge variant="outline" className="text-[8px] font-black border-blue-500/30 text-blue-400 bg-blue-500/5">TESTNET</Badge>
@@ -204,7 +205,7 @@ export default function WalletManager() {
               setCopied(true)
               setTimeout(() => setCopied(false), 2000)
             }}>
-              {copied ? <CheckCircle2 className="h-4 w-4 text-emerald-500" /> : <Copy className="h-4 w-4" />}
+              {copied ? <CheckCircle2 className="h-4 w-4 text-indigo-500" /> : <Copy className="h-4 w-4" />}
             </Button>
           </div>
         </div>

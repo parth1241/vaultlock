@@ -35,6 +35,7 @@ export default withAuth(
           path.startsWith("/terms") ||
           path.startsWith("/login") ||
           path.startsWith("/signup") ||
+          path.startsWith("/screenshots") ||
           path.startsWith("/api/auth")
         ) {
           return true;

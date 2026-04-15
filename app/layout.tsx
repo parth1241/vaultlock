@@ -31,13 +31,13 @@ export default function RootLayout({
         className={cn(
           inter.variable,
           jetbrainsMono.variable,
-          "antialiased selection:bg-amber-500/30 selection:text-amber-200"
+          "antialiased selection:bg-indigo-500/30 selection:text-indigo-200"
         )}
       >
         <Providers>
           <WalletStatusBar />
           <div className="ambient-blobs">
-            <div className="blob-amber" />
+            <div className="blob-indigo" />
             <div className="blob-indigo" />
             <div className="blob-violet" />
           </div>

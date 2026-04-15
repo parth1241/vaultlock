@@ -10,20 +10,107 @@
 
 > Built on **Stellar Testnet** — no real funds used.
 
-## 📱 Screenshots
+## 📸 Screenshots
+
+> **How to capture:** Visit `/screenshots` in the running app
+> for a dedicated screenshot helper page.
 
 ### Wallet Connected + Balance Display
-> Screenshot of WalletStatusBar showing connected address + XLM balance.
+Shows Freighter wallet connected with XLM balance on Stellar Testnet.
+
+![Wallet Connected](./screenshots/desktop/02-wallet-connected.png)
+
+> **To capture this screenshot:**
+> 1. Run the app locally: `npm run dev`
+> 2. Visit http://localhost:3000/screenshots
+> 3. Connect your Freighter wallet (Testnet)
+> 4. Screenshot Section 1 of the page
+> 5. Save as `screenshots/desktop/02-wallet-connected.png`
+
+---
 
 ### Successful Testnet Transaction
-> Screenshot of TransactionSuccessCard after creating an escrow.
-> Shows: txHash, amount, wallet address, updated balance, Stellar Expert link.
+Transaction confirmed on Stellar Testnet with full details.
+Shows transaction hash, amount, updated balance, and Stellar Expert link.
 
-### Mobile Responsive View
-> Screenshot of the app on 375px mobile width.
+![Transaction Success](./screenshots/desktop/04-transaction-success.png)
+
+> **To capture this screenshot:**
+> 1. Complete any transaction in the app (Fund an escrow on /client/escrow/new)
+> 2. The TransactionSuccessCard appears automatically
+> 3. Screenshot the full card
+> 4. Save as `screenshots/desktop/04-transaction-success.png`
+>
+> OR visit `/screenshots` → Section 3 for a demo version
+
+---
+
+### Dashboard Overview
+Main dashboard showing wallet status bar, stats, and navigation.
+
+![Dashboard](./screenshots/desktop/03-dashboard.png)
+
+> **To capture this screenshot:**
+> 1. Log in to the app
+> 2. Connect Freighter wallet
+> 3. Navigate to Client or Freelancer dashboard
+> 4. Screenshot the full page
+> 5. Save as `screenshots/desktop/03-dashboard.png`
+
+---
+
+### Mobile Responsive View (375px)
+App fully responsive on iPhone SE screen width.
+
+![Mobile View](./screenshots/desktop/05-mobile-view.png)
+
+> **To capture this screenshot:**
+> 1. Open Chrome DevTools (F12)
+> 2. Click "Toggle device toolbar" (phone icon)
+> 3. Select "iPhone SE" (375px)
+> 4. Navigate to the landing page or dashboard
+> 5. Screenshot the viewport
+> 6. Save as `screenshots/desktop/05-mobile-view.png`
+
+---
 
 ### CI/CD Pipeline
-> GitHub Actions tab showing green CI run.
+GitHub Actions CI pipeline running successfully.
+
+![CI Pipeline](./screenshots/desktop/06-ci-pipeline.png)
+
+> **To capture this screenshot:**
+> 1. Push code to GitHub
+> 2. Visit: `https://github.com/parth1241/vaultlock/actions`
+> 3. Click the latest workflow run
+> 4. Screenshot the green passing steps
+> 5. Save as `screenshots/desktop/06-ci-pipeline.png`
+
+OR use this badge (auto-updates):
+
+![CI](https://github.com/parth1241/vaultlock/actions/workflows/ci.yml/badge.svg)
+
+---
+
+### Landing Page
+Full landing page with particle network and feature highlights.
+
+![Landing](./screenshots/desktop/01-landing.png)
+
+---
+
+## 📱 Mobile Screenshots
+
+### Mobile Landing
+![Mobile Landing](./screenshots/mobile/01-landing-mobile.png)
+
+### Mobile Dashboard
+![Mobile Dashboard](./screenshots/mobile/02-dashboard-mobile.png)
+
+### Mobile Action (Escrow)
+![Mobile Action](./screenshots/mobile/03-vote-or-action-mobile.png)
+
+> **All mobile screenshots:** DevTools → iPhone SE (375px)
 
 ---
 

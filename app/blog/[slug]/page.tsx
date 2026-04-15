@@ -12,7 +12,7 @@ const articles: Record<string, any> = {
     title: 'How Stellar Claimable Balances Work',
     author: 'Sarah Chen', authorRole: 'CTO at VaultLock',
     date: 'March 15, 2026', readTime: '8 min read',
-    category: 'Education', color: 'amber',
+    category: 'Education', color: 'indigo',
     content: `
 ## What Are Claimable Balances?
 
@@ -115,7 +115,7 @@ We split into teams. Sarah and I handled the Stellar integration while Marcus wo
 
 ## Day 2: Making It Real
 
-The second day was about polish. We added milestone tracking, invite links, and a full authentication system. Marcus's dark-themed UI with amber accents became our signature look. We shipped at 11:58 PM — two minutes before the deadline.
+The second day was about polish. We added milestone tracking, invite links, and a full authentication system. Marcus's dark-themed UI with indigo accents became our signature look. We shipped at 11:58 PM — two minutes before the deadline.
 
 ## The Result
 
@@ -166,20 +166,20 @@ export default function BlogPostPage() {
 
           {/* Content */}
           <div
-            className="prose prose-invert prose-amber max-w-none
-              prose-headings:text-slate-100 prose-p:text-slate-400 prose-a:text-amber-400
-              prose-strong:text-slate-200 prose-code:text-amber-400 prose-code:bg-[#120f00]
+            className="prose prose-invert prose-indigo max-w-none
+              prose-headings:text-slate-100 prose-p:text-slate-400 prose-a:text-indigo-400
+              prose-strong:text-slate-200 prose-code:text-indigo-400 prose-code:bg-[#120f00]
               prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm
-              prose-pre:bg-[#0a0800] prose-pre:border prose-pre:border-amber-900/10
+              prose-pre:bg-[#0a0800] prose-pre:border prose-pre:border-indigo-900/10
               prose-li:text-slate-400 prose-table:text-sm
-              prose-th:text-slate-300 prose-td:text-slate-400 prose-td:border-amber-900/10
-              prose-th:border-amber-900/10"
+              prose-th:text-slate-300 prose-td:text-slate-400 prose-td:border-indigo-900/10
+              prose-th:border-indigo-900/10"
             dangerouslySetInnerHTML={{ __html: formatMarkdown(article.content) }}
           />
 
           {/* Author card */}
           <div className="mt-12 card-surface p-6 flex items-center space-x-4">
-            <div className="w-12 h-12 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-500 font-bold shrink-0">
+            <div className="w-12 h-12 rounded-full bg-indigo-500/10 flex items-center justify-center text-indigo-500 font-bold shrink-0">
               {article.author[0]}
             </div>
             <div>
@@ -193,7 +193,7 @@ export default function BlogPostPage() {
             <h3 className="text-sm font-semibold text-slate-300 mb-4">Related Posts</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {relatedSlugs.map((s) => (
-                <Link key={s} href={`/blog/${s}`} className="card-surface card-hover p-4 text-sm text-slate-200 hover:text-amber-400 transition-colors">
+                <Link key={s} href={`/blog/${s}`} className="card-surface card-hover p-4 text-sm text-slate-200 hover:text-indigo-400 transition-colors">
                   {articles[s].title}
                 </Link>
               ))}

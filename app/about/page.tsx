@@ -8,14 +8,14 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
 const values = [
-  { icon: Lock, color: 'amber', title: 'Trustless', desc: 'Code enforces the contract, not lawyers. Smart escrow means no middleman.' },
+  { icon: Lock, color: 'indigo', title: 'Trustless', desc: 'Code enforces the contract, not lawyers. Smart escrow means no middleman.' },
   { icon: Eye, color: 'indigo', title: 'Transparent', desc: 'Every transaction publicly verifiable on the Stellar blockchain.' },
   { icon: Zap, color: 'violet', title: 'Instant', desc: 'Stellar settles in 3-5 seconds. No waiting days for bank transfers.' },
   { icon: Scale, color: 'cyan', title: 'Fair', desc: 'Disputes resolved without bias through structured milestone verification.' },
 ];
 
 const colorMap: Record<string, string> = {
-  amber: 'text-amber-500 bg-amber-500/10 border-amber-500/20',
+  indigo: 'text-indigo-500 bg-indigo-500/10 border-indigo-500/20',
   indigo: 'text-indigo-500 bg-indigo-500/10 border-indigo-500/20',
   violet: 'text-violet-500 bg-violet-500/10 border-violet-500/20',
   cyan: 'text-cyan-500 bg-cyan-500/10 border-cyan-500/20',
@@ -25,11 +25,11 @@ export default function AboutPage() {
   return (
     <main>
       <Navbar />
-      <div className="min-h-screen pt-24 pb-16 px-6">
+      <div className="min-h-screen pb-16 px-6" style={{ paddingTop: 'calc(96px + var(--wallet-bar-height))' }}>
         <div className="max-w-4xl mx-auto">
           {/* Hero */}
           <div className="text-center mb-20">
-            <span className="badge-amber mb-4 inline-block">About VaultLock</span>
+            <span className="badge-indigo mb-4 inline-block">About VaultLock</span>
             <h1 className="text-3xl md:text-5xl font-bold text-slate-100 mb-6">
               Payments should be <span className="gradient-text">trustless</span>
             </h1>
@@ -41,7 +41,7 @@ export default function AboutPage() {
           </div>
 
           {/* Mission */}
-          <div className="card-surface p-8 mb-16 border-amber-500/20">
+          <div className="card-surface p-8 mb-16 border-indigo-500/20">
             <h2 className="text-xl font-bold text-slate-100 mb-4">Our Mission</h2>
             <p className="text-slate-400 leading-relaxed">
               To make freelancer payments instant, secure, and trustless. No banks. No middlemen.

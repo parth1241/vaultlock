@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 const statusConfig: Record<string, { label: string; badge: string; bar: string }> = {
   draft: { label: 'Draft', badge: 'badge-sky', bar: 'bg-slate-500' },
   active: { label: 'Active', badge: 'badge-indigo', bar: 'bg-indigo-500' },
-  in_progress: { label: 'In Progress', badge: 'badge-amber', bar: 'bg-amber-500' },
+  in_progress: { label: 'In Progress', badge: 'badge-indigo', bar: 'bg-indigo-500' },
   completed: { label: 'Completed', badge: 'badge-violet', bar: 'bg-violet-500' },
   disputed: { label: 'Disputed', badge: 'badge-rose', bar: 'bg-rose-500' },
   cancelled: { label: 'Cancelled', badge: 'badge-sky', bar: 'bg-slate-500' },
@@ -60,7 +60,7 @@ export function EscrowCard({ escrow, milestones = [], role }: EscrowCardProps) {
 
         {/* Amount + Currency */}
         <div className="flex items-center space-x-3 mb-4">
-          <span className="badge-amber text-sm font-mono font-bold">
+          <span className="badge-indigo text-sm font-mono font-bold">
             {escrow.totalAmount.toLocaleString()} {escrow.currency || 'XLM'}
           </span>
         </div>
@@ -74,7 +74,7 @@ export function EscrowCard({ escrow, milestones = [], role }: EscrowCardProps) {
             </div>
             <div className="h-1.5 bg-[#0a0800] rounded-full overflow-hidden">
               <div
-                className="h-full bg-gradient-to-r from-amber-500 to-violet-500 rounded-full transition-all duration-500"
+                className="h-full bg-gradient-to-r from-indigo-500 to-violet-500 rounded-full transition-all duration-500"
                 style={{ width: `${progress}%` }}
               />
             </div>
@@ -82,7 +82,7 @@ export function EscrowCard({ escrow, milestones = [], role }: EscrowCardProps) {
         )}
 
         {/* Footer */}
-        <div className="flex items-center justify-between pt-3 border-t border-amber-900/10">
+        <div className="flex items-center justify-between pt-3 border-t border-indigo-900/10">
           <div className="flex items-center space-x-2 text-xs text-slate-500">
             <Briefcase size={14} />
             <span>
@@ -93,7 +93,7 @@ export function EscrowCard({ escrow, milestones = [], role }: EscrowCardProps) {
           </div>
           <Link
             href={detailUrl}
-            className="text-xs text-amber-400 hover:text-amber-300 font-medium transition-colors"
+            className="text-xs text-indigo-400 hover:text-indigo-300 font-medium transition-colors"
           >
             View Details →
           </Link>

@@ -102,11 +102,11 @@ export default function LoginPage() {
           shake && 'animate-shake'
         )}
       >
-        <div className="bg-[#120f00] border border-amber-500/20 rounded-xl p-8 shadow-[0_0_40px_rgba(245,158,11,0.05)]">
+        <div className="bg-[#120f00] border border-indigo-500/20 rounded-xl p-8 shadow-[0_0_40px_rgba(245,158,11,0.05)]">
           {/* Header */}
           <div className="text-center mb-8">
             <Link href="/" className="inline-flex items-center space-x-2 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center">
                 <Shield className="text-black w-6 h-6" />
               </div>
             </Link>
@@ -115,13 +115,13 @@ export default function LoginPage() {
           </div>
 
           {/* Role Toggle */}
-          <div className="flex rounded-xl bg-[#0a0800] p-1 mb-8 border border-amber-900/20">
+          <div className="flex rounded-xl bg-[#0a0800] p-1 mb-8 border border-indigo-900/20">
             <button
               onClick={() => setRole('client')}
               className={cn(
                 'flex-1 flex items-center justify-center space-x-2 py-2.5 rounded-lg text-sm font-medium transition-all duration-200',
                 role === 'client'
-                  ? 'bg-gradient-to-r from-amber-500/20 to-amber-600/10 border border-amber-500/30 text-amber-400'
+                  ? 'bg-gradient-to-r from-indigo-500/20 to-indigo-600/10 border border-indigo-500/30 text-indigo-400'
                   : 'text-slate-500 hover:text-slate-300'
               )}
             >
@@ -187,11 +187,11 @@ export default function LoginPage() {
                   type="checkbox"
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
-                  className="w-4 h-4 rounded border-amber-900/30 bg-[#0a0800] text-amber-500 focus:ring-amber-500 focus:ring-offset-0 accent-amber-500"
+                  className="w-4 h-4 rounded border-indigo-900/30 bg-[#0a0800] text-indigo-500 focus:ring-indigo-500 focus:ring-offset-0 accent-indigo-500"
                 />
                 <span className="text-sm text-slate-400">Remember me</span>
               </label>
-              <Link href="/contact" className="text-sm text-amber-400 hover:text-amber-300 transition-colors">
+              <Link href="/contact" className="text-sm text-indigo-400 hover:text-indigo-300 transition-colors">
                 Forgot password?
               </Link>
             </div>
@@ -229,15 +229,15 @@ export default function LoginPage() {
           <div className="mt-8 space-y-4">
             <p className="text-center text-sm text-slate-400">
               New to VaultLock?{' '}
-              <Link href="/signup" className="text-amber-400 hover:text-amber-300 font-medium transition-colors">
+              <Link href="/signup" className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
                 Create account
               </Link>
             </p>
 
             <div className="flex items-center space-x-3">
-              <div className="flex-1 h-px bg-amber-900/20" />
+              <div className="flex-1 h-px bg-indigo-900/20" />
               <span className="text-xs text-slate-500">or</span>
-              <div className="flex-1 h-px bg-amber-900/20" />
+              <div className="flex-1 h-px bg-indigo-900/20" />
             </div>
 
             <div className="flex justify-center">

@@ -22,14 +22,14 @@ export function TransactionErrorCard({
     <div className="card-surface p-8 relative overflow-hidden group animate-shake">
       {/* Background Warning Glow */}
       <div className={`absolute -top-24 -right-24 w-64 h-64 blur-[80px] -z-10 opacity-20 transition-colors duration-500 ${
-        type === "critical" ? "bg-rose-500" : "bg-amber-500"
+        type === "critical" ? "bg-rose-500" : "bg-indigo-500"
       }`} />
       
       <div className="flex flex-col items-center text-center space-y-6">
         <div className={`w-16 h-16 rounded-2xl flex items-center justify-center border transition-transform duration-500 group-hover:scale-110 ${
           type === "critical" 
             ? "bg-rose-500/10 border-rose-500/20 text-rose-500 shadow-[0_0_20px_rgba(244,63,94,0.3)]" 
-            : "bg-amber-500/10 border-amber-500/20 text-amber-500 shadow-[0_0_20px_rgba(245,158,11,0.3)]"
+            : "bg-indigo-500/10 border-indigo-500/20 text-indigo-500 shadow-[0_0_20px_rgba(245,158,11,0.3)]"
         }`}>
           {type === "critical" ? <ShieldAlert size={32} /> : <Info size={32} />}
         </div>

@@ -7,7 +7,7 @@ import { useToast } from '@/lib/context/ToastContext';
 
 const statusConfig: Record<string, { color: string; icon: React.ReactNode; bg: string; dot?: boolean }> = {
   pending: { color: 'text-slate-400', icon: <Clock size={16} />, bg: 'bg-slate-500' },
-  submitted: { color: 'text-amber-400', icon: <Send size={16} />, bg: 'bg-amber-500', dot: true },
+  submitted: { color: 'text-indigo-400', icon: <Send size={16} />, bg: 'bg-indigo-500', dot: true },
   approved: { color: 'text-indigo-400', icon: <DollarSign size={16} />, bg: 'bg-indigo-500' },
   released: { color: 'text-violet-400', icon: <CheckCircle2 size={16} />, bg: 'bg-violet-500' },
   disputed: { color: 'text-rose-400', icon: <AlertTriangle size={16} />, bg: 'bg-rose-500' },
@@ -139,7 +139,7 @@ export function MilestoneTracker({ milestones, escrowId, role, onAction }: Miles
                   milestone.status === 'released'
                     ? 'bg-violet-500/20 border-violet-500'
                     : milestone.status === 'submitted'
-                    ? 'bg-amber-500/20 border-amber-500'
+                    ? 'bg-indigo-500/20 border-indigo-500'
                     : milestone.status === 'approved'
                     ? 'bg-indigo-500/20 border-indigo-500'
                     : milestone.status === 'disputed'
@@ -149,8 +149,8 @@ export function MilestoneTracker({ milestones, escrowId, role, onAction }: Miles
               >
                 {milestone.status === 'submitted' && (
                   <span className="absolute top-0 right-0 flex h-2.5 w-2.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
-                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-500" />
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-indigo-500" />
                   </span>
                 )}
                 <span className={cn('text-xs font-bold', config.color)}>
@@ -163,7 +163,7 @@ export function MilestoneTracker({ milestones, escrowId, role, onAction }: Miles
                     'w-0.5 flex-1 min-h-[40px]',
                     milestone.status === 'released'
                       ? 'bg-violet-500'
-                      : 'border-l-2 border-dashed border-amber-500/20'
+                      : 'border-l-2 border-dashed border-indigo-500/20'
                   )}
                 />
               )}
@@ -179,7 +179,7 @@ export function MilestoneTracker({ milestones, escrowId, role, onAction }: Miles
                       <p className="text-xs text-slate-500 mt-0.5">{milestone.description}</p>
                     )}
                   </div>
-                  <span className="badge-amber font-mono text-xs ml-3 shrink-0">
+                  <span className="badge-indigo font-mono text-xs ml-3 shrink-0">
                     {milestone.amount} XLM
                   </span>
                 </div>
@@ -193,8 +193,8 @@ export function MilestoneTracker({ milestones, escrowId, role, onAction }: Miles
                 </div>
 
                 {milestone.freelancerNotes && (
-                  <p className="text-xs text-slate-400 bg-[#0a0800] rounded-lg p-2 mb-3 border border-amber-900/10">
-                    <span className="text-amber-500 font-medium">Notes: </span>
+                  <p className="text-xs text-slate-400 bg-[#0a0800] rounded-lg p-2 mb-3 border border-indigo-900/10">
+                    <span className="text-indigo-500 font-medium">Notes: </span>
                     {milestone.freelancerNotes}
                   </p>
                 )}
@@ -215,7 +215,7 @@ export function MilestoneTracker({ milestones, escrowId, role, onAction }: Miles
                       href={`https://stellar.expert/explorer/testnet/tx/${milestone.txHash}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-amber-400 hover:text-amber-300 flex items-center space-x-1"
+                      className="text-indigo-400 hover:text-indigo-300 flex items-center space-x-1"
                     >
                       <ExternalLink size={12} />
                       <span>Stellar Expert</span>

@@ -11,7 +11,7 @@ import { MilestoneTracker } from '@/components/shared/MilestoneTracker';
 const statusConfig: Record<string, { label: string; badge: string }> = {
   draft: { label: 'Draft', badge: 'badge-sky' },
   active: { label: 'Active', badge: 'badge-indigo' },
-  in_progress: { label: 'In Progress', badge: 'badge-amber' },
+  in_progress: { label: 'In Progress', badge: 'badge-indigo' },
   completed: { label: 'Completed', badge: 'badge-violet' },
   disputed: { label: 'Disputed', badge: 'badge-rose' },
   cancelled: { label: 'Cancelled', badge: 'badge-sky' },
@@ -42,7 +42,7 @@ export default function FreelancerContractDetail() {
   useEffect(() => { fetchData(); }, [escrowId]);
 
   if (loading) {
-    return <div className="space-y-4">{[1,2,3].map(i => <div key={i} className="h-24 bg-amber-500/5 rounded-xl shimmer" />)}</div>;
+    return <div className="space-y-4">{[1,2,3].map(i => <div key={i} className="h-24 bg-indigo-500/5 rounded-xl shimmer" />)}</div>;
   }
 
   if (!escrow) {
@@ -66,9 +66,9 @@ export default function FreelancerContractDetail() {
           <span className={config.badge}>{config.label}</span>
         </div>
         <div className="flex flex-wrap items-center gap-4 text-sm">
-          <span className="badge-amber font-mono font-bold">{escrow.totalAmount} {escrow.currency || 'XLM'}</span>
+          <span className="badge-indigo font-mono font-bold">{escrow.totalAmount} {escrow.currency || 'XLM'}</span>
           {escrow.escrowWallet && (
-            <a href={`https://stellar.expert/explorer/testnet/account/${escrow.escrowWallet}`} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-1 text-amber-400 hover:text-amber-300 text-xs">
+            <a href={`https://stellar.expert/explorer/testnet/account/${escrow.escrowWallet}`} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-1 text-indigo-400 hover:text-indigo-300 text-xs">
               <ExternalLink size={12} /><span>View on Stellar</span>
             </a>
           )}

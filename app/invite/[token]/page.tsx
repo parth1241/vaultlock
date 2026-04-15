@@ -70,11 +70,11 @@ export default function InvitePage() {
         <div className="max-w-lg mx-auto">
           {loading ? (
             <div className="space-y-4">
-              {[1,2,3].map(i => <div key={i} className="h-16 bg-amber-500/5 rounded-xl shimmer" />)}
+              {[1,2,3].map(i => <div key={i} className="h-16 bg-indigo-500/5 rounded-xl shimmer" />)}
             </div>
           ) : error ? (
-            <div className="card-surface p-8 text-center border-amber-500/20">
-              <AlertTriangle size={40} className="mx-auto text-amber-500 mb-4" />
+            <div className="card-surface p-8 text-center border-indigo-500/20">
+              <AlertTriangle size={40} className="mx-auto text-indigo-500 mb-4" />
               <h2 className="text-lg font-bold text-slate-100 mb-2">
                 {error.includes('expired') ? 'Invite Expired' : 'Invalid Invite'}
               </h2>
@@ -86,19 +86,19 @@ export default function InvitePage() {
               <Link href="/" className="btn-secondary text-sm">Go Home</Link>
             </div>
           ) : (
-            <div className="card-surface p-8 border-amber-500/20">
+            <div className="card-surface p-8 border-indigo-500/20">
               <div className="text-center mb-6">
-                <div className="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mx-auto mb-4">
-                  <Lock size={24} className="text-amber-500" />
+                <div className="w-14 h-14 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mx-auto mb-4">
+                  <Lock size={24} className="text-indigo-500" />
                 </div>
                 <h2 className="text-lg font-bold text-slate-100">You&apos;ve been invited!</h2>
                 <p className="text-sm text-slate-400 mt-1">
-                  <strong className="text-amber-400">{invite.clientName}</strong> wants to work with you
+                  <strong className="text-indigo-400">{invite.clientName}</strong> wants to work with you
                 </p>
               </div>
 
               <div className="space-y-4 mb-8">
-                <div className="p-4 rounded-xl bg-[#0a0800] border border-amber-900/10">
+                <div className="p-4 rounded-xl bg-[#0a0800] border border-indigo-900/10">
                   <p className="text-xs text-slate-500 uppercase tracking-wider mb-1">Project</p>
                   <p className="text-base font-semibold text-slate-100">{invite.escrowTitle}</p>
                   {invite.escrowDescription && (
@@ -106,20 +106,20 @@ export default function InvitePage() {
                   )}
                 </div>
 
-                <div className="flex justify-between p-4 rounded-xl bg-[#0a0800] border border-amber-900/10">
+                <div className="flex justify-between p-4 rounded-xl bg-[#0a0800] border border-indigo-900/10">
                   <span className="text-sm text-slate-400">Total Budget</span>
-                  <span className="text-amber-400 font-mono font-bold">
+                  <span className="text-indigo-400 font-mono font-bold">
                     {invite.totalAmount} {invite.currency || 'XLM'}
                   </span>
                 </div>
 
-                <div className="p-4 rounded-xl bg-[#0a0800] border border-amber-900/10">
+                <div className="p-4 rounded-xl bg-[#0a0800] border border-indigo-900/10">
                   <p className="text-xs text-slate-500 uppercase tracking-wider mb-2">Milestones</p>
                   <div className="space-y-2">
                     {invite.milestones?.map((m: any, i: number) => (
                       <div key={m._id || i} className="flex justify-between text-sm">
                         <span className="text-slate-300">#{i + 1} {m.title}</span>
-                        <span className="text-amber-400 font-mono">{m.amount} XLM</span>
+                        <span className="text-indigo-400 font-mono">{m.amount} XLM</span>
                       </div>
                     ))}
                   </div>

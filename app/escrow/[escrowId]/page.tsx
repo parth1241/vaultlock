@@ -32,7 +32,7 @@ export default function PublicEscrowPage() {
   const statusBadge: Record<string, { l: string; b: string }> = {
     draft: { l: 'Draft', b: 'badge-sky' },
     active: { l: 'Active', b: 'badge-indigo' },
-    in_progress: { l: 'In Progress', b: 'badge-amber' },
+    in_progress: { l: 'In Progress', b: 'badge-indigo' },
     completed: { l: 'Completed', b: 'badge-violet' },
     disputed: { l: 'Disputed', b: 'badge-rose' },
   };
@@ -44,13 +44,13 @@ export default function PublicEscrowPage() {
         <div className="max-w-2xl mx-auto">
           {loading ? (
             <div className="space-y-4">
-              {[1,2,3].map(i => <div key={i} className="h-20 bg-amber-500/5 rounded-xl shimmer" />)}
+              {[1,2,3].map(i => <div key={i} className="h-20 bg-indigo-500/5 rounded-xl shimmer" />)}
             </div>
           ) : !escrow ? (
             <div className="text-center py-20">
-              <Lock size={48} className="mx-auto text-amber-500/30 mb-4" />
+              <Lock size={48} className="mx-auto text-indigo-500/30 mb-4" />
               <h2 className="text-xl font-bold text-slate-100 mb-2">Escrow Not Found</h2>
-              <Link href="/" className="text-amber-400 text-sm">Go Home</Link>
+              <Link href="/" className="text-indigo-400 text-sm">Go Home</Link>
             </div>
           ) : (
             <>
@@ -61,7 +61,7 @@ export default function PublicEscrowPage() {
                     {statusBadge[escrow.status]?.l || escrow.status}
                   </span>
                 </div>
-                <span className="badge-amber font-mono font-bold text-base">
+                <span className="badge-indigo font-mono font-bold text-base">
                   {escrow.totalAmount} {escrow.currency || 'XLM'}
                 </span>
               </div>
@@ -71,14 +71,14 @@ export default function PublicEscrowPage() {
                 <h3 className="text-sm font-semibold text-slate-300 mb-4">Milestones</h3>
                 <div className="space-y-3">
                   {milestones.map((m: any, i: number) => (
-                    <div key={m._id || i} className="flex items-center justify-between p-3 rounded-lg bg-[#0a0800] border border-amber-900/10">
+                    <div key={m._id || i} className="flex items-center justify-between p-3 rounded-lg bg-[#0a0800] border border-indigo-900/10">
                       <div className="flex items-center space-x-3">
-                        <span className="w-6 h-6 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-xs text-amber-400">
+                        <span className="w-6 h-6 rounded-full bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-xs text-indigo-400">
                           {m.status === 'released' ? <CheckCircle2 size={12} /> : i + 1}
                         </span>
                         <span className="text-sm text-slate-200">{m.title}</span>
                       </div>
-                      <span className="text-xs text-amber-400 font-mono">{m.amount} XLM</span>
+                      <span className="text-xs text-indigo-400 font-mono">{m.amount} XLM</span>
                     </div>
                   ))}
                 </div>

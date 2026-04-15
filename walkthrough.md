@@ -10,7 +10,7 @@ VaultLock is a premium milestone-based payment platform built on the Stellar blo
 *   **NextAuth Integration:** Secure, role-based authentication system supporting distinct 'Client' and 'Freelancer' roles.
 
 ### 2. Premium Design System
-*   **Amber/Gold Theme:** A high-end dark aesthetic utilizing deep blacks (`#0a0800`) and vibrant amber accents (`#f59e0b`).
+*   **Amber/Gold Theme:** A high-end dark aesthetic utilizing deep blacks (`#0a0800`) and vibrant amber accents (`#6366f1`).
 *   **Responsive UI:** Fully fluid layouts with mobile-first design, interactive hover states, and smooth transitions.
 *   **Custom Components:** A library of bespoke shadcn/ui components, including `EscrowCard`, `MilestoneTracker`, and `WalletButton`.
 

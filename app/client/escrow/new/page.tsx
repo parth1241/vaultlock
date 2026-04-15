@@ -10,7 +10,8 @@ import { useToast } from '@/lib/context/ToastContext';
 import { triggerConfetti } from '@/components/shared/Confetti';
 import TransactionSuccessCard from '@/components/shared/TransactionSuccessCard';
 import { getAccountBalance } from '@/lib/stellar';
-import { getAddress } from '@stellar/freighter-api';
+import { getAddress, signTransaction } from '@stellar/freighter-api';
+import { Networks } from '@stellar/stellar-sdk';
 import { cn } from '@/lib/utils';
 
 interface MilestoneInput {
@@ -115,12 +116,15 @@ export default function CreateEscrowPage() {
         if (addr) {
           setWalletAddr(addr as string);
           const bal = await getAccountBalance(addr as string);
-          setUpdatedBalance(bal);
+          setUpdatedBalance(bal.toString());
         }
       } catch (e) {}
 
-      setShowSuccessCard(true);
-      triggerConfetti();
+      // Stage 4: Signing and Submitting (Implementation placeholder)
+      // For real implementation, we would call an API that uses the signed XDR
+      // Here we simulate the final stage
+      setFundingStage(3);
+      await new Promise((r) => setTimeout(r, 1000));
       showToast('Escrow created successfully!', 'success');
 
       // Redirect after delay
@@ -144,9 +148,9 @@ export default function CreateEscrowPage() {
   if (createdEscrow) {
     return (
       <div className="max-w-lg mx-auto text-center animate-in fade-in zoom-in-95 duration-500">
-        <div className="card-surface p-8 border-amber-500/30">
-          <div className="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mx-auto mb-6">
-            <CheckCircle2 size={32} className="text-amber-500" />
+        <div className="card-surface p-8 border-indigo-500/30">
+          <div className="w-16 h-16 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mx-auto mb-6">
+            <CheckCircle2 size={32} className="text-indigo-500" />
           </div>
           <h2 className="text-2xl font-bold text-slate-100 mb-2">Escrow Created!</h2>
           <p className="text-slate-400 text-sm mb-6">Your escrow has been set up on Stellar testnet</p>
@@ -158,7 +162,7 @@ export default function CreateEscrowPage() {
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-slate-500">Amount</span>
-              <span className="text-amber-400 font-mono">{createdEscrow.totalAmount} XLM</span>
+              <span className="text-indigo-400 font-mono">{createdEscrow.totalAmount} XLM</span>
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-slate-500">Wallet</span>
@@ -199,7 +203,7 @@ export default function CreateEscrowPage() {
             <div className={cn(
               'w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2 transition-all',
               step >= s
-                ? 'bg-amber-500/20 border-amber-500 text-amber-400'
+                ? 'bg-indigo-500/20 border-indigo-500 text-indigo-400'
                 : 'bg-[#0a0800] border-slate-700 text-slate-500'
             )}>
               {step > s ? '✓' : s}
@@ -207,7 +211,7 @@ export default function CreateEscrowPage() {
             {s < 4 && (
               <div className={cn(
                 'flex-1 h-0.5 mx-2 rounded-full transition-all',
-                step > s ? 'bg-amber-500' : 'bg-slate-800'
+                step > s ? 'bg-indigo-500' : 'bg-slate-800'
               )} />
             )}
           </div>
@@ -236,7 +240,7 @@ export default function CreateEscrowPage() {
                   <label className="block text-sm font-medium text-slate-300 mb-2">Total Budget</label>
                   <div className="relative">
                     <input type="number" value={totalAmount} onChange={(e) => setTotalAmount(e.target.value)} className="input-field pr-16" placeholder="0.00" min="0" step="0.01" required />
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2 badge-amber text-xs">XLM</span>
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 badge-indigo text-xs">XLM</span>
                   </div>
                 </div>
               </div>
@@ -251,14 +255,14 @@ export default function CreateEscrowPage() {
 
               <div className="space-y-4">
                 {milestones.map((m, index) => (
-                  <div key={m.id} className="p-4 rounded-xl bg-[#0a0800] border border-amber-900/10 group">
+                  <div key={m.id} className="p-4 rounded-xl bg-[#0a0800] border border-indigo-900/10 group">
                     <div className="flex items-center space-x-3 mb-3">
                       <GripVertical size={16} className="text-slate-600 cursor-grab" />
                       <span className="text-xs font-mono text-slate-500">#{index + 1}</span>
                       <input type="text" value={m.title} onChange={(e) => updateMilestone(m.id, 'title', e.target.value)} className="input-field flex-1 py-1.5 text-sm" placeholder="Milestone title" />
                       <div className="relative w-28">
                         <input type="number" value={m.amount} onChange={(e) => updateMilestone(m.id, 'amount', e.target.value)} className="input-field py-1.5 text-sm pr-10" placeholder="0" min="0" />
-                        <span className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-amber-500">XLM</span>
+                        <span className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-indigo-500">XLM</span>
                       </div>
                       {milestones.length > 1 && (
                         <button onClick={() => removeMilestone(m.id)} className="text-slate-600 hover:text-rose-400 transition-colors">
@@ -271,16 +275,16 @@ export default function CreateEscrowPage() {
                 ))}
               </div>
 
-              <button onClick={addMilestone} disabled={milestones.length >= 10} className="mt-4 flex items-center space-x-2 text-sm text-amber-400 hover:text-amber-300 transition-colors disabled:opacity-30">
+              <button onClick={addMilestone} disabled={milestones.length >= 10} className="mt-4 flex items-center space-x-2 text-sm text-indigo-400 hover:text-indigo-300 transition-colors disabled:opacity-30">
                 <Plus size={14} />
                 <span>Add Milestone ({milestones.length}/10)</span>
               </button>
 
               {/* Totals */}
-              <div className="mt-6 pt-4 border-t border-amber-900/10">
+              <div className="mt-6 pt-4 border-t border-indigo-900/10">
                 <div className="flex justify-between text-sm">
                   <span className="text-slate-400">Milestone Total</span>
-                  <span className={cn('font-mono', mismatch ? 'text-rose-400' : 'text-amber-400')}>
+                  <span className={cn('font-mono', mismatch ? 'text-rose-400' : 'text-indigo-400')}>
                     {milestoneTotal} XLM
                   </span>
                 </div>
@@ -311,14 +315,14 @@ export default function CreateEscrowPage() {
                 </div>
 
                 {/* Preview */}
-                <div className="mt-6 p-4 rounded-xl bg-[#0a0800] border border-amber-900/10">
+                <div className="mt-6 p-4 rounded-xl bg-[#0a0800] border border-indigo-900/10">
                   <p className="text-xs text-slate-500 uppercase tracking-wider mb-3">Invite Preview</p>
-                  <div className="p-4 rounded-lg bg-[#120f00] border border-amber-500/10">
+                  <div className="p-4 rounded-lg bg-[#120f00] border border-indigo-500/10">
                     <p className="text-sm text-slate-300 mb-2">
-                      <strong className="text-amber-400">{session?.user?.name}</strong> has invited you to work on:
+                      <strong className="text-indigo-400">{session?.user?.name}</strong> has invited you to work on:
                     </p>
                     <p className="text-base font-semibold text-slate-100 mb-1">{title || 'Untitled Project'}</p>
-                    <p className="text-sm text-amber-400 font-mono">{totalNum} XLM • {milestones.length} milestone{milestones.length !== 1 ? 's' : ''}</p>
+                    <p className="text-sm text-indigo-400 font-mono">{totalNum} XLM • {milestones.length} milestone{milestones.length !== 1 ? 's' : ''}</p>
                   </div>
                 </div>
               </div>
@@ -332,30 +336,30 @@ export default function CreateEscrowPage() {
               <p className="text-sm text-slate-400 mb-6">Confirm your escrow details</p>
 
               <div className="space-y-4">
-                <div className="p-4 rounded-xl bg-[#0a0800] border border-amber-900/10">
+                <div className="p-4 rounded-xl bg-[#0a0800] border border-indigo-900/10">
                   <p className="text-xs text-slate-500 uppercase tracking-wider mb-2">Project</p>
                   <p className="text-base font-semibold text-slate-100">{title}</p>
                   {description && <p className="text-sm text-slate-400 mt-1">{description}</p>}
                 </div>
 
-                <div className="p-4 rounded-xl bg-[#0a0800] border border-amber-900/10">
+                <div className="p-4 rounded-xl bg-[#0a0800] border border-indigo-900/10">
                   <p className="text-xs text-slate-500 uppercase tracking-wider mb-2">Milestones</p>
                   <div className="space-y-2">
                     {milestones.map((m, i) => (
                       <div key={m.id} className="flex justify-between text-sm">
                         <span className="text-slate-300">#{i + 1} {m.title}</span>
-                        <span className="text-amber-400 font-mono">{m.amount} XLM</span>
+                        <span className="text-indigo-400 font-mono">{m.amount} XLM</span>
                       </div>
                     ))}
                   </div>
-                  <div className="mt-3 pt-3 border-t border-amber-900/10 flex justify-between text-sm font-semibold">
+                  <div className="mt-3 pt-3 border-t border-indigo-900/10 flex justify-between text-sm font-semibold">
                     <span className="text-slate-200">Total</span>
-                    <span className="text-amber-400 font-mono">{totalNum} XLM</span>
+                    <span className="text-indigo-400 font-mono">{totalNum} XLM</span>
                   </div>
                 </div>
 
                 {freelancerEmail && (
-                  <div className="p-4 rounded-xl bg-[#0a0800] border border-amber-900/10">
+                  <div className="p-4 rounded-xl bg-[#0a0800] border border-indigo-900/10">
                     <p className="text-xs text-slate-500 uppercase tracking-wider mb-2">Freelancer</p>
                     <p className="text-sm text-slate-300">{freelancerEmail}</p>
                   </div>
@@ -363,7 +367,7 @@ export default function CreateEscrowPage() {
 
                 {/* Funding progress */}
                 {fundingStage > 0 && (
-                  <div className="p-4 rounded-xl bg-amber-500/5 border border-amber-500/20">
+                  <div className="p-4 rounded-xl bg-indigo-500/5 border border-indigo-500/20">
                     <div className="space-y-3">
                       {[
                         { stage: 1, label: 'Creating escrow...' },
@@ -372,9 +376,9 @@ export default function CreateEscrowPage() {
                       ].map((s) => (
                         <div key={s.stage} className="flex items-center space-x-3">
                           {fundingStage > s.stage ? (
-                            <CheckCircle2 size={16} className="text-amber-500" />
+                            <CheckCircle2 size={16} className="text-indigo-500" />
                           ) : fundingStage === s.stage ? (
-                            <Loader2 size={16} className="text-amber-500 animate-spin" />
+                            <Loader2 size={16} className="text-indigo-500 animate-spin" />
                           ) : (
                             <div className="w-4 h-4 rounded-full border border-slate-700" />
                           )}
@@ -434,7 +438,7 @@ export default function CreateEscrowPage() {
             <div className="space-y-3 text-sm">
               <div className="flex justify-between">
                 <span className="text-slate-500">Amount</span>
-                <span className="text-amber-400 font-mono">{totalNum || '—'} XLM</span>
+                <span className="text-indigo-400 font-mono">{totalNum || '—'} XLM</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-500">Milestones</span>
@@ -446,13 +450,12 @@ export default function CreateEscrowPage() {
               </div>
             </div>
             {title && (
-              <div className="pt-3 border-t border-amber-900/10">
+              <div className="pt-3 border-t border-indigo-900/10">
                 <p className="text-xs text-slate-500">Project</p>
                 <p className="text-sm text-slate-200 font-medium truncate">{title}</p>
               </div>
             )}
           </div>
-        </div>
         </div>
       </div>
 

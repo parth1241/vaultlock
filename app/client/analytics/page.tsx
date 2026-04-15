@@ -7,7 +7,7 @@ import { BarChart, Bar, PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, Cart
 import { TrendingUp, DollarSign, Clock, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-const COLORS = ['#f59e0b', '#6366f1', '#8b5cf6', '#f43f5e', '#06b6d4', '#64748b'];
+const COLORS = ['#6366f1', '#6366f1', '#8b5cf6', '#f43f5e', '#06b6d4', '#64748b'];
 
 export default function AnalyticsPage() {
   const [escrows, setEscrows] = useState<any[]>([]);
@@ -57,14 +57,14 @@ export default function AnalyticsPage() {
       {/* Stats row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {[
-          { label: 'Avg Escrow Size', value: `${Math.round(avgSize)} XLM`, icon: DollarSign, color: 'amber' },
+          { label: 'Avg Escrow Size', value: `${Math.round(avgSize)} XLM`, icon: DollarSign, color: 'indigo' },
           { label: 'Avg Completion', value: '12 days', icon: Clock, color: 'indigo' },
           { label: 'Total Paid Out', value: `${totalPaid} XLM`, icon: TrendingUp, color: 'violet' },
           { label: 'Success Rate', value: `${successRate.toFixed(0)}%`, icon: CheckCircle2, color: 'cyan' },
         ].map((s, i) => (
           <div key={i} className="card-surface card-hover p-5">
             <div className={cn('w-10 h-10 rounded-xl flex items-center justify-center border mb-3',
-              s.color === 'amber' ? 'bg-amber-500/10 border-amber-500/20 text-amber-500' :
+              s.color === 'indigo' ? 'bg-indigo-500/10 border-indigo-500/20 text-indigo-500' :
               s.color === 'indigo' ? 'bg-indigo-500/10 border-indigo-500/20 text-indigo-500' :
               s.color === 'violet' ? 'bg-violet-500/10 border-violet-500/20 text-violet-500' :
               'bg-cyan-500/10 border-cyan-500/20 text-cyan-500'
@@ -88,7 +88,7 @@ export default function AnalyticsPage() {
               <XAxis dataKey="month" stroke="#64748b" fontSize={12} />
               <YAxis stroke="#64748b" fontSize={12} />
               <Tooltip contentStyle={{ backgroundColor: '#120f00', border: '1px solid rgba(245,158,11,0.2)', borderRadius: '8px' }} />
-              <Bar dataKey="xlm" fill="#f59e0b" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="xlm" fill="#6366f1" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>

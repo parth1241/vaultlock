@@ -4,7 +4,7 @@ import { authOptions } from '@/lib/auth';
 import dbConnect from '@/lib/db';
 import Escrow from '@/lib/models/Escrow';
 import Milestone from '@/lib/models/Milestone';
-import { generateCollectorKeypair, encryptSecret, fundWithFriendbot } from '@/lib/stellar';
+import { generateCollectorKeypair, encryptSecret, fundWithFriendbot, submitClaimableBalance, decryptSecret } from '@/lib/stellar';
 import crypto from 'crypto';
 
 // GET /api/escrows — List escrows for current user
@@ -73,8 +73,8 @@ export async function POST(req: Request) {
     await dbConnect();
 
     // Generate escrow keypair
-    const { publicKey, secretKey } = generateCollectorKeypair();
-    const escrowSecretEncrypted = encryptSecret(secretKey);
+    const { publicKey, secret } = generateCollectorKeypair();
+    const escrowSecretEncrypted = encryptSecret(secret);
 
     // Fund escrow wallet with friendbot (testnet)
     await fundWithFriendbot(publicKey);

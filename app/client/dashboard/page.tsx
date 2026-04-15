@@ -76,7 +76,7 @@ export default function ClientDashboard() {
       {/* Stat Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {[
-          { label: 'Total Escrowed', value: `${totalEscrowed.toLocaleString()} XLM`, icon: DollarSign, color: 'amber' },
+          { label: 'Total Escrowed', value: `${totalEscrowed.toLocaleString()} XLM`, icon: DollarSign, color: 'indigo' },
           { label: 'Active Contracts', value: activeCount.toString(), icon: Briefcase, color: 'indigo' },
           { label: 'Completed', value: completedCount.toString(), icon: CheckCircle2, color: 'violet' },
           { label: 'Pending Reviews', value: pendingMilestones.toString(), icon: Clock, color: 'cyan' },
@@ -84,7 +84,7 @@ export default function ClientDashboard() {
           <div key={i} className="card-surface card-hover p-5">
             <div className="flex items-center justify-between mb-3">
               <div className={cn('w-10 h-10 rounded-xl flex items-center justify-center border',
-                stat.color === 'amber' ? 'bg-amber-500/10 border-amber-500/20 text-amber-500' :
+                stat.color === 'indigo' ? 'bg-indigo-500/10 border-indigo-500/20 text-indigo-500' :
                 stat.color === 'indigo' ? 'bg-indigo-500/10 border-indigo-500/20 text-indigo-500' :
                 stat.color === 'violet' ? 'bg-violet-500/10 border-violet-500/20 text-violet-500' :
                 'bg-cyan-500/10 border-cyan-500/20 text-cyan-500'
@@ -117,8 +117,8 @@ export default function ClientDashboard() {
              </div>
              <div className="w-full h-px bg-white/5" />
              <div className="flex items-center gap-2">
-                <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                <span className="text-[10px] font-black text-emerald-500 uppercase">Operational</span>
+                <div className="h-1.5 w-1.5 rounded-full bg-indigo-500" />
+                <span className="text-[10px] font-black text-indigo-500 uppercase">Operational</span>
              </div>
           </div>
         </div>
@@ -130,9 +130,9 @@ export default function ClientDashboard() {
         <ResponsiveContainer width="100%" height={240}>
           <AreaChart data={chartData}>
             <defs>
-              <linearGradient id="amberGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.3} />
-                <stop offset="95%" stopColor="#f59e0b" stopOpacity={0} />
+              <linearGradient id="indigoGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#6366f1" stopOpacity={0.3} />
+                <stop offset="95%" stopColor="#6366f1" stopOpacity={0} />
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(245,158,11,0.1)" />
@@ -141,9 +141,9 @@ export default function ClientDashboard() {
             <Tooltip
               contentStyle={{ backgroundColor: '#120f00', border: '1px solid rgba(245,158,11,0.2)', borderRadius: '8px' }}
               labelStyle={{ color: '#94a3b8' }}
-              itemStyle={{ color: '#f59e0b' }}
+              itemStyle={{ color: '#6366f1' }}
             />
-            <Area type="monotone" dataKey="amount" stroke="#8b5cf6" fill="url(#amberGrad)" strokeWidth={2} />
+            <Area type="monotone" dataKey="amount" stroke="#8b5cf6" fill="url(#indigoGrad)" strokeWidth={2} />
           </AreaChart>
         </ResponsiveContainer>
       </div>
@@ -167,12 +167,12 @@ export default function ClientDashboard() {
         {loading ? (
           <div className="space-y-4">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="h-24 bg-amber-500/5 rounded-xl shimmer" />
+              <div key={i} className="h-24 bg-indigo-500/5 rounded-xl shimmer" />
             ))}
           </div>
         ) : filtered.length === 0 ? (
           <div className="text-center py-16">
-            <DollarSign size={48} className="mx-auto text-amber-500/30 mb-4" />
+            <DollarSign size={48} className="mx-auto text-indigo-500/30 mb-4" />
             <h3 className="text-lg font-medium text-slate-300 mb-2">No escrows yet</h3>
             <p className="text-sm text-slate-500 mb-6">Create your first escrow to get started</p>
             <Link href="/client/escrow/new" className="btn-primary inline-flex items-center space-x-2">

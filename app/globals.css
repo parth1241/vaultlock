@@ -4,35 +4,36 @@
 
 @layer base {
   :root {
-    --background: #0a0800;
+    --background: #05050a;
     --foreground: #f1f5f9;
+    --wallet-bar-height: 0px;
 
-    --card: #120f00;
+    --card: #0a0a14;
     --card-foreground: #f1f5f9;
 
-    --popover: #120f00;
+    --popover: #0a0a14;
     --popover-foreground: #f1f5f9;
 
-    --primary: #f59e0b;
-    --primary-foreground: #0a0800;
+    --primary: #6366f1;
+    --primary-foreground: #ffffff;
 
-    --secondary: #fbbf24;
-    --secondary-foreground: #0a0800;
+    --secondary: #0d0d1a;
+    --secondary-foreground: #94a3b8;
 
-    --muted: #1a1500;
+    --muted: #0d0d1a;
     --muted-foreground: #94a3b8;
 
-    --accent: #242000;
-    --accent-foreground: #f1f5f9;
+    --accent: #121224;
+    --accent-foreground: #ffffff;
 
     --destructive: #f43f5e;
-    --destructive-foreground: #f1f5f9;
+    --destructive-foreground: #ffffff;
 
-    --border: rgba(245,158,11,0.25);
-    --input: rgba(245,158,11,0.25);
-    --ring: #f59e0b;
+    --border: rgba(99, 102, 241, 0.15);
+    --input: rgba(99, 102, 241, 0.15);
+    --ring: #6366f1;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
   }
 }
 
@@ -41,7 +42,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-base text-text-primary min-h-screen font-sans;
+    @apply bg-background text-foreground min-h-screen font-sans;
     position: relative;
     overflow-x: hidden;
   }
@@ -53,7 +54,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: radial-gradient(rgba(245, 158, 11, 0.06) 1px, transparent 1px);
+    background-image: radial-gradient(rgba(99, 102, 241, 0.05) 1px, transparent 1px);
     background-size: 24px 24px;
     pointer-events: none;
     z-index: -1;
@@ -61,103 +62,51 @@
 }
 
 @layer components {
-  .ambient-blobs {
+  .ambient-bg {
     @apply fixed inset-0 pointer-events-none z-[-2] overflow-hidden;
   }
 
-  .blob-amber {
-    @apply absolute top-[-10%] left-[-5%] w-[40%] h-[40%] bg-amber-500/10 blur-[120px] rounded-full;
-  }
-
   .blob-indigo {
-    @apply absolute top-[-5%] right-[-5%] w-[35%] h-[35%] bg-indigo-500/10 blur-[120px] rounded-full;
+    @apply absolute top-[-10%] left-[-5%] w-[40%] h-[40%] blur-[120px] rounded-full animate-blob1;
+    background-color: rgba(99, 102, 241, 0.15);
   }
 
   .blob-violet {
-    @apply absolute bottom-[-10%] right-[10%] w-[45%] h-[45%] bg-violet-500/10 blur-[150px] rounded-full;
+    @apply absolute bottom-[-10%] right-[10%] w-[45%] h-[45%] blur-[150px] rounded-full animate-blob2;
+    background-color: rgba(139, 92, 246, 0.12);
   }
 
   .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500;
-  }
-
-  .gradient-text-2 {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-indigo-500 to-violet-500;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-violet-500 to-cyan-400;
   }
 
   .btn-primary {
-    @apply bg-gradient-to-r from-amber-500 to-orange-600 text-[#0a0800] font-semibold px-6 py-2 rounded-lg 
-           transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(245,158,11,0.4)]
+    @apply bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-bold px-6 py-2.5 rounded-lg 
+           transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_8px_25px_rgba(99,102,241,0.4)]
            active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none;
   }
 
   .btn-secondary {
-    @apply border border-amber-500/50 text-amber-500 font-semibold px-6 py-2 rounded-lg
-           transition-all duration-300 hover:bg-amber-500/10 active:scale-[0.98] 
+    @apply border border-indigo-500/40 text-indigo-300 font-semibold px-6 py-2.5 rounded-lg
+           transition-all duration-300 hover:bg-indigo-500/10 active:scale-[0.98] 
            disabled:opacity-50 disabled:pointer-events-none;
   }
 
-  .card-surface {
-    @apply bg-surface border border-border-subtle rounded-xl p-6;
-  }
+  .card-surface { @apply bg-card border border-border rounded-xl p-6 transition-all; }
+  .card-hover { @apply hover:border-indigo-500/40 hover:shadow-[0_12px_40px_rgba(99,102,241,0.15)]; }
 
-  .card-elevated {
-    @apply bg-surface-elevated border border-border-default rounded-xl p-6 shadow-lg;
-  }
-
-  .card-hover {
-    @apply transition-all duration-300 hover:border-amber-500/40 hover:shadow-[0_0_15px_rgba(245,158,11,0.1)];
-  }
-
-  .font-mono-hash {
-    @apply font-mono text-sm tracking-tight;
-  }
-
-  .input-field {
-    @apply w-full bg-surface-high border border-border-subtle rounded-lg px-4 py-2 outline-none
-           focus:border-amber-500/60 transition-colors placeholder:text-text-muted;
-  }
-
-  .badge-amber { @apply px-2 py-0.5 rounded-full text-xs font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20; }
-  .badge-indigo { @apply px-2 py-0.5 rounded-full text-xs font-medium bg-indigo-500/10 text-indigo-400 border border-indigo-500/20; }
-  .badge-violet { @apply px-2 py-0.5 rounded-full text-xs font-medium bg-violet-500/10 text-violet-400 border border-violet-500/20; }
-  .badge-rose { @apply px-2 py-0.5 rounded-full text-xs font-medium bg-rose-500/10 text-rose-400 border border-rose-500/20; }
-  .badge-cyan { @apply px-2 py-0.5 rounded-full text-xs font-medium bg-cyan-500/10 text-cyan-400 border border-cyan-500/20; }
-  .badge-sky { @apply px-2 py-0.5 rounded-full text-xs font-medium bg-sky-500/10 text-sky-400 border border-sky-500/20; }
-
-  .shimmer {
-    @apply relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite]
-           before:bg-gradient-to-r before:from-transparent before:via-amber-500/10 before:to-transparent;
-  }
-
-  .shake {
-    @apply animate-shake;
-  }
-
-  .milestone-complete {
-    @apply animate-milestoneComplete;
-  }
-
-  .fund-release-progress {
-    @apply h-2 rounded-full animate-fundRelease;
-  }
-
-  .spin-ring {
-    @apply w-4 h-4 rounded-full border-2 border-amber-500/30 border-t-amber-500 animate-spin;
-  }
+  .lock-pulse { @apply animate-pulse border-indigo-500/30; }
 }
 
-/* Scrollbar Style */
-::-webkit-scrollbar {
-  width: 8px;
+@keyframes blob1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(50px, 50px) scale(1.1); }
 }
-::-webkit-scrollbar-track {
-  background: #0a0800;
+
+@keyframes blob2 {
+  0%, 100% { transform: translate(0, 0) scale(1.1); }
+  50% { transform: translate(-40px, -60px) scale(1); }
 }
-::-webkit-scrollbar-thumb {
-  background: rgba(245, 158, 11, 0.2);
-  border-radius: 9999px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(245, 158, 11, 0.3);
-}
+
+.animate-blob1 { animation: blob1 20s infinite linear alternate; }
+.animate-blob2 { animation: blob2 25s infinite linear alternate; }

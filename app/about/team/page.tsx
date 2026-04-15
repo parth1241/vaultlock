@@ -6,21 +6,21 @@ import { Footer } from '@/components/shared/Footer';
 import { cn } from '@/lib/utils';
 
 const teamMembers = [
-  { name: 'Alex Nakamoto', role: 'CEO & Co-Founder', bio: 'Former fintech lead at Stripe. Passionate about decentralized payments.', color: 'amber', initial: 'A' },
+  { name: 'Alex Nakamoto', role: 'CEO & Co-Founder', bio: 'Former fintech lead at Stripe. Passionate about decentralized payments.', color: 'indigo', initial: 'A' },
   { name: 'Sarah Chen', role: 'CTO', bio: 'Full-stack engineer with 10+ years in blockchain. Previously at Stellar Foundation.', color: 'indigo', initial: 'S' },
   { name: 'Marcus Johnson', role: 'Head of Design', bio: 'Product designer crafting beautiful DeFi experiences. Ex-Figma.', color: 'violet', initial: 'M' },
   { name: 'Priya Sharma', role: 'Head of Business', bio: 'MBA from Wharton. Building partnerships with freelance platforms globally.', color: 'cyan', initial: 'P' },
 ];
 
 const borderMap: Record<string, string> = {
-  amber: 'border-amber-500/20 hover:border-amber-500/40',
+  indigo: 'border-indigo-500/20 hover:border-indigo-500/40',
   indigo: 'border-indigo-500/20 hover:border-indigo-500/40',
   violet: 'border-violet-500/20 hover:border-violet-500/40',
   cyan: 'border-cyan-500/20 hover:border-cyan-500/40',
 };
 
 const bgMap: Record<string, string> = {
-  amber: '#f59e0b', indigo: '#6366f1', violet: '#8b5cf6', cyan: '#06b6d4',
+  indigo: '#6366f1', indigo: '#6366f1', violet: '#8b5cf6', cyan: '#06b6d4',
 };
 
 export default function TeamPage() {
@@ -52,7 +52,7 @@ export default function TeamPage() {
                 </div>
                 <p className="text-sm text-slate-400">{m.bio}</p>
                 <div className="flex space-x-3 mt-4">
-                  <span className="text-xs text-slate-600 hover:text-amber-400 cursor-pointer transition-colors">Twitter</span>
+                  <span className="text-xs text-slate-600 hover:text-indigo-400 cursor-pointer transition-colors">Twitter</span>
                   <span className="text-xs text-slate-600 hover:text-indigo-400 cursor-pointer transition-colors">LinkedIn</span>
                   <span className="text-xs text-slate-600 hover:text-violet-400 cursor-pointer transition-colors">GitHub</span>
                 </div>
@@ -61,7 +61,7 @@ export default function TeamPage() {
           </div>
 
           {/* Join card */}
-          <div className="card-surface p-8 text-center border-amber-500/20">
+          <div className="card-surface p-8 text-center border-indigo-500/20">
             <h3 className="text-xl font-bold text-slate-100 mb-2">Join Our Team</h3>
             <p className="text-sm text-slate-400 mb-4">We&apos;re always looking for talented builders who share our vision</p>
             <a href="mailto:careers@vaultlock.io" className="btn-primary text-sm px-6 py-2 rounded-xl inline-block">

@@ -117,7 +117,7 @@ export function WalletButton({ onWalletConnect, enableLogin = false }: WalletBut
 
   if (loading) {
     return (
-      <button className="flex items-center space-x-2 px-4 py-2 rounded-lg border border-amber-500/30 bg-amber-500/5 text-amber-400">
+      <button className="flex items-center space-x-2 px-4 py-2 rounded-lg border border-indigo-500/30 bg-indigo-500/5 text-indigo-400">
         <div className="spin-ring" />
         <span className="text-sm">Connecting...</span>
       </button>
@@ -129,11 +129,11 @@ export function WalletButton({ onWalletConnect, enableLogin = false }: WalletBut
       <div className="relative" ref={dropdownRef}>
         <button
           onClick={() => setShowDropdown(!showDropdown)}
-          className="flex items-center space-x-2 px-4 py-2 rounded-lg border border-amber-500/30 bg-amber-500/5 text-amber-400 hover:border-amber-500/50 transition-all"
+          className="flex items-center space-x-2 px-4 py-2 rounded-lg border border-indigo-500/30 bg-indigo-500/5 text-indigo-400 hover:border-indigo-500/50 transition-all"
         >
           <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500" />
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500" />
           </span>
           <span className="font-mono text-xs">
             {address.slice(0, 4)}...{address.slice(-4)}
@@ -141,13 +141,13 @@ export function WalletButton({ onWalletConnect, enableLogin = false }: WalletBut
         </button>
 
         {showDropdown && (
-          <div className="absolute top-full right-0 mt-2 w-72 bg-[#120f00] border border-amber-900/30 rounded-xl shadow-xl shadow-black/40 p-4 z-50">
+          <div className="absolute top-full right-0 mt-2 w-72 bg-[#120f00] border border-indigo-900/30 rounded-xl shadow-xl shadow-black/40 p-4 z-50">
             <p className="text-xs text-slate-400 mb-1">Full Address</p>
             <p className="text-xs font-mono text-slate-200 break-all mb-3">{address}</p>
             <div className="flex space-x-2">
               <button
                 onClick={copyAddress}
-                className="flex-1 flex items-center justify-center space-x-1 px-3 py-2 rounded-lg bg-amber-500/10 text-amber-400 text-xs hover:bg-amber-500/20 transition-colors"
+                className="flex-1 flex items-center justify-center space-x-1 px-3 py-2 rounded-lg bg-indigo-500/10 text-indigo-400 text-xs hover:bg-indigo-500/20 transition-colors"
               >
                 <Copy size={12} />
                 <span>{copied ? 'Copied!' : 'Copy'}</span>
@@ -170,7 +170,7 @@ export function WalletButton({ onWalletConnect, enableLogin = false }: WalletBut
     <div className="flex flex-col items-center">
       <button
         onClick={connectWallet}
-        className="flex items-center space-x-2 px-4 py-2 rounded-lg border border-amber-500/30 text-amber-400 hover:bg-amber-500/10 transition-all"
+        className="flex items-center space-x-2 px-4 py-2 rounded-lg border border-indigo-500/30 text-indigo-400 hover:bg-indigo-500/10 transition-all"
       >
         <Wallet size={16} />
         <span className="text-sm font-medium">Connect Wallet</span>

@@ -32,7 +32,7 @@ function getPasswordStrength(password: string): number {
   return strength;
 }
 
-const strengthColors = ['bg-slate-700', 'bg-rose-500', 'bg-amber-500', 'bg-yellow-500', 'bg-indigo-500'];
+const strengthColors = ['bg-slate-700', 'bg-rose-500', 'bg-indigo-500', 'bg-fuchsia-500', 'bg-indigo-500'];
 const strengthLabels = ['', 'Weak', 'Fair', 'Good', 'Strong'];
 
 export default function SignupPage() {
@@ -118,7 +118,7 @@ export default function SignupPage() {
         <div className="w-full max-w-3xl animate-in fade-in slide-in-from-bottom-4 duration-500">
           <div className="text-center mb-12">
             <Link href="/" className="inline-flex items-center space-x-2 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center">
                 <Shield className="text-black w-6 h-6" />
               </div>
             </Link>
@@ -130,17 +130,17 @@ export default function SignupPage() {
             {/* Client Card */}
             <button
               onClick={() => selectRole('client')}
-              className="group text-left p-8 rounded-2xl bg-[#120f00] border border-amber-500/20 hover:border-amber-500/50 hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(245,158,11,0.1)] transition-all duration-300"
+              className="group text-left p-8 rounded-2xl bg-[#120f00] border border-indigo-500/20 hover:border-indigo-500/50 hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(245,158,11,0.1)] transition-all duration-300"
             >
-              <div className="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <Briefcase className="text-amber-500 w-7 h-7" />
+              <div className="w-14 h-14 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <Briefcase className="text-indigo-500 w-7 h-7" />
               </div>
               <h3 className="text-xl font-bold text-slate-100 mb-2">I&apos;m a Client</h3>
               <p className="text-slate-400 text-sm mb-6">Hire talent and pay securely through on-chain escrow</p>
               <ul className="space-y-3">
                 {clientBenefits.map((b, i) => (
                   <li key={i} className="flex items-start space-x-2 text-sm text-slate-300">
-                    <CheckCircle2 size={16} className="text-amber-500 mt-0.5 shrink-0" />
+                    <CheckCircle2 size={16} className="text-indigo-500 mt-0.5 shrink-0" />
                     <span>{b}</span>
                   </li>
                 ))}
@@ -170,7 +170,7 @@ export default function SignupPage() {
 
           <p className="text-center text-sm text-slate-400 mt-10">
             Already have an account?{' '}
-            <Link href="/login" className="text-amber-400 hover:text-amber-300 font-medium">Sign in</Link>
+            <Link href="/login" className="text-indigo-400 hover:text-indigo-300 font-medium">Sign in</Link>
           </p>
         </div>
       )}
@@ -178,7 +178,7 @@ export default function SignupPage() {
       {/* Step 2: Registration Form */}
       {step === 2 && role && (
         <div className="w-full max-w-md animate-in fade-in slide-in-from-right-4 duration-500">
-          <div className="bg-[#120f00] border border-amber-500/20 rounded-xl p-8 shadow-[0_0_40px_rgba(245,158,11,0.05)]">
+          <div className="bg-[#120f00] border border-indigo-500/20 rounded-xl p-8 shadow-[0_0_40px_rgba(245,158,11,0.05)]">
             {/* Top bar */}
             <div className="flex items-center justify-between mb-8">
               <button
@@ -191,7 +191,7 @@ export default function SignupPage() {
               <span className={cn(
                 'px-3 py-1 rounded-full text-xs font-medium border',
                 role === 'client'
-                  ? 'bg-amber-500/10 text-amber-400 border-amber-500/20'
+                  ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20'
                   : 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20'
               )}>
                 {role === 'client' ? 'Client' : 'Freelancer'}
@@ -277,8 +277,8 @@ export default function SignupPage() {
                     <p className={cn(
                       'text-xs',
                       passwordStrength <= 1 ? 'text-rose-400' :
-                      passwordStrength === 2 ? 'text-amber-400' :
-                      passwordStrength === 3 ? 'text-yellow-400' :
+                      passwordStrength === 2 ? 'text-indigo-400' :
+                      passwordStrength === 3 ? 'text-fuchsia-400' :
                       'text-indigo-400'
                     )}>
                       {strengthLabels[passwordStrength]}
@@ -335,7 +335,7 @@ export default function SignupPage() {
 
             <p className="text-center text-sm text-slate-400 mt-6">
               Already have an account?{' '}
-              <Link href="/login" className="text-amber-400 hover:text-amber-300 font-medium">Sign in</Link>
+              <Link href="/login" className="text-indigo-400 hover:text-indigo-300 font-medium">Sign in</Link>
             </p>
           </div>
         </div>

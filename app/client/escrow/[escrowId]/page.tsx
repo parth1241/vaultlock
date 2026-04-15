@@ -14,7 +14,7 @@ import { cn } from '@/lib/utils';
 const statusConfig: Record<string, { label: string; badge: string }> = {
   draft: { label: 'Draft', badge: 'badge-sky' },
   active: { label: 'Active', badge: 'badge-indigo' },
-  in_progress: { label: 'In Progress', badge: 'badge-amber' },
+  in_progress: { label: 'In Progress', badge: 'badge-indigo' },
   completed: { label: 'Completed', badge: 'badge-violet' },
   disputed: { label: 'Disputed', badge: 'badge-rose' },
   cancelled: { label: 'Cancelled', badge: 'badge-sky' },
@@ -76,7 +76,7 @@ export default function EscrowDetailPage() {
     return (
       <div className="space-y-4">
         {[1, 2, 3].map((i) => (
-          <div key={i} className="h-24 bg-amber-500/5 rounded-xl shimmer" />
+          <div key={i} className="h-24 bg-indigo-500/5 rounded-xl shimmer" />
         ))}
       </div>
     );
@@ -86,7 +86,7 @@ export default function EscrowDetailPage() {
     return (
       <div className="text-center py-20">
         <p className="text-slate-400">Escrow not found</p>
-        <Link href="/client/dashboard" className="text-amber-400 text-sm mt-2 inline-block">
+        <Link href="/client/dashboard" className="text-indigo-400 text-sm mt-2 inline-block">
           Back to dashboard
         </Link>
       </div>
@@ -118,7 +118,7 @@ export default function EscrowDetailPage() {
             </div>
 
             <div className="flex flex-wrap items-center gap-4 text-sm">
-              <span className="badge-amber font-mono font-bold">
+              <span className="badge-indigo font-mono font-bold">
                 {escrow.totalAmount} {escrow.currency || 'XLM'}
               </span>
               {escrow.escrowWallet && (
@@ -131,7 +131,7 @@ export default function EscrowDetailPage() {
                   href={`https://stellar.expert/explorer/testnet/account/${escrow.escrowWallet}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center space-x-1 text-amber-400 hover:text-amber-300 text-xs"
+                  className="flex items-center space-x-1 text-indigo-400 hover:text-indigo-300 text-xs"
                 >
                   <ExternalLink size={12} />
                   <span>Stellar Expert</span>

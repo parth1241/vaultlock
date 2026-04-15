@@ -17,14 +17,14 @@ import { Networks } from '@stellar/stellar-sdk';
 const navItems = [
   { label: 'Dashboard', href: '/freelancer/dashboard', icon: LayoutDashboard, color: 'indigo' },
   { label: 'My Contracts', href: '/freelancer/contracts', icon: FileText, color: 'violet' },
-  { label: 'Earnings', href: '/freelancer/earnings', icon: DollarSign, color: 'amber' },
+  { label: 'Earnings', href: '/freelancer/earnings', icon: DollarSign, color: 'indigo' },
   { label: 'Profile', href: '/freelancer/profile', icon: UserCircle, color: 'cyan' },
 ];
 
 const colorMap: Record<string, { border: string; bg: string; text: string }> = {
   indigo: { border: 'border-l-indigo-500', bg: 'bg-indigo-500/10', text: 'text-indigo-500' },
   violet: { border: 'border-l-violet-500', bg: 'bg-violet-500/10', text: 'text-violet-500' },
-  amber: { border: 'border-l-amber-500', bg: 'bg-amber-500/10', text: 'text-amber-500' },
+  indigo: { border: 'border-l-indigo-500', bg: 'bg-indigo-500/10', text: 'text-indigo-500' },
   cyan: { border: 'border-l-cyan-500', bg: 'bg-cyan-500/10', text: 'text-cyan-500' },
 };
 
@@ -73,7 +73,7 @@ export default function FreelancerLayout({ children }: { children: React.ReactNo
   const avatarColor = session.user.avatarColor || '#6366f1';
 
   return (
-    <div className="flex h-screen overflow-hidden relative">
+    <div className="flex overflow-hidden relative" style={{ height: 'calc(100vh - var(--wallet-bar-height))' }}>
       <SessionWatcher />
 
       {/* Mobile Sidebar Overlay */}
@@ -85,11 +85,14 @@ export default function FreelancerLayout({ children }: { children: React.ReactNo
       )}
 
       {/* Sidebar */}
-      <aside className={cn(
-        "w-64 bg-[#120f00] border-r border-indigo-900/10 flex flex-col shrink-0 transition-transform duration-300 z-50 overflow-y-auto",
-        "fixed inset-y-0 left-0 lg:static lg:translate-x-0",
-        sidebarOpen ? "translate-x-0" : "-translate-x-full"
-      )}>
+      <aside 
+        className={cn(
+          "w-64 bg-[#120f00] border-r border-indigo-900/10 flex flex-col shrink-0 transition-transform duration-300 z-50 overflow-y-auto",
+          "fixed inset-y-0 left-0 lg:static lg:translate-x-0",
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        )}
+        style={{ top: 'var(--wallet-bar-height)' }}
+      >
         {/* Logo */}
         <div className="p-6 pb-4">
           <Link href="/" className="flex items-center space-x-2 group">
@@ -169,7 +172,6 @@ export default function FreelancerLayout({ children }: { children: React.ReactNo
             </span>
           </div>
         )}
-        <WalletStatusBar />
         <main className="flex-1 overflow-y-auto bg-[#0a0800] p-4 sm:p-8">
           {children}
         </main>

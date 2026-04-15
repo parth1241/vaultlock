@@ -76,13 +76,13 @@ export default function FreelancerDashboard() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {[
           { label: 'Active Contracts', value: activeContracts.length.toString(), icon: Briefcase, color: 'indigo' },
-          { label: 'Pending Submits', value: pendingSubmit.toString(), icon: Clock, color: 'amber' },
+          { label: 'Pending Submits', value: pendingSubmit.toString(), icon: Clock, color: 'indigo' },
           { label: 'Total Earned', value: `${totalEarned} XLM`, icon: DollarSign, color: 'violet' },
           { label: 'Claimable Now', value: `${claimableAmount} XLM`, icon: Zap, color: 'cyan' },
         ].map((s, i) => (
           <div key={i} className="card-surface card-hover p-5">
             <div className={cn('w-10 h-10 rounded-xl flex items-center justify-center border mb-3',
-              s.color === 'amber' ? 'bg-amber-500/10 border-amber-500/20 text-amber-500' :
+              s.color === 'indigo' ? 'bg-indigo-500/10 border-indigo-500/20 text-indigo-500' :
               s.color === 'indigo' ? 'bg-indigo-500/10 border-indigo-500/20 text-indigo-500' :
               s.color === 'violet' ? 'bg-violet-500/10 border-violet-500/20 text-violet-500' :
               'bg-cyan-500/10 border-cyan-500/20 text-cyan-500'
@@ -114,8 +114,8 @@ export default function FreelancerDashboard() {
              </div>
              <div className="w-full h-px bg-white/5" />
              <div className="flex items-center gap-2">
-                <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                <span className="text-[10px] font-black text-emerald-500 uppercase">Operational</span>
+                <div className="h-1.5 w-1.5 rounded-full bg-indigo-500" />
+                <span className="text-[10px] font-black text-indigo-500 uppercase">Operational</span>
              </div>
           </div>
         </div>
@@ -136,7 +136,7 @@ export default function FreelancerDashboard() {
                   <p className="text-xs text-slate-500">{m.escrowTitle}</p>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <span className="badge-amber font-mono">{m.amount} XLM</span>
+                  <span className="badge-indigo font-mono">{m.amount} XLM</span>
                   <button
                     onClick={() => handleClaim(m._id)}
                     disabled={claimingId === m._id}
@@ -157,7 +157,7 @@ export default function FreelancerDashboard() {
         <h3 className="text-sm font-semibold text-slate-300 mb-4">Active Contracts</h3>
         {loading ? (
           <div className="space-y-4">
-            {[1, 2].map((i) => <div key={i} className="h-32 bg-amber-500/5 rounded-xl shimmer" />)}
+            {[1, 2].map((i) => <div key={i} className="h-32 bg-indigo-500/5 rounded-xl shimmer" />)}
           </div>
         ) : activeContracts.length === 0 ? (
           <div className="card-surface p-12 text-center">

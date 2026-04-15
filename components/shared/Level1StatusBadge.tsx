@@ -59,9 +59,9 @@ export default function Level1StatusBadge() {
           <div className="flex h-full items-center justify-center gap-1.5 px-3">
             <span className="text-[10px] font-black text-blue-500 uppercase tracking-tighter">LV1</span>
             {status.ready ? (
-              <ShieldCheck className="h-4 w-4 text-emerald-500" />
+              <ShieldCheck className="h-4 w-4 text-indigo-500" />
             ) : (
-              <Zap className="h-4 w-4 text-amber-500 animate-pulse" />
+              <Zap className="h-4 w-4 text-indigo-500 animate-pulse" />
             )}
           </div>
         ) : (
@@ -115,7 +115,7 @@ function StatusItem({ label, active }: { label: string; active: boolean }) {
         {label}
       </span>
       {active ? (
-        <Check className="h-3 w-3 text-emerald-500 stroke-[4px]" />
+        <Check className="h-3 w-3 text-indigo-500 stroke-[4px]" />
       ) : (
         <X className="h-3 w-3 text-rose-500 stroke-[4px]" />
       )}

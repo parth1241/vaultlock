@@ -91,7 +91,7 @@ export const authOptions: NextAuthOptions = {
           email: user.email,
           role: user.role,
           linkedWallet: user.linkedWallet || '',
-          avatarColor: user.avatarColor || '#f59e0b',
+          avatarColor: user.avatarColor || '#6366f1',
           rememberMe: credentials.rememberMe === 'true',
         };
       },

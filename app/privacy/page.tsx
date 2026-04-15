@@ -11,7 +11,7 @@ export default function PrivacyPage() {
           <h1 className="text-3xl font-bold text-slate-100 mb-2">Privacy Policy</h1>
           <p className="text-sm text-slate-500 mb-8">Last updated: March 1, 2026</p>
 
-          <div className="prose prose-invert prose-amber max-w-none prose-headings:text-slate-100 prose-p:text-slate-400 prose-li:text-slate-400">
+          <div className="prose prose-invert prose-indigo max-w-none prose-headings:text-slate-100 prose-p:text-slate-400 prose-li:text-slate-400">
             <h2>1. Information We Collect</h2>
             <p>
               VaultLock collects the minimum information necessary to provide our escrow services:

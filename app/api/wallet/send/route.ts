@@ -1,30 +1,34 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { Server } from '@stellar/stellar-sdk'
+import { NextResponse } from 'next/server';
+import { Horizon, TransactionBuilder, Networks } from '@stellar/stellar-sdk';
 
-const HORIZON_URL = process.env.NEXT_PUBLIC_STELLAR_HORIZON || 'https://horizon-testnet.stellar.org'
-const server = new Server(HORIZON_URL)
+const HORIZON_URL = process.env.NEXT_PUBLIC_STELLAR_HORIZON || 'https://horizon-testnet.stellar.org';
+const server = new Horizon.Server(HORIZON_URL);
+const NETWORK_PASSPHRASE = process.env.NEXT_PUBLIC_STELLAR_NETWORK === 'public' 
+  ? Networks.PUBLIC 
+  : Networks.TESTNET;
 
-export async function POST(req: NextRequest) {
+export async function POST(req: Request) {
   try {
-    const { txHash } = await req.json()
-    if (!txHash) return NextResponse.json({ error: 'Transaction hash is required' }, { status: 400 })
+    const { xdr } = await req.json();
 
-    const tx = await server.transactions().transaction(txHash).call()
-    if (!tx) return NextResponse.json({ verified: false, error: 'Transaction not found' }, { status: 404 })
+    if (!xdr) {
+      return NextResponse.json({ error: 'XDR is required' }, { status: 400 });
+    }
 
-    return NextResponse.json({
-      verified: true,
-      txDetails: {
-        hash: tx.hash,
-        ledger: tx.ledger_attr,
-        createdAt: tx.created_at,
-        source: tx.source_account,
-        fee: tx.fee_value,
-        memo: tx.memo,
-        successful: tx.successful
-      }
-    })
+    const transaction = TransactionBuilder.fromXDR(xdr, NETWORK_PASSPHRASE);
+    const result = await server.submitTransaction(transaction);
+
+    return NextResponse.json({ 
+      success: true,
+      hash: result.hash,
+      ledger: result.ledger,
+      fee: (result as any).fee_value || '100'
+    });
   } catch (error: any) {
-    return NextResponse.json({ verified: false, error: 'Failed to verify transaction' }, { status: 500 })
+    console.error('Send API Error:', error);
+    return NextResponse.json({ 
+      error: 'Failed to submit transaction',
+      details: error.message 
+    }, { status: 500 });
   }
 }

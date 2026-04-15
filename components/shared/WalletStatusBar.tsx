@@ -55,6 +55,17 @@ export default function WalletStatusBar() {
     }
   }, [fetchWalletData])
 
+  useEffect(() => {
+    if (address) {
+      document.documentElement.style.setProperty('--wallet-bar-height', '56px');
+    } else {
+      document.documentElement.style.setProperty('--wallet-bar-height', '0px');
+    }
+    return () => {
+      document.documentElement.style.setProperty('--wallet-bar-height', '0px');
+    };
+  }, [address]);
+
   const copyAddress = () => {
     if (address) {
       navigator.clipboard.writeText(address)
@@ -108,11 +119,11 @@ export default function WalletStatusBar() {
         {/* Right Side: Quick Actions */}
         <div className="flex items-center gap-3 shrink-0">
            <Dialog>
-            <DialogTrigger asChild>
-              <Button size="sm" className="bg-blue-600 hover:bg-blue-500 text-white h-9 px-4 font-black uppercase tracking-widest text-[10px] italic shadow-lg shadow-blue-500/20">
+            <DialogTrigger>
+              <div className="bg-blue-600 hover:bg-blue-500 text-white h-9 px-4 flex items-center rounded-md font-black uppercase tracking-widest text-[10px] italic shadow-lg shadow-blue-500/20 cursor-pointer">
                 <Send className="h-3.5 w-3.5 mr-2" />
                 Quick Send
-              </Button>
+              </div>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[480px] p-0 border-none bg-transparent">
               <SendXLMPanel />
@@ -126,7 +137,7 @@ export default function WalletStatusBar() {
             className="p-2 text-muted-foreground hover:text-white transition-colors rounded-lg hover:bg-white/5"
             title="Copy Address"
           >
-            {copied ? <Check size={16} className="text-emerald-400" /> : <Copy size={16} />}
+            {copied ? <Check size={16} className="text-indigo-400" /> : <Copy size={16} />}
           </button>
           
           <button 

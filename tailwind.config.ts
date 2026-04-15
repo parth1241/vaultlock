@@ -82,12 +82,12 @@ const config: Config = {
           "100%": { transform: "scale(1)", boxShadow: "0 0 0 rgba(245,158,11,0)" },
         },
         fundRelease: {
-          "0%": { width: "0%", backgroundColor: "#f59e0b" },
+          "0%": { width: "0%", backgroundColor: "#6366f1" },
           "100%": { width: "100%", backgroundColor: "#ea580c" },
         },
         spinRing: {
-          "0%": { transform: "rotate(0deg)", borderTopColor: "#f59e0b" },
-          "100%": { transform: "rotate(360deg)", borderTopColor: "#f59e0b" },
+          "0%": { transform: "rotate(0deg)", borderTopColor: "#6366f1" },
+          "100%": { transform: "rotate(360deg)", borderTopColor: "#6366f1" },
         },
         bob1: {
           "0%, 100%": { transform: "translateY(0)" },

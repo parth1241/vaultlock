@@ -7,14 +7,14 @@ import { Save, Loader2, Trash2, AlertTriangle } from 'lucide-react';
 import { useToast } from '@/lib/context/ToastContext';
 import { cn } from '@/lib/utils';
 
-const AVATAR_COLORS = ['#f59e0b', '#6366f1', '#8b5cf6', '#06b6d4', '#f43f5e', '#64748b'];
+const AVATAR_COLORS = ['#6366f1', '#6366f1', '#8b5cf6', '#06b6d4', '#f43f5e', '#64748b'];
 
 export default function AccountSettingsPage() {
   const { data: session, update } = useSession();
   const { showToast } = useToast();
 
   const [name, setName] = useState(session?.user?.name || '');
-  const [avatarColor, setAvatarColor] = useState(session?.user?.avatarColor || '#f59e0b');
+  const [avatarColor, setAvatarColor] = useState(session?.user?.avatarColor || '#6366f1');
   const [saving, setSaving] = useState(false);
 
   // Password
@@ -123,20 +123,20 @@ export default function AccountSettingsPage() {
         </div>
 
         {/* Sessions */}
-        <div className="mt-6 pt-6 border-t border-amber-900/10">
+        <div className="mt-6 pt-6 border-t border-indigo-900/10">
           <h4 className="text-sm font-medium text-slate-300 mb-3">Active Sessions</h4>
           <div className="space-y-2">
             {[
               { device: 'Chrome — macOS', location: 'San Francisco, US', active: 'Just now', current: true },
               { device: 'Safari — iOS', location: 'San Francisco, US', active: '2 hours ago', current: false },
             ].map((s, i) => (
-              <div key={i} className="flex items-center justify-between p-3 rounded-lg bg-[#0a0800] border border-amber-900/10">
+              <div key={i} className="flex items-center justify-between p-3 rounded-lg bg-[#0a0800] border border-indigo-900/10">
                 <div>
                   <p className="text-sm text-slate-200">{s.device}</p>
                   <p className="text-xs text-slate-500">{s.location} • {s.active}</p>
                 </div>
                 {s.current ? (
-                  <span className="badge-amber text-xs">Current</span>
+                  <span className="badge-indigo text-xs">Current</span>
                 ) : (
                   <button className="text-xs text-rose-400 hover:text-rose-300 transition-colors">Revoke</button>
                 )}
@@ -161,7 +161,7 @@ export default function AccountSettingsPage() {
                 onClick={() => { n.set(!n.value); showToast('Setting saved', 'success'); }}
                 className={cn(
                   'w-10 h-6 rounded-full relative transition-all duration-300',
-                  n.value ? 'bg-amber-500' : 'bg-slate-700'
+                  n.value ? 'bg-indigo-500' : 'bg-slate-700'
                 )}
               >
                 <span className={cn(

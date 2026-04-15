@@ -64,13 +64,13 @@ export default function ContactPage() {
             {/* Contact Cards */}
             <div className="space-y-4">
               {[
-                { icon: Mail, title: 'Email', value: 'hello@vaultlock.io', color: 'amber' },
+                { icon: Mail, title: 'Email', value: 'hello@vaultlock.io', color: 'indigo' },
                 { icon: MapPin, title: 'Location', value: 'San Francisco, CA (Remote-first)', color: 'indigo' },
                 { icon: Clock, title: 'Response Time', value: 'Within 24 hours', color: 'violet' },
               ].map((c, i) => (
                 <div key={i} className="card-surface card-hover p-6 flex items-center space-x-4">
                   <div className={`w-12 h-12 rounded-xl flex items-center justify-center border ${
-                    c.color === 'amber' ? 'bg-amber-500/10 border-amber-500/20 text-amber-500' :
+                    c.color === 'indigo' ? 'bg-indigo-500/10 border-indigo-500/20 text-indigo-500' :
                     c.color === 'indigo' ? 'bg-indigo-500/10 border-indigo-500/20 text-indigo-500' :
                     'bg-violet-500/10 border-violet-500/20 text-violet-500'
                   }`}>

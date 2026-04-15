@@ -6,7 +6,7 @@ import { Save, Loader2, Wallet, Unlink, Download } from 'lucide-react';
 import { useToast } from '@/lib/context/ToastContext';
 import { cn } from '@/lib/utils';
 
-const AVATAR_COLORS = ['#f59e0b', '#6366f1', '#8b5cf6', '#06b6d4', '#f43f5e', '#64748b'];
+const AVATAR_COLORS = ['#6366f1', '#6366f1', '#8b5cf6', '#06b6d4', '#f43f5e', '#64748b'];
 
 export default function FreelancerProfilePage() {
   const { data: session, update } = useSession();
@@ -100,8 +100,8 @@ export default function FreelancerProfilePage() {
             </button>
           </div>
         ) : (
-          <div className="text-center p-8 rounded-xl bg-[#0a0800] border border-amber-900/10">
-            <Wallet size={32} className="mx-auto text-amber-500/30 mb-3" />
+          <div className="text-center p-8 rounded-xl bg-[#0a0800] border border-indigo-900/10">
+            <Wallet size={32} className="mx-auto text-indigo-500/30 mb-3" />
             <p className="text-sm text-slate-400 mb-4">Link your Stellar wallet to receive payments</p>
             <button className="btn-primary text-sm">Link Wallet</button>
           </div>

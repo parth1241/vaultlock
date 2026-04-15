@@ -55,7 +55,7 @@ export default function ContractsPage() {
 
       {loading ? (
         <div className="space-y-4">
-          {[1, 2, 3].map((i) => <div key={i} className="h-32 bg-amber-500/5 rounded-xl shimmer" />)}
+          {[1, 2, 3].map((i) => <div key={i} className="h-32 bg-indigo-500/5 rounded-xl shimmer" />)}
         </div>
       ) : filtered.length === 0 ? (
         <div className="card-surface p-12 text-center">

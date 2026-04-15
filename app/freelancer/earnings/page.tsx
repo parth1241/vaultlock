@@ -70,13 +70,13 @@ export default function EarningsPage() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
         {[
           { label: 'Total Earned', value: `${totalEarned} XLM`, icon: DollarSign, color: 'violet' },
-          { label: 'This Month', value: '1,200 XLM', icon: TrendingUp, color: 'amber' },
+          { label: 'This Month', value: '1,200 XLM', icon: TrendingUp, color: 'indigo' },
           { label: 'Avg Per Project', value: `${escrows.length > 0 ? Math.round(totalEarned / escrows.length) : 0} XLM`, icon: Calendar, color: 'cyan' },
         ].map((s, i) => (
           <div key={i} className="card-surface card-hover p-5">
             <div className={cn('w-10 h-10 rounded-xl flex items-center justify-center border mb-3',
               s.color === 'violet' ? 'bg-violet-500/10 border-violet-500/20 text-violet-500' :
-              s.color === 'amber' ? 'bg-amber-500/10 border-amber-500/20 text-amber-500' :
+              s.color === 'indigo' ? 'bg-indigo-500/10 border-indigo-500/20 text-indigo-500' :
               'bg-cyan-500/10 border-cyan-500/20 text-cyan-500'
             )}>
               <s.icon size={20} />
@@ -115,7 +115,7 @@ export default function EarningsPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-amber-900/10">
+                <tr className="border-b border-indigo-900/10">
                   <th className="text-left py-3 px-6 text-xs text-slate-500 uppercase">Milestone</th>
                   <th className="text-left py-3 px-4 text-xs text-slate-500 uppercase">Escrow</th>
                   <th className="text-left py-3 px-4 text-xs text-slate-500 uppercase">Amount</th>
@@ -125,7 +125,7 @@ export default function EarningsPage() {
               </thead>
               <tbody>
                 {allReleased.map((m: any, i: number) => (
-                  <tr key={i} className="border-b border-amber-900/5 hover:bg-amber-500/5 transition-colors">
+                  <tr key={i} className="border-b border-indigo-900/5 hover:bg-indigo-500/5 transition-colors">
                     <td className="py-3 px-6 text-slate-200">{m.title}</td>
                     <td className="py-3 px-4 text-slate-400">{m.escrowTitle}</td>
                     <td className="py-3 px-4 text-violet-400 font-mono">{m.amount} XLM</td>
@@ -138,7 +138,7 @@ export default function EarningsPage() {
                           href={`https://stellar.expert/explorer/testnet/tx/${m.txHash}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-amber-400 hover:text-amber-300 flex items-center space-x-1"
+                          className="text-indigo-400 hover:text-indigo-300 flex items-center space-x-1"
                         >
                           <span className="font-mono-hash truncate max-w-[80px]">{m.txHash.slice(0, 8)}...</span>
                           <ExternalLink size={10} />

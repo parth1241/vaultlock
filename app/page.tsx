@@ -27,7 +27,7 @@ function ParticleCanvas() {
     resize();
     window.addEventListener('resize', resize);
 
-    const colors = ['#f59e0b', '#6366f1', '#8b5cf6', '#f59e0b'];
+    const colors = ['#6366f1', '#6366f1', '#8b5cf6', '#6366f1'];
     interface Particle { x: number; y: number; vx: number; vy: number; r: number; color: string; }
     const particles: Particle[] = [];
     for (let i = 0; i < 60; i++) {
@@ -179,7 +179,7 @@ const tickerItems = [
 
 // ─── HOW IT WORKS STEPS ─────────────────────────────────
 const steps = [
-  { icon: Lock, color: 'amber', title: 'Create Escrow', desc: 'Client defines project, milestones, and locks XLM on-chain.' },
+  { icon: Lock, color: 'indigo', title: 'Create Escrow', desc: 'Client defines project, milestones, and locks XLM on-chain.' },
   { icon: Shield, color: 'indigo', title: 'Funds Locked', desc: 'XLM is secured on Stellar. Neither party can withdraw unilaterally.' },
   { icon: CheckCircle2, color: 'violet', title: 'Work & Submit', desc: 'Freelancer completes milestones and submits for review.' },
   { icon: Zap, color: 'cyan', title: 'Release Payment', desc: 'Client approves. Freelancer claims XLM instantly to their wallet.' },
@@ -187,7 +187,7 @@ const steps = [
 
 // ─── FEATURES ───────────────────────────────────────────
 const features = [
-  { icon: DollarSign, color: 'amber', title: 'Claimable Balances', desc: 'Funds locked until you approve', border: 'border-amber-500/20 hover:border-amber-500/40' },
+  { icon: DollarSign, color: 'indigo', title: 'Claimable Balances', desc: 'Funds locked until you approve', border: 'border-indigo-500/20 hover:border-indigo-500/40' },
   { icon: CheckCircle2, color: 'indigo', title: 'Milestone Payments', desc: 'Break projects into verifiable stages', border: 'border-indigo-500/20 hover:border-indigo-500/40' },
   { icon: Shield, color: 'violet', title: 'Dispute Protection', desc: 'Built-in resolution for disagreements', border: 'border-violet-500/20 hover:border-violet-500/40' },
   { icon: Wallet, color: 'cyan', title: 'Freighter Native', desc: 'Sign with your Stellar wallet', border: 'border-cyan-500/20 hover:border-cyan-500/40' },
@@ -196,7 +196,7 @@ const features = [
 ];
 
 const colorMap: Record<string, string> = {
-  amber: 'text-amber-500 bg-amber-500/10 border-amber-500/20',
+  indigo: 'text-indigo-500 bg-indigo-500/10 border-indigo-500/20',
   indigo: 'text-indigo-500 bg-indigo-500/10 border-indigo-500/20',
   violet: 'text-violet-500 bg-violet-500/10 border-violet-500/20',
   cyan: 'text-cyan-500 bg-cyan-500/10 border-cyan-500/20',
@@ -206,7 +206,7 @@ const colorMap: Record<string, string> = {
 
 // ─── TESTIMONIALS ───────────────────────────────────────
 const testimonials = [
-  { name: 'Sarah Chen', role: 'Freelance Developer', text: 'VaultLock changed how I handle payments. No more chasing invoices — funds are locked before I start.', border: 'border-amber-500/20' },
+  { name: 'Sarah Chen', role: 'Freelance Developer', text: 'VaultLock changed how I handle payments. No more chasing invoices — funds are locked before I start.', border: 'border-indigo-500/20' },
   { name: 'Marcus Johnson', role: 'Agency Owner', text: 'We moved all our contractor payments to VaultLock. The milestone system keeps everyone aligned.', border: 'border-indigo-500/20' },
   { name: 'Priya Sharma', role: 'UI/UX Designer', text: 'Getting paid in XLM within seconds of approval is magical. The future of freelancing is here.', border: 'border-violet-500/20' },
 ];
@@ -219,7 +219,7 @@ const pricingTiers = [
     cta: 'Start Free', popular: false,
   },
   {
-    name: 'Pro', price: '1%', period: 'per transaction', color: 'amber',
+    name: 'Pro', price: '1%', period: 'per transaction', color: 'indigo',
     features: ['1% platform fee', 'Unlimited escrows', 'Dispute protection', 'Priority support', 'Analytics dashboard', 'CSV export'],
     cta: 'Go Pro', popular: true,
   },
@@ -242,19 +242,22 @@ export default function LandingPage() {
       <Navbar />
 
       {/* ─── HERO ─────────────────────────────────────── */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+      <section 
+        className="relative min-h-screen flex items-center justify-center overflow-hidden transition-all duration-300"
+        style={{ paddingTop: 'calc(64px + var(--wallet-bar-height))' }}
+      >
         <ParticleCanvas />
 
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
           {/* Badge */}
-          <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/5 mb-8">
-            <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
-            <span className="text-xs text-amber-400 font-medium">Built on Stellar Blockchain</span>
+          <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full border border-indigo-500/30 bg-indigo-500/5 mb-8">
+            <div className="w-2 h-2 bg-indigo-500 rounded-full animate-pulse" />
+            <span className="text-xs text-indigo-400 font-medium">Built on Stellar Blockchain</span>
           </div>
 
           <h1 className="text-3xl sm:text-5xl lg:text-7xl font-bold text-slate-100 mb-6 min-h-[60px] md:min-h-[100px]">
             {headline}
-            <span className="animate-pulse text-amber-500">|</span>
+            <span className="animate-pulse text-indigo-500">|</span>
           </h1>
 
           <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-10">
@@ -274,7 +277,7 @@ export default function LandingPage() {
 
           {/* Floating stat badges */}
           <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
-            <div className="badge-amber px-4 py-2 text-sm animate-bob1">
+            <div className="badge-indigo px-4 py-2 text-sm animate-bob1">
               <span className="font-bold">2,847</span> Escrows Created
             </div>
             <div className="badge-indigo px-4 py-2 text-sm animate-bob2">
@@ -293,11 +296,11 @@ export default function LandingPage() {
       </section>
 
       {/* ─── LIVE TICKER ──────────────────────────────── */}
-      <section className="border-y border-amber-900/20 bg-[#120f00]/50 py-4 overflow-hidden">
+      <section className="border-y border-indigo-900/20 bg-[#120f00]/50 py-4 overflow-hidden">
         <div className="flex animate-[marquee_30s_linear_infinite] whitespace-nowrap">
           {[...tickerItems, ...tickerItems].map((item, i) => (
             <span key={i} className="flex items-center mx-8 text-sm text-slate-400">
-              <span className="w-1.5 h-1.5 bg-amber-500 rounded-full mr-3 shrink-0" />
+              <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full mr-3 shrink-0" />
               {item}
             </span>
           ))}
@@ -308,7 +311,7 @@ export default function LandingPage() {
       <section id="how-it-works" className="py-24 px-6">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <span className="badge-amber mb-4 inline-block">Simple Process</span>
+            <span className="badge-indigo mb-4 inline-block">Simple Process</span>
             <h2 className="text-3xl md:text-4xl font-bold text-slate-100 mb-4">How VaultLock Works</h2>
             <p className="text-slate-400 max-w-lg mx-auto">Four steps to trustless, on-chain payments</p>
           </div>
@@ -320,7 +323,7 @@ export default function LandingPage() {
                 <div key={index} className="relative">
                   {/* Connecting line */}
                   {index < steps.length - 1 && (
-                    <div className="hidden md:block absolute top-10 left-[60%] w-full border-t-2 border-dashed border-amber-500/20 z-0" />
+                    <div className="hidden md:block absolute top-10 left-[60%] w-full border-t-2 border-dashed border-indigo-500/20 z-0" />
                   )}
                   <div className="card-surface card-hover text-center relative z-10">
                     <div className="flex justify-center mb-4">
@@ -397,7 +400,7 @@ export default function LandingPage() {
               <div key={i} className={cn('card-surface p-6 border', t.border)}>
                 <div className="flex items-center space-x-1 mb-4">
                   {[1, 2, 3, 4, 5].map((s) => (
-                    <Star key={s} size={14} className="text-amber-500 fill-amber-500" />
+                    <Star key={s} size={14} className="text-indigo-500 fill-indigo-500" />
                   ))}
                 </div>
                 <p className="text-sm text-slate-300 mb-4 italic">&ldquo;{t.text}&rdquo;</p>
@@ -434,14 +437,14 @@ export default function LandingPage() {
                 className={cn(
                   'card-surface p-8 border relative',
                   tier.popular
-                    ? 'border-amber-500/40 shadow-[0_0_30px_rgba(245,158,11,0.1)]'
+                    ? 'border-indigo-500/40 shadow-[0_0_30px_rgba(245,158,11,0.1)]'
                     : tier.color === 'violet'
                     ? 'border-violet-500/20'
                     : 'border-indigo-500/20'
                 )}
               >
                 {tier.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 badge-amber px-3 py-1 text-xs">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 badge-indigo px-3 py-1 text-xs">
                     Most Popular
                   </div>
                 )}
@@ -454,7 +457,7 @@ export default function LandingPage() {
                   {tier.features.map((f, fi) => (
                     <li key={fi} className="flex items-center space-x-2 text-sm text-slate-300">
                       <CheckCircle2 size={14} className={cn('shrink-0',
-                        tier.color === 'amber' ? 'text-amber-500' :
+                        tier.color === 'indigo' ? 'text-indigo-500' :
                         tier.color === 'indigo' ? 'text-indigo-500' : 'text-violet-500'
                       )} />
                       <span>{f}</span>
@@ -481,7 +484,7 @@ export default function LandingPage() {
       {/* ─── CTA BANNER ───────────────────────────────── */}
       <section className="py-24 px-6">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-gradient-to-br from-amber-500/20 via-orange-500/10 to-rose-500/5 rounded-3xl p-12 md:p-16 text-center border border-amber-500/20">
+          <div className="bg-gradient-to-br from-indigo-500/20 via-violet-500/10 to-rose-500/5 rounded-3xl p-12 md:p-16 text-center border border-indigo-500/20">
             <h2 className="text-3xl md:text-5xl font-bold text-slate-100 mb-6">
               Ready to lock in your next project?
             </h2>
@@ -495,7 +498,7 @@ export default function LandingPage() {
               </Link>
               <div className="flex items-center space-x-2">
                 <div className="flex -space-x-2">
-                  {['#f59e0b', '#6366f1', '#8b5cf6', '#06b6d4', '#64748b'].map((c, i) => (
+                  {['#6366f1', '#6366f1', '#8b5cf6', '#06b6d4', '#64748b'].map((c, i) => (
                     <div key={i} className="w-8 h-8 rounded-full border-2 border-[#0a0800] flex items-center justify-center text-xs font-bold text-black" style={{ backgroundColor: c }}>
                       {String.fromCharCode(65 + i)}
                     </div>
