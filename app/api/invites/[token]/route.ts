@@ -39,7 +39,7 @@ export async function GET(
       status: escrow.status,
       escrowId: escrow._id,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('GET /api/invites/[token] error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }

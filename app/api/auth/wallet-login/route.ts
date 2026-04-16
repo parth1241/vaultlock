@@ -34,7 +34,7 @@ export async function POST(req: Request) {
       role: user.role,
       linkedWallet: user.linkedWallet,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Wallet login error:', error);
     return NextResponse.json(
       { error: 'Internal server error' },

@@ -47,12 +47,11 @@ const articles = [
 
 const colorBorder: Record<string, string> = {
   indigo: 'border-indigo-500/20 hover:border-indigo-500/40',
-  indigo: 'border-indigo-500/20 hover:border-indigo-500/40',
   violet: 'border-violet-500/20 hover:border-violet-500/40',
 };
 
 const colorBadge: Record<string, string> = {
-  indigo: 'badge-indigo', indigo: 'badge-indigo', violet: 'badge-violet',
+  indigo: 'badge-indigo', violet: 'badge-violet', cyan: 'badge-cyan', slate: 'badge-slate',
 };
 
 export default function BlogPage() {

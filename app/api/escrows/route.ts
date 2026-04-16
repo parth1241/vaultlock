@@ -4,8 +4,14 @@ import { authOptions } from '@/lib/auth';
 import dbConnect from '@/lib/db';
 import Escrow from '@/lib/models/Escrow';
 import Milestone from '@/lib/models/Milestone';
-import { generateCollectorKeypair, encryptSecret, fundWithFriendbot, submitClaimableBalance, decryptSecret } from '@/lib/stellar';
+import { generateCollectorKeypair, encryptSecret, fundWithFriendbot } from '@/lib/stellar';
 import crypto from 'crypto';
+
+interface MilestoneInput {
+  title: string;
+  description?: string;
+  amount: number;
+}
 
 // GET /api/escrows — List escrows for current user
 export async function GET() {
@@ -43,7 +49,7 @@ export async function GET() {
     );
 
     return NextResponse.json(escrowsWithMilestones);
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('GET /api/escrows error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
@@ -97,7 +103,7 @@ export async function POST(req: Request) {
     });
 
     // Create milestones
-    const milestonePromises = milestones.map((m: any, index: number) =>
+    const milestonePromises = milestones.map((m: MilestoneInput, index: number) =>
       Milestone.create({
         escrowId: escrow._id,
         title: m.title,
@@ -120,7 +126,7 @@ export async function POST(req: Request) {
       milestones: createdMilestones,
       inviteUrl,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('POST /api/escrows error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }

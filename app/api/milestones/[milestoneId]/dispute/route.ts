@@ -42,7 +42,7 @@ export async function POST(
     await escrow.save();
 
     return NextResponse.json({ success: true });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('POST /api/milestones/[milestoneId]/dispute error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }

@@ -7,11 +7,7 @@ import {
   Memo,
   Asset,
   Keypair,
-  Claimant
 } from '@stellar/stellar-sdk'
-import { 
-  StellarWalletsKit,
-} from '@creit.tech/stellar-wallets-kit'
 
 const HORIZON_URL = process.env.NEXT_PUBLIC_STELLAR_HORIZON 
   || 'https://horizon-testnet.stellar.org'

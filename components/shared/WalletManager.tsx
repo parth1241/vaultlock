@@ -4,6 +4,8 @@ import React, { useState, useEffect, useCallback } from 'react'
 
 import { useStellarWallet } from '@/lib/context/StellarWalletContext'
 import { WalletSelector } from './WalletSelector'
+import { useSession } from 'next-auth/react'
+import { useToast } from '@/lib/context/ToastContext'
 import { 
   getXLMBalance, 
   fundWithFriendbot,
@@ -16,12 +18,31 @@ import { Badge } from '@/components/ui/badge'
 
 export default function WalletManager() {
   const { address, walletType, disconnect, isConnected } = useStellarWallet()
+  const { data: session, update } = useSession()
+  const { showToast } = useToast()
   const [balance, setBalance] = useState<number>(0)
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [isFunding, setIsFunding] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [copied, setCopied] = useState(false)
   const [showSelector, setShowSelector] = useState(false)
+
+  // Sync wallet to profile
+  const syncWallet = useCallback(async (walletAddress: string | null) => {
+    try {
+      const res = await fetch('/api/user/profile', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ linkedWallet: walletAddress }),
+      });
+      if (res.ok) {
+        showToast(walletAddress ? 'Wallet linked!' : 'Wallet unlinked!', 'success');
+        update(); // Refresh session
+      }
+    } catch (err) {
+      showToast('Failed to update wallet', 'error');
+    }
+  }, [showToast, update]);
 
   const handleRefresh = useCallback(async () => {
     if (address) {
@@ -37,21 +58,27 @@ export default function WalletManager() {
   }, [handleRefresh])
 
   useEffect(() => {
+    if (isConnected && address && session && session.user.linkedWallet !== address) {
+      syncWallet(address);
+    }
+    
     if (isConnected && address) {
       const interval = setInterval(handleRefresh, 60000)
       return () => clearInterval(interval)
     }
-  }, [isConnected, address, handleRefresh])
+  }, [isConnected, address, handleRefresh, syncWallet, session])
 
-  const handleDisconnect = () => {
-    disconnect()
-    setBalance(0)
-  }
+  const handleDisconnect = async () => {
+    await syncWallet(null);
+    disconnect();
+    setBalance(0);
+  };
 
   const handleFund = async () => {
     setIsFunding(true)
     setError(null)
     try {
+      if (!address) throw new Error('No address');
       const result = await fundWithFriendbot(address)
       if (result.success) {
         await handleRefresh()
@@ -104,10 +131,10 @@ export default function WalletManager() {
           <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/50">Wallet Signature</label>
           <div className="flex items-center gap-2 group/addr">
             <code className="flex-1 rounded-xl bg-white/5 px-4 py-3 text-sm font-mono tracking-tight border border-white/5 transition-all group-hover/addr:border-blue-500/30">
-              {address.slice(0, 10)}...{address.slice(-10)}
+              {address ? `${address.slice(0, 10)}...${address.slice(-10)}` : ''}
             </code>
             <Button variant="ghost" size="icon" className="h-10 w-10 hover:bg-blue-500/10" onClick={() => {
-              navigator.clipboard.writeText(address)
+              if (address) navigator.clipboard.writeText(address)
               setCopied(true)
               setTimeout(() => setCopied(false), 2000)
             }}>

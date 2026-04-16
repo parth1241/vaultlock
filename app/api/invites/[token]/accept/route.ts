@@ -38,7 +38,7 @@ export async function POST(
     await escrow.save();
 
     return NextResponse.json({ escrowId: escrow._id.toString() });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('POST /api/invites/[token]/accept error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }

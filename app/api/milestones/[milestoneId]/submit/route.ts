@@ -36,7 +36,7 @@ export async function POST(
     await milestone.save();
 
     return NextResponse.json({ milestone });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('POST /api/milestones/[milestoneId]/submit error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }

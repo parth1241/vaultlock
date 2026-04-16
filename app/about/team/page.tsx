@@ -14,13 +14,12 @@ const teamMembers = [
 
 const borderMap: Record<string, string> = {
   indigo: 'border-indigo-500/20 hover:border-indigo-500/40',
-  indigo: 'border-indigo-500/20 hover:border-indigo-500/40',
   violet: 'border-violet-500/20 hover:border-violet-500/40',
   cyan: 'border-cyan-500/20 hover:border-cyan-500/40',
 };
 
 const bgMap: Record<string, string> = {
-  indigo: '#6366f1', indigo: '#6366f1', violet: '#8b5cf6', cyan: '#06b6d4',
+  indigo: '#6366f1', violet: '#8b5cf6', cyan: '#06b6d4',
 };
 
 export default function TeamPage() {

@@ -12,13 +12,14 @@ export async function PATCH(req: Request) {
     }
 
     const body = await req.json();
-    const { name, avatarColor } = body;
+    const { name, avatarColor, linkedWallet } = body;
 
     await dbConnect();
 
-    const updateFields: Record<string, string> = {};
+    const updateFields: Record<string, any> = {};
     if (name) updateFields.name = name;
     if (avatarColor) updateFields.avatarColor = avatarColor;
+    if (linkedWallet !== undefined) updateFields.linkedWallet = linkedWallet;
 
     const user = await User.findByIdAndUpdate(
       session.user.id,
@@ -27,7 +28,7 @@ export async function PATCH(req: Request) {
     ).select('-passwordHash -__v');
 
     return NextResponse.json({ success: true, user });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Profile update error:', error);
     return NextResponse.json(
       { error: 'Internal server error' },

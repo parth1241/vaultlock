@@ -8,8 +8,10 @@ import { Shield, LayoutDashboard, Plus, History, BarChart3, Settings, LogOut, Al
 import { DashboardSkeleton } from '@/components/shared/DashboardSkeleton';
 import { SessionWatcher } from '@/components/shared/SessionWatcher';
 import WalletStatusBar from '@/components/shared/WalletStatusBar';
-import Level1StatusBadge from '@/components/shared/Level1StatusBadge';
+import dynamic from 'next/dynamic';
 import { MobilePreviewBanner } from '@/components/shared/MobilePreviewBanner';
+
+const Level1StatusBadge = dynamic(() => import('@/components/shared/Level1StatusBadge'), { ssr: false });
 import { cn } from '@/lib/utils';
 import { formatDistanceToNow } from 'date-fns';
 import { Networks } from '@stellar/stellar-sdk';
@@ -23,7 +25,6 @@ const navItems = [
 ];
 
 const colorMap: Record<string, { border: string; bg: string; text: string }> = {
-  indigo: { border: 'border-l-indigo-500', bg: 'bg-indigo-500/10', text: 'text-indigo-500' },
   indigo: { border: 'border-l-indigo-500', bg: 'bg-indigo-500/10', text: 'text-indigo-500' },
   violet: { border: 'border-l-violet-500', bg: 'bg-violet-500/10', text: 'text-violet-500' },
   cyan: { border: 'border-l-cyan-500', bg: 'bg-cyan-500/10', text: 'text-cyan-500' },

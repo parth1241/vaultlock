@@ -6,7 +6,7 @@ import bcrypt from 'bcryptjs';
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { name, email, password, role } = body;
+    const { name, email, password, role, linkedWallet } = body;
 
     if (!name || !email || !password || !role) {
       return NextResponse.json(
@@ -39,6 +39,7 @@ export async function POST(req: Request) {
       email,
       passwordHash,
       role,
+      linkedWallet,
     });
 
     return NextResponse.json({
@@ -50,7 +51,7 @@ export async function POST(req: Request) {
         role: user.role,
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Signup error:', error);
     return NextResponse.json(
       { error: 'Internal server error' },

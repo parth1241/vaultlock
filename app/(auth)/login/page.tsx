@@ -84,7 +84,7 @@ export default function LoginPage() {
         const redirectTo = returnUrl || (role === 'client' ? '/client/dashboard' : '/freelancer/dashboard');
         router.push(redirectTo);
       }
-    } catch (err: any) {
+    } catch {
       setError('Something went wrong. Please try again.');
     } finally {
       setLoading(false);

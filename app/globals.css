@@ -66,6 +66,12 @@
     @apply fixed inset-0 pointer-events-none z-[-2] overflow-hidden;
   }
 
+  .input-field {
+    @apply w-full bg-[#120f00] border border-indigo-500/20 rounded-lg px-4 py-2 text-slate-200 
+           focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent
+           transition-all duration-200 placeholder:text-slate-500;
+  }
+
   .blob-indigo {
     @apply absolute top-[-10%] left-[-5%] w-[40%] h-[40%] blur-[120px] rounded-full animate-blob1;
     background-color: rgba(99, 102, 241, 0.15);

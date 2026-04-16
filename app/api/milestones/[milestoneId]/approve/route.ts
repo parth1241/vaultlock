@@ -59,7 +59,7 @@ export async function POST(
       );
       milestone.balanceId = result.balanceId;
       milestone.txHash = result.txHash;
-    } catch (stellarError: any) {
+    } catch (stellarError: unknown) {
       console.error('Stellar claimable balance error:', stellarError);
       // Still approve even if Stellar fails for demo robustness
       milestone.status = 'approved';
@@ -71,7 +71,7 @@ export async function POST(
       milestone,
       balanceId: milestone.balanceId,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('POST /api/milestones/[milestoneId]/approve error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }

@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Shield, Briefcase, Zap, ChevronLeft, Eye, EyeOff, CheckCircle2, User, Mail, Lock } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useStellarWallet } from '@/lib/context/StellarWalletContext';
+import { WalletButton } from '@/components/shared/WalletButton';
 
 type Role = 'client' | 'freelancer';
 
@@ -39,6 +41,7 @@ export default function SignupPage() {
   const router = useRouter();
   const [step, setStep] = useState(1);
   const [role, setRole] = useState<Role | null>(null);
+  const { address: linkedWallet } = useStellarWallet();
 
   // Form fields
   const [name, setName] = useState('');
@@ -80,7 +83,7 @@ export default function SignupPage() {
       const res = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password, role }),
+        body: JSON.stringify({ name, email, password, role, linkedWallet }),
       });
 
       const data = await res.json();
@@ -104,7 +107,7 @@ export default function SignupPage() {
         // Sign in failed but signup succeeded — redirect to login
         router.push('/login');
       }
-    } catch (err: any) {
+    } catch {
       setErrors({ form: 'Something went wrong. Please try again.' });
     } finally {
       setLoading(false);
@@ -332,6 +335,18 @@ export default function SignupPage() {
                 )}
               </button>
             </form>
+
+            <div className="mt-8 space-y-4">
+              <div className="flex items-center space-x-3">
+                <div className="flex-1 h-px bg-indigo-900/20" />
+                <span className="text-xs text-slate-500">Optional: Link Wallet</span>
+                <div className="flex-1 h-px bg-indigo-900/20" />
+              </div>
+
+              <div className="flex justify-center">
+                <WalletButton />
+              </div>
+            </div>
 
             <p className="text-center text-sm text-slate-400 mt-6">
               Already have an account?{' '}

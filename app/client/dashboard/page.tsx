@@ -9,9 +9,10 @@ import { Plus, Search, DollarSign, Briefcase, CheckCircle2, Clock } from 'lucide
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { EscrowCard } from '@/components/shared/EscrowCard';
 import { cn } from '@/lib/utils';
-import WalletManager from '@/components/shared/WalletManager';
-import SendXLMPanel from '@/components/shared/SendXLMPanel';
-import { LiquidityPoolCard } from '@/components/shared/LiquidityPoolCard';
+import dynamicNext from 'next/dynamic';
+const WalletManager = dynamicNext(() => import('@/components/shared/WalletManager'), { ssr: false });
+const SendXLMPanel = dynamicNext(() => import('@/components/shared/SendXLMPanel'), { ssr: false });
+const LiquidityPoolCard = dynamicNext(() => import('@/components/shared/LiquidityPoolCard').then(m => ({ default: m.LiquidityPoolCard })), { ssr: false });
 import { Activity } from 'lucide-react';
 
 const chartData = [

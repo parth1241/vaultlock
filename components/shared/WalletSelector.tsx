@@ -8,12 +8,10 @@ import {
   DialogTitle,
   DialogDescription
 } from '@/components/ui/dialog';
-import { 
-  FREIGHTER_ID, 
-  ALBEDO_ID, 
-  XBULL_ID, 
-  LOBSTR_ID 
-} from '@creit.tech/stellar-wallets-kit';
+const FREIGHTER_ID = 'freighter';
+const ALBEDO_ID = 'albedo';
+const XBULL_ID = 'xbull';
+const LOBSTR_ID = 'lobstr';
 import { useStellarWallet } from '@/lib/context/StellarWalletContext';
 import { Shield, Zap, Wallet, Globe } from 'lucide-react';
 import { cn } from '@/lib/utils';

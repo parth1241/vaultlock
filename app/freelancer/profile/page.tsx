@@ -1,20 +1,41 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { Save, Loader2, Wallet, Unlink, Download } from 'lucide-react';
 import { useToast } from '@/lib/context/ToastContext';
 import { cn } from '@/lib/utils';
+import { useStellarWallet } from '@/lib/context/StellarWalletContext';
+import { WalletSelector } from '@/components/shared/WalletSelector';
 
 const AVATAR_COLORS = ['#6366f1', '#6366f1', '#8b5cf6', '#06b6d4', '#f43f5e', '#64748b'];
 
 export default function FreelancerProfilePage() {
   const { data: session, update } = useSession();
   const { showToast } = useToast();
+  const { address, disconnect } = useStellarWallet();
 
   const [name, setName] = useState(session?.user?.name || '');
   const [avatarColor, setAvatarColor] = useState(session?.user?.avatarColor || '#8b5cf6');
   const [saving, setSaving] = useState(false);
+  const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
+
+  // Sync wallet to profile when address changes IF the user intentionally triggered it
+  const syncWallet = async (walletAddress: string | null) => {
+    try {
+      const res = await fetch('/api/user/profile', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ linkedWallet: walletAddress }),
+      });
+      if (res.ok) {
+        showToast(walletAddress ? 'Wallet linked!' : 'Wallet unlinked!', 'success');
+        update(); // Refresh session
+      }
+    } catch (err) {
+      showToast('Failed to update wallet', 'error');
+    }
+  };
 
   const handleSave = async () => {
     setSaving(true);
@@ -35,8 +56,25 @@ export default function FreelancerProfilePage() {
     }
   };
 
+  const handleUnlink = async () => {
+    await syncWallet(null);
+    disconnect();
+  };
+
+  // Watch for connection from modal
+  useEffect(() => {
+    if (isWalletModalOpen && address) {
+      syncWallet(address);
+      setIsWalletModalOpen(false);
+    }
+  }, [address, isWalletModalOpen]);
+
   return (
     <div className="max-w-2xl space-y-8 animate-in fade-in duration-500">
+      <WalletSelector 
+        isOpen={isWalletModalOpen} 
+        onClose={() => setIsWalletModalOpen(false)} 
+      />
       <div>
         <h1 className="text-2xl font-bold text-slate-100">Profile</h1>
         <p className="text-sm text-slate-400 mt-1">Manage your freelancer profile</p>
@@ -79,7 +117,7 @@ export default function FreelancerProfilePage() {
           </div>
           <button onClick={handleSave} disabled={saving} className="btn-primary flex items-center space-x-2">
             {saving ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
-            <span>Save</span>
+            <span>Save Changes</span>
           </button>
         </div>
       </div>
@@ -94,7 +132,10 @@ export default function FreelancerProfilePage() {
               <p className="text-xs text-slate-500 mb-1">Linked Wallet</p>
               <p className="font-mono-hash text-slate-200 break-all">{session.user.linkedWallet}</p>
             </div>
-            <button className="flex items-center space-x-2 text-sm text-rose-400 hover:text-rose-300 transition-colors">
+            <button 
+              onClick={handleUnlink}
+              className="flex items-center space-x-2 text-sm text-rose-400 hover:text-rose-300 transition-colors"
+            >
               <Unlink size={14} />
               <span>Unlink Wallet</span>
             </button>
@@ -103,7 +144,12 @@ export default function FreelancerProfilePage() {
           <div className="text-center p-8 rounded-xl bg-[#0a0800] border border-indigo-900/10">
             <Wallet size={32} className="mx-auto text-indigo-500/30 mb-3" />
             <p className="text-sm text-slate-400 mb-4">Link your Stellar wallet to receive payments</p>
-            <button className="btn-primary text-sm">Link Wallet</button>
+            <button 
+              onClick={() => setIsWalletModalOpen(true)}
+              className="btn-primary text-sm"
+            >
+              Link Wallet
+            </button>
           </div>
         )}
       </div>

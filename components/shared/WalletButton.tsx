@@ -95,8 +95,7 @@ export function WalletButton({ onWalletConnect, enableLogin = false }: WalletBut
       
       <WalletSelector 
         isOpen={showSelector} 
-        onClose={() => setShowSelector(false)} 
-        onConnect={(addr) => onWalletConnect?.(addr)}
+        onClose={() => setShowSelector(false)}
       />
     </div>
   );

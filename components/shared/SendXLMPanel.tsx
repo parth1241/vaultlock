@@ -90,8 +90,10 @@ export default function SendXLMPanel({ defaultMemo = '', onSuccess, compact = fa
             origin: { y: 0.6 },
             colors: ['#3b82f6', '#22d3ee', '#6366f1']
           })
+      if (address) {
           const newBal = await getXLMBalance(address)
           setBalance(newBal)
+      }
           if (onSuccess) onSuccess(result)
         } else {
           setTxResult(result)

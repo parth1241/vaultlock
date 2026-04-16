@@ -1,11 +1,8 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { 
-  isFreighterInstalled, 
-  getFreighterNetwork,
-  getXLMBalance
-} from '@/lib/stellar'
+import { getXLMBalance } from '@/lib/stellar'
+import { isInstalled as isFreighterInstalled, getNetworkDetails as getFreighterNetwork } from '@stellar/freighter-api'
 import { Check, X, ShieldCheck, Zap } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -22,11 +19,11 @@ export default function Level1StatusBadge() {
     const checkAll = async () => {
       try {
         const installed = await isFreighterInstalled()
-        const network = await getFreighterNetwork()
+        const networkDetails = await getFreighterNetwork()
         const address = localStorage.getItem('stellar_address')
         const balance = address ? await getXLMBalance(address) : 0
 
-        const isTestnet = network === 'TESTNET'
+        const isTestnet = networkDetails.network === 'TESTNET'
         const isBalanceLoaded = address ? true : false
         const isReady = installed && isTestnet && isBalanceLoaded
 

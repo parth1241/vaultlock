@@ -98,13 +98,22 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger }) {
       if (user) {
         token.id = user.id;
         token.role = user.role;
         token.linkedWallet = user.linkedWallet;
         token.avatarColor = user.avatarColor;
         token.rememberMe = user.rememberMe;
+      } else if (trigger === 'update') {
+        // Refetch user data from DB to get latest profile changes
+        await dbConnect();
+        const dbUser = await User.findById(token.id).lean();
+        if (dbUser) {
+          token.name = dbUser.name;
+          token.linkedWallet = dbUser.linkedWallet;
+          token.avatarColor = dbUser.avatarColor;
+        }
       }
       return token;
     },

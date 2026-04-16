@@ -1,15 +1,11 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
-import { 
-  StellarWalletsKit, 
-  WalletNetwork, 
-  defaultModules,
-  FREIGHTER_ID,
-  ALBEDO_ID,
-  XBULL_ID,
-  LOBSTR_ID
-} from '@creit.tech/stellar-wallets-kit';
+import { Networks } from '@stellar/stellar-sdk';
+const FREIGHTER_ID = 'freighter';
+const ALBEDO_ID = 'albedo';
+const XBULL_ID = 'xbull';
+const LOBSTR_ID = 'lobstr';
 
 interface WalletContextType {
   address: string | null;
@@ -26,17 +22,32 @@ export function StellarWalletProvider({ children }: { children: React.ReactNode 
   const [address, setAddress] = useState<string | null>(null);
   const [walletType, setWalletType] = useState<string | null>(null);
 
-  // Initialize kit instance
-  const kit = useMemo(() => new StellarWalletsKit({
-    network: WalletNetwork.TESTNET,
-    modules: defaultModules(),
-  }), []);
+  const [kit, setKit] = useState<any>(null);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+       Promise.all([
+         import('@creit.tech/stellar-wallets-kit'),
+         import('@creit.tech/stellar-wallets-kit/modules/utils')
+       ]).then(([kitModule, utilsModule]) => {
+          const { StellarWalletsKit } = kitModule;
+          const { defaultModules } = utilsModule;
+          
+          StellarWalletsKit.init({
+            network: Networks.TESTNET,
+            modules: defaultModules(),
+          });
+          
+          setKit(() => StellarWalletsKit);
+       }).catch(console.error);
+    }
+  }, []);
 
   const checkConnection = useCallback(async () => {
     const savedAddress = localStorage.getItem('stellar_address');
     const savedType = localStorage.getItem('wallet_type');
 
-    if (savedAddress && savedType) {
+    if (savedAddress && savedType && kit) {
       setAddress(savedAddress);
       setWalletType(savedType);
       
@@ -51,6 +62,7 @@ export function StellarWalletProvider({ children }: { children: React.ReactNode 
 
   const connect = async (moduleId: string) => {
     try {
+      if (!kit) throw new Error('Wallet kit not initialized');
       await kit.setWallet(moduleId);
       const { address } = await kit.getAddress();
       

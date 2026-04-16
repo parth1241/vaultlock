@@ -13,18 +13,18 @@ export async function POST(req: Request) {
     }
 
     const account = await server.loadAccount(address);
-    const nativeBalance = account.balances.find((b: any) => b.asset_type === 'native');
+    const nativeBalance = account.balances.find((b) => (b as any).asset_type === 'native');
     const balance = nativeBalance ? nativeBalance.balance : '0';
 
     return NextResponse.json({ 
       balance,
       asset_type: 'native'
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Balance API Error:', error);
     return NextResponse.json({ 
       error: 'Failed to fetch balance',
-      details: error.message 
+      details: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 });
   }
 }

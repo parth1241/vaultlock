@@ -16,7 +16,6 @@ const values = [
 
 const colorMap: Record<string, string> = {
   indigo: 'text-indigo-500 bg-indigo-500/10 border-indigo-500/20',
-  indigo: 'text-indigo-500 bg-indigo-500/10 border-indigo-500/20',
   violet: 'text-violet-500 bg-violet-500/10 border-violet-500/20',
   cyan: 'text-cyan-500 bg-cyan-500/10 border-cyan-500/20',
 };

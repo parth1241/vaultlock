@@ -41,7 +41,7 @@ export async function POST(
     delete escrowObj.escrowSecretEncrypted;
 
     return NextResponse.json({ success: true, escrow: escrowObj });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('POST /api/escrows/[escrowId]/accept error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }

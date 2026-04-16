@@ -2,7 +2,12 @@
 
 import { SessionProvider } from 'next-auth/react';
 import { ToastProvider } from '@/lib/context/ToastContext';
-import { StellarWalletProvider } from '@/lib/context/StellarWalletContext';
+import dynamic from 'next/dynamic';
+
+const StellarWalletProvider = dynamic(
+  () => import('@/lib/context/StellarWalletContext').then(m => ({ default: m.StellarWalletProvider })),
+  { ssr: false }
+);
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (

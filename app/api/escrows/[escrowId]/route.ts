@@ -51,7 +51,7 @@ export async function GET(
         order: m.order,
       })),
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('GET /api/escrows/[escrowId] error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
@@ -93,7 +93,7 @@ export async function PATCH(
     delete escrowObj.escrowSecretEncrypted;
 
     return NextResponse.json({ escrow: escrowObj });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('PATCH /api/escrows/[escrowId] error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
@@ -130,7 +130,7 @@ export async function DELETE(
     await escrow.save();
 
     return NextResponse.json({ success: true });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('DELETE /api/escrows/[escrowId] error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }

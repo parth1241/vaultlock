@@ -24,11 +24,11 @@ export async function POST(req: Request) {
       ledger: result.ledger,
       fee: (result as any).fee_value || '100'
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Send API Error:', error);
     return NextResponse.json({ 
       error: 'Failed to submit transaction',
-      details: error.message 
+      details: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 });
   }
 }
